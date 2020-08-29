@@ -8,7 +8,11 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "rewrites": [{
+      "source": "**",
+      "destination": "/index.html"
+    }]
   },
   "emulators": {
     "database": {
@@ -21,7 +25,7 @@
       "enabled": true
     },
     "firestore": {
-      "port": 8080
+      "port": 8081
     }
   },
   "firestore": {
