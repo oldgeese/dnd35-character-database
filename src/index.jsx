@@ -8,6 +8,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Button,
 } from '@material-ui/core'
 import {
   createMuiTheme,
@@ -507,10 +508,10 @@ function NewCharForm() {
           })
       }}
     >
-      {({values}) => (
+      {({values, ...props}) => (
         <Form>
           <CharacterSheet input={true} values={values}/>
-          <button type="submit">Submit</button>
+          <Button onClick={props.handleSubmit} variant='contained' color='primary'>SAVE</Button>
         </Form>
       )}
     </Formik>
@@ -585,10 +586,10 @@ function EditCharForm() {
           })
       }}
     >
-      {({values}) => (
+      {({values, ...props}) => (
         <Form>
           <CharacterSheet input={true} values={values}/>
-          <button type="submit">Submit</button>
+          <Button onClick={props.handleSubmit} variant='contained' color='primary'>SAVE</Button>
         </Form>
       )}
     </Formik>
