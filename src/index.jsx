@@ -8,7 +8,11 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemAvatar,
+  ListItemSecondaryAction,
+  Avatar,
   Button,
+  Typography,
 } from '@material-ui/core'
 import {
   createMuiTheme,
@@ -511,7 +515,7 @@ function NewCharForm() {
       {({values, ...props}) => (
         <Form>
           <CharacterSheet input={true} values={values}/>
-          <Button onClick={props.handleSubmit} variant='contained' color='primary'>SAVE</Button>
+          <Button onClick={props.handleSubmit} variant='contained' color='primary'>保存</Button>
         </Form>
       )}
     </Formik>
@@ -589,7 +593,7 @@ function EditCharForm() {
       {({values, ...props}) => (
         <Form>
           <CharacterSheet input={true} values={values}/>
-          <Button onClick={props.handleSubmit} variant='contained' color='primary'>SAVE</Button>
+          <Button onClick={props.handleSubmit} variant='contained' color='primary'>保存</Button>
         </Form>
       )}
     </Formik>
@@ -597,7 +601,7 @@ function EditCharForm() {
 }
 
 function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
+  return <ListItem button component="a" {...props} />
 }
 
 function ListChars() {
@@ -611,7 +615,6 @@ function ListChars() {
         snapshot.forEach(doc => {
           result.push(doc.data())
         })
-        console.log(result)
         setCharacters(result)
     })
     return unsubscribe;
@@ -620,12 +623,17 @@ function ListChars() {
   return (
     <List>
       {characters.map(character => (
-        <ListItem>
-          <ListItemLink href={`/char/${character.id}`}>
-            <ListItemText primary={character.pcName} />
-          </ListItemLink>
-          <Link to={`/editchar/${character.id}`}>EDIT</Link>
-        </ListItem>
+        <ListItemLink href={`/char/${character.id}`}>
+          <ListItemAvatar>
+            <Avatar src={character.image}/>
+          </ListItemAvatar>
+          <ListItemText primary={character.pcName} secondary={`PL名:${character.plName}, クラスレベル:${character.classLevel}`}/>
+          <ListItemSecondaryAction>
+            <Button variant='contained' component={Link} to={`/editchar/${character.id}`}>
+              編集
+            </Button>
+          </ListItemSecondaryAction>
+        </ListItemLink>
       ))}
     </List>
   )
@@ -659,8 +667,14 @@ function App() {
 function Home() {
   return (
     <React.Fragment>
-      <h1>D&amp;D 3.5版 キャラクターデータベース</h1>
-      <Link to='/newchar'>新規作成</Link>
+      <Typography component='h1' variant='h2' align='center' color='textPrimary'>
+        D&amp;D 3.5版 キャラクターデータベース
+      </Typography>
+      <Grid container justify='center'>
+        <Button variant='contained' color='primary' component={Link} to='/newchar'>
+          新規作成
+        </Button>
+      </Grid>
       <br/>
       <ListChars />
     </React.Fragment>
