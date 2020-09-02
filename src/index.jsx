@@ -75,13 +75,30 @@ function Value({input, ...props}) {
   )
 }
 
+function ImageValue({input, ...props}) {
+  const [field, meta] = useField(props.name)
+  const {value} = meta
+
+  return (
+    input ?
+      <React.Fragment>
+        <Label>画像URL</Label><br/>
+        <Value input={true} {...props}/>
+      </React.Fragment>
+    :
+    <Box width='100%' border={1} style={{maxHeight:'250px'}}>
+      <img src={value} style={{maxWidth:'100%', maxHeight:'100%', display:'block', margin:'auto'}}/>
+    </Box>
+  )
+}
+
 function MultiLineValue({input, ...props}) {
   const [field, meta] = useField(props.name)
   const {value} = meta
 
   return (
     input ?
-    <FastField component={TextField} multiline={true} fullWidth={true} rows={10} size='small' style={{width: '100%'}} {...props}/>
+      <FastField component={TextField} multiline={true} fullWidth={true} rows={10} size='small' style={{width: '100%'}} {...props}/>
     :
     <Box width='100%' minHeight='200px' fontSize='caption2.fontSize' border={1} {...props}>
       {value.split(/\r\n|\r|\n/).map((item, key) => {
@@ -671,7 +688,7 @@ function Home() {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1')
   return (
     <React.Fragment>
-      <Typography component='h1' variant='h2' align='center' color='textPrimary'>
+      <Typography component='h3' variant='h4' align='center' color='textPrimary'>
         D&amp;D 3.5版 キャラクターデータベース
       </Typography>
       <Grid container justify='center'>
@@ -691,9 +708,7 @@ function CharacterSheet({input, values, ...props}) {
     <ThemeProvider theme={theme}>
       <Grid container item xs={12} spacing={1}>
         <Grid container item xs={3}>
-          <Paper width={1}>
-            D&D 3.5
-          </Paper>
+          <ImageValue name='image' input={input} {...props} />
         </Grid>
         <Grid container item xs={9}>
           <Grid container item xs={12} spacing={1}>
