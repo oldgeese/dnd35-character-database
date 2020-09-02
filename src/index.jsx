@@ -495,6 +495,7 @@ const INITIAL_SKILLS = [
 ]
 
 function NewCharForm() {
+  document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
   return (
     <Formik
       initialValues={new Character()}
@@ -523,6 +524,7 @@ function NewCharForm() {
 }
 
 function ViewCharForm() {
+  document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
   const {id} = useParams()
   const [character, setCharacter] = useState(new Character())
 
@@ -555,6 +557,7 @@ function ViewCharForm() {
 }
 
 function EditCharForm() {
+  document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
   const {id} = useParams()
   const [character, setCharacter] = useState(new Character())
 
@@ -665,6 +668,7 @@ function App() {
 }
 
 function Home() {
+  document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1')
   return (
     <React.Fragment>
       <Typography component='h1' variant='h2' align='center' color='textPrimary'>
