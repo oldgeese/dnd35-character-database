@@ -643,7 +643,7 @@ function ListChars() {
   return (
     <List>
       {characters.map(character => (
-        <ListItemLink href={`/char/${character.id}`}>
+        <ListItemLink href={`/char/${character.id}`} key={character.id}>
           <ListItemAvatar>
             <Avatar src={character.image}/>
           </ListItemAvatar>
