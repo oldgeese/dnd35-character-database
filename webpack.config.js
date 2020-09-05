@@ -1,9 +1,10 @@
 const path = require('path')
+const env = process.env.NODE_ENV || 'production'
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
   // development に設定するとソースマップ有効でJSファイルが出力される
-  mode: 'production',
+  mode: env,
   entry: './src/index.jsx',
   output: {
     path: __dirname + '/public',
