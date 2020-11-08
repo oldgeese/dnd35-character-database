@@ -66,7 +66,7 @@ function Label2(props) {
 }
 
 function Value({input, ...props}) {
-  const [field, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
 
   return (
@@ -80,7 +80,7 @@ function Value({input, ...props}) {
 }
 
 function ImageValue({input, ...props}) {
-  const [field, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
 
   return (
@@ -97,7 +97,7 @@ function ImageValue({input, ...props}) {
 }
 
 function MultiLineValue({input, ...props}) {
-  const [field, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
 
   return (
@@ -113,7 +113,7 @@ function MultiLineValue({input, ...props}) {
 }
 
 function BooleanValue({input, ...props}) {
-  const [field, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
 
   return (
@@ -127,7 +127,7 @@ function BooleanValue({input, ...props}) {
 }
 
 function DateValue({input, ...props}) {
-  const [field, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
   const displayValue = value.toLocaleString()
   return (
@@ -138,7 +138,7 @@ function DateValue({input, ...props}) {
 }
 
 function SkillNameValue({input, name, subName, skill, ...props}) {
-  const [_, meta] = useField(name)
+  const [, meta] = useField(name)
   const {value} = meta
 
   if (input && skill.hasSubName) {
@@ -169,7 +169,7 @@ function SkillNameValue({input, name, subName, skill, ...props}) {
 }
 
 function SkillAbilityValue({input, skill, ...props}) {
-  const [_, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
 
   return (
