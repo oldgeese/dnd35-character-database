@@ -13,6 +13,7 @@ import {
   Avatar,
   Button,
   Typography,
+  FormHelperText,
 } from '@material-ui/core'
 import {
   createMuiTheme,
@@ -25,14 +26,18 @@ import {
 } from '@material-ui/icons'
 import {
   Formik,
+  Field,
   FastField,
   Form,
+  ErrorMessage,
   useField,
+  withFormik,
 } from 'formik'
 import {
   TextField,
   Checkbox,
 } from 'formik-material-ui'
+import * as Yup from 'yup'
 
 import {
   BrowserRouter as Router,
@@ -41,6 +46,8 @@ import {
   Link,
   useParams,
 } from 'react-router-dom'
+
+import jsSHA from 'jssha'
 
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
@@ -304,6 +311,9 @@ class Character {
     this.money = new Money('', '', '', '')
     this.load = new Load('', '', '', '', '', '')
     this.setting = ''
+    this.password = ''
+    this.passwordConfirm = ''
+    this.passwordForUpdate = ''
   }
 }
 
@@ -513,6 +523,9 @@ const INITIAL_SKILLS = [
 
 function NewCharForm() {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
+  const schema = Yup.object().shape({
+    passwordConfirm: Yup.mixed().oneOf([Yup.ref('password')], 'パスワードが一致しません。')
+  })
   return (
     <Formik
       initialValues={new Character()}
@@ -520,6 +533,12 @@ function NewCharForm() {
         const newDocRef = db.collection('characters').doc()
         values.updateTime = new Date()
         values.id = newDocRef.id
+
+        const shaObj = new jsSHA('SHA-256', 'TEXT')
+        shaObj.update(values.password)
+        values.password = shaObj.getHash('HEX')
+        values.passwordConfirm = ''
+
         newDocRef.set(JSON.parse(JSON.stringify(values)))
           .then(function() {
             console.log("Document successfully written!");
@@ -529,10 +548,17 @@ function NewCharForm() {
             console.error("Error writing document: ", error);
           })
       }}
+      validationSchema={schema}
     >
-      {({values, ...props}) => (
+      {({values, errors, touched, ...props}) => (
         <Form>
           <CharacterSheet input={true} values={values}/>
+          <Label>パスワード</Label>
+          <Field name='password' type='password' component={TextField} size='small' margin='none' variant='outlined'/>
+          <Label>パスワード(確認用)</Label>
+          <Field name='passwordConfirm' type='password' component={TextField} size='small' margin='none' variant='outlined'/>
+          <br/>
+          <br/>
           <Button onClick={props.handleSubmit} variant='contained' color='primary'>保存</Button>
         </Form>
       )}
