@@ -6,6 +6,9 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@types/react-dom": "^16.9.9",
+    "@types/react-router-dom": "^5.1.6",
+    "@types/yup": "^0.29.9",
     "firebase": "^7.17.2",
     "formik": "^2.1.5",
     "formik-material-ui": "^3.0.0-alpha.0",
