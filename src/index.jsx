@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import {
   Grid,
-  Paper,
   Box,
-  TextareaAutosize,
   List,
   ListItem,
   ListItemText,
@@ -13,7 +11,6 @@ import {
   Avatar,
   Button,
   Typography,
-  FormHelperText,
 } from '@material-ui/core'
 import {
   createMuiTheme,
