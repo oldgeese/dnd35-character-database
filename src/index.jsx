@@ -595,8 +595,6 @@ function ViewCharForm() {
 }
 
 const validatePassword = async (id, values) => {
-  const errors = {}
-
   const shaObj = new jsSHA('SHA-256', 'TEXT')
   shaObj.update(values.passwordForUpdate)
   const hashForUpdate = shaObj.getHash('HEX')
@@ -616,7 +614,6 @@ const validatePassword = async (id, values) => {
     console.log('hashForUpdate', hashForUpdate)
     if (passwordOnServer !== hashForUpdate) {
       console.log('wrong password.')
-      errors.passwordForUpdate = 'パスワードが誤っています。'
       throw new Error('wrong password.')
     }
   } catch (err){
