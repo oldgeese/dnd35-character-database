@@ -26,9 +26,7 @@ import {
   Field,
   FastField,
   Form,
-  ErrorMessage,
   useField,
-  withFormik,
 } from 'formik'
 import {
   TextField,
@@ -547,7 +545,7 @@ function NewCharForm() {
       }}
       validationSchema={schema}
     >
-      {({values, errors, touched, ...props}) => (
+      {({values, errors, ...props}) => (
         <Form>
           <CharacterSheet input={true} values={values}/>
           <Label>パスワード</Label>
@@ -596,6 +594,37 @@ function ViewCharForm() {
   )
 }
 
+const validatePassword = async (id, values) => {
+  const errors = {}
+
+  const shaObj = new jsSHA('SHA-256', 'TEXT')
+  shaObj.update(values.passwordForUpdate)
+  const hashForUpdate = shaObj.getHash('HEX')
+  const editDocRef = db.collection('characters').doc(id)
+
+  try {
+    const snapshot = await editDocRef.get()
+    let passwordOnServer
+    if (snapshot.exists) {
+      passwordOnServer = snapshot.data().password
+    } else {
+      throw new Error('document does not exist.')
+    }
+
+    console.log('passwordOnServer', passwordOnServer)
+    console.log('passwordForUpdate', values.passwordForUpdate)
+    console.log('hashForUpdate', hashForUpdate)
+    if (passwordOnServer !== hashForUpdate) {
+      console.log('wrong password.')
+      errors.passwordForUpdate = 'パスワードが誤っています。'
+      throw new Error('wrong password.')
+    }
+  } catch (err){
+    console.error("Error :", err)
+    throw err
+  }
+}
+
 function EditCharForm() {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
   const {id} = useParams()
@@ -619,7 +648,13 @@ function EditCharForm() {
     <Formik
       initialValues={character}
       enableReinitialize={true}
-      onSubmit={async values => {
+      onSubmit={async (values, actions) => {
+        try {
+          await validatePassword(id, values)
+        } catch (err) {
+          actions.setFieldError('passwordForUpdate', 'パスワードが誤っています。')
+          return
+        }
         const editDocRef = db.collection('characters').doc(id)
         values.updateTime = new Date()
         values.id = editDocRef.id
@@ -633,9 +668,13 @@ function EditCharForm() {
           })
       }}
     >
-      {({values, ...props}) => (
+      {({values, errors, ...props}) => (
         <Form>
           <CharacterSheet input={true} values={values}/>
+          <Label>パスワード</Label>
+          <Field name='passwordForUpdate' type='password' component={TextField} size='small' margin='none' variant='outlined'/>
+          <br/>
+          <br/>
           <Button onClick={props.handleSubmit} variant='contained' color='primary'>保存</Button>
         </Form>
       )}
