@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import {
   Grid,
-  Paper,
   Box,
-  TextareaAutosize,
   List,
   ListItem,
   ListItemText,
@@ -25,6 +23,7 @@ import {
 } from '@material-ui/icons'
 import {
   Formik,
+  Field,
   FastField,
   Form,
   useField,
@@ -33,6 +32,7 @@ import {
   TextField,
   Checkbox,
 } from 'formik-material-ui'
+import * as Yup from 'yup'
 
 import {
   BrowserRouter as Router,
@@ -41,6 +41,8 @@ import {
   Link,
   useParams,
 } from 'react-router-dom'
+
+import jsSHA from 'jssha'
 
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
@@ -62,7 +64,7 @@ function Label2(props) {
 }
 
 function Value({input, ...props}) {
-  const [field, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
 
   return (
@@ -76,7 +78,7 @@ function Value({input, ...props}) {
 }
 
 function ImageValue({input, ...props}) {
-  const [field, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
 
   return (
@@ -93,7 +95,7 @@ function ImageValue({input, ...props}) {
 }
 
 function MultiLineValue({input, ...props}) {
-  const [field, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
 
   return (
@@ -109,7 +111,7 @@ function MultiLineValue({input, ...props}) {
 }
 
 function BooleanValue({input, ...props}) {
-  const [field, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
 
   return (
@@ -123,7 +125,7 @@ function BooleanValue({input, ...props}) {
 }
 
 function DateValue({input, ...props}) {
-  const [field, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
   const displayValue = value.toLocaleString()
   return (
@@ -134,7 +136,7 @@ function DateValue({input, ...props}) {
 }
 
 function SkillNameValue({input, name, subName, skill, ...props}) {
-  const [_, meta] = useField(name)
+  const [, meta] = useField(name)
   const {value} = meta
 
   if (input && skill.hasSubName) {
@@ -165,7 +167,7 @@ function SkillNameValue({input, name, subName, skill, ...props}) {
 }
 
 function SkillAbilityValue({input, skill, ...props}) {
-  const [_, meta] = useField(props.name)
+  const [, meta] = useField(props.name)
   const {value} = meta
 
   return (
@@ -304,6 +306,9 @@ class Character {
     this.money = new Money('', '', '', '')
     this.load = new Load('', '', '', '', '', '')
     this.setting = ''
+    this.password = ''
+    this.passwordConfirm = ''
+    this.passwordForUpdate = ''
   }
 }
 
@@ -513,6 +518,9 @@ const INITIAL_SKILLS = [
 
 function NewCharForm() {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
+  const schema = Yup.object().shape({
+    passwordConfirm: Yup.mixed().oneOf([Yup.ref('password')], 'パスワードが一致しません。')
+  })
   return (
     <Formik
       initialValues={new Character()}
@@ -520,6 +528,12 @@ function NewCharForm() {
         const newDocRef = db.collection('characters').doc()
         values.updateTime = new Date()
         values.id = newDocRef.id
+
+        const shaObj = new jsSHA('SHA-256', 'TEXT')
+        shaObj.update(values.password)
+        values.password = shaObj.getHash('HEX')
+        values.passwordConfirm = ''
+
         newDocRef.set(JSON.parse(JSON.stringify(values)))
           .then(function() {
             console.log("Document successfully written!");
@@ -529,10 +543,17 @@ function NewCharForm() {
             console.error("Error writing document: ", error);
           })
       }}
+      validationSchema={schema}
     >
-      {({values, ...props}) => (
+      {({values, errors, ...props}) => (
         <Form>
           <CharacterSheet input={true} values={values}/>
+          <Label>パスワード</Label>
+          <Field name='password' type='password' component={TextField} size='small' margin='none' variant='outlined'/>
+          <Label>パスワード(確認用)</Label>
+          <Field name='passwordConfirm' type='password' component={TextField} size='small' margin='none' variant='outlined'/>
+          <br/>
+          <br/>
           <Button onClick={props.handleSubmit} variant='contained' color='primary'>保存</Button>
         </Form>
       )}
@@ -573,6 +594,34 @@ function ViewCharForm() {
   )
 }
 
+const validatePassword = async (id, values) => {
+  const shaObj = new jsSHA('SHA-256', 'TEXT')
+  shaObj.update(values.passwordForUpdate)
+  const hashForUpdate = shaObj.getHash('HEX')
+  const editDocRef = db.collection('characters').doc(id)
+
+  try {
+    const snapshot = await editDocRef.get()
+    let passwordOnServer
+    if (snapshot.exists) {
+      passwordOnServer = snapshot.data().password
+    } else {
+      throw new Error('document does not exist.')
+    }
+
+    console.log('passwordOnServer', passwordOnServer)
+    console.log('passwordForUpdate', values.passwordForUpdate)
+    console.log('hashForUpdate', hashForUpdate)
+    if (passwordOnServer !== hashForUpdate) {
+      console.log('wrong password.')
+      throw new Error('wrong password.')
+    }
+  } catch (err){
+    console.error("Error :", err)
+    throw err
+  }
+}
+
 function EditCharForm() {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
   const {id} = useParams()
@@ -596,7 +645,13 @@ function EditCharForm() {
     <Formik
       initialValues={character}
       enableReinitialize={true}
-      onSubmit={async values => {
+      onSubmit={async (values, actions) => {
+        try {
+          await validatePassword(id, values)
+        } catch (err) {
+          actions.setFieldError('passwordForUpdate', 'パスワードが誤っています。')
+          return
+        }
         const editDocRef = db.collection('characters').doc(id)
         values.updateTime = new Date()
         values.id = editDocRef.id
@@ -610,9 +665,13 @@ function EditCharForm() {
           })
       }}
     >
-      {({values, ...props}) => (
+      {({values, errors, ...props}) => (
         <Form>
           <CharacterSheet input={true} values={values}/>
+          <Label>パスワード</Label>
+          <Field name='passwordForUpdate' type='password' component={TextField} size='small' margin='none' variant='outlined'/>
+          <br/>
+          <br/>
           <Button onClick={props.handleSubmit} variant='contained' color='primary'>保存</Button>
         </Form>
       )}
