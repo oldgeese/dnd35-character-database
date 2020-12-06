@@ -78,6 +78,20 @@ function Value({input, ...props}) {
   )
 }
 
+function ModifierValue({input, ...props}) {
+  const [, meta] = useField(props.name)
+  const {value} = meta
+
+  return (
+    input ?
+      <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' disabled {...props}/>
+    :
+    <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
+      {value}
+    </Box>
+  )
+}
+
 function ImageValue({input, ...props}) {
   const [, meta] = useField(props.name)
   const {value} = meta
@@ -881,13 +895,13 @@ function CharacterSheet({input, values, ...props}) {
                     <Value name={`abilities.${index}.score`} input={input} {...props} align='center' />
                   </Grid>
                   <Grid container item xs={2} justify='center' alignItems='center'>
-                    <Value name={`abilities.${index}.modifier`} input={input} {...props} align='center' />
-                  </Grid>
-                  <Grid container item xs={2} justify='center' alignItems='center'>
-                    <Value name={`abilities.${index}.temporaryModifier`} input={input} {...props} align='center' />
+                    <ModifierValue name={`abilities.${index}.modifier`} input={input} {...props} align='center' />
                   </Grid>
                   <Grid container item xs={2} justify='center' alignItems='center'>
                     <Value name={`abilities.${index}.temporaryScore`} input={input} {...props} align='center' />
+                  </Grid>
+                  <Grid container item xs={2} justify='center' alignItems='center'>
+                    <Value name={`abilities.${index}.temporaryModifier`} input={input} {...props} align='center' />
                   </Grid>
                 </Grid>
               ))}
