@@ -1663,5 +1663,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 const db = firebase.firestore()
+firebase.analytics()
 
 ReactDOM.render(<App />, document.querySelector('#app'))
