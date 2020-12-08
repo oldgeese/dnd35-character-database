@@ -27,6 +27,8 @@ import {
   FastField,
   Form,
   useField,
+  useFormikContext,
+  getIn,
 } from 'formik'
 import {
   TextField,
@@ -47,6 +49,8 @@ import jsSHA from 'jssha'
 import firebase from 'firebase/app'
 import "firebase/analytics"
 import 'firebase/firestore'
+
+const calcModifier = x => Math.floor((x-10)/2)
 
 function Label(props) {
   return (
@@ -71,6 +75,29 @@ function Value({input, ...props}) {
   return (
     input ?
       <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' {...props}/>
+    :
+    <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
+      {value}
+    </Box>
+  )
+}
+
+function ComputeValue({input, ...props}) {
+  const [, meta] = useField(props.name)
+  const {value} = meta
+  const {values, touched, setFieldValue} = useFormikContext()
+
+  useEffect(() => {
+    const publisher = getIn(values, props.subscribe)
+    const touchedPublisher = getIn(touched, props.subscribe)
+    if (touchedPublisher) {
+      setFieldValue(props.name, props.compute(publisher));
+    }
+  }, [getIn(values, props.subscribe), getIn(touched, props.subscribe), setFieldValue, props.name])
+
+  return (
+    input ?
+      <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' disabled {...props} compute=''/>
     :
     <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
       {value}
@@ -460,6 +487,19 @@ class Load {
     this.liftOffGround = liftOffGround
     this.pushOrDrag = pushOrDrag
   }
+}
+
+const ABILITY_POSITION = {
+  '【筋】': 0,
+  '【敏】': 1,
+  '【耐】': 2,
+  '【知】': 3,
+  '【判】': 4,
+  '【魅】': 5,
+}
+
+const getAbilityPosition = (ability) => {
+  return ABILITY_POSITION[ability]
 }
 
 const INITIAL_SKILLS = [
@@ -881,13 +921,16 @@ function CharacterSheet({input, values, ...props}) {
                     <Value name={`abilities.${index}.score`} input={input} {...props} align='center' />
                   </Grid>
                   <Grid container item xs={2} justify='center' alignItems='center'>
-                    <Value name={`abilities.${index}.modifier`} input={input} {...props} align='center' />
-                  </Grid>
-                  <Grid container item xs={2} justify='center' alignItems='center'>
-                    <Value name={`abilities.${index}.temporaryModifier`} input={input} {...props} align='center' />
+                    <ComputeValue name={`abilities.${index}.modifier`} input={input}
+                      subscribe={`abilities.${index}.score`}
+                      compute={calcModifier}
+                      {...props} align='center' />
                   </Grid>
                   <Grid container item xs={2} justify='center' alignItems='center'>
                     <Value name={`abilities.${index}.temporaryScore`} input={input} {...props} align='center' />
+                  </Grid>
+                  <Grid container item xs={2} justify='center' alignItems='center'>
+                    <Value name={`abilities.${index}.temporaryModifier`} input={input} {...props} align='center' />
                   </Grid>
                 </Grid>
               ))}
@@ -1392,7 +1435,10 @@ function CharacterSheet({input, values, ...props}) {
                 </Grid>
                 <Grid container item xs={1} justify='center' alignItems='center'>
                   <Grid item xs={9}>
-                    <Value name={`skills.${index}.abilityModifier`} input={input} {...props} align='center' />
+                    <ComputeValue name={`skills.${index}.abilityModifier`} input={input}
+                      subscribe={`abilities.${getAbilityPosition(skill.ability)}.score`}
+                      compute={calcModifier}
+                      {...props} align='center' />
                   </Grid>
                   <Grid item xs={3}>
                     <Label align='center'>+</Label>
@@ -1663,5 +1709,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 const db = firebase.firestore()
+firebase.analytics()
 
 ReactDOM.render(<App />, document.querySelector('#app'))
