@@ -83,7 +83,8 @@ function Value({input, ...props}) {
 }
 
 function ComputeValue({input, ...props}) {
-  const [field] = useField(props.name)
+  const [, meta] = useField(props.name)
+  const {value} = meta
   const {values, touched, setFieldValue} = useFormikContext()
 
   useEffect(() => {
@@ -98,7 +99,9 @@ function ComputeValue({input, ...props}) {
     input ?
       <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' disabled {...props} compute=''/>
     :
-    <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props} {...field}/>
+    <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
+      {value}
+    </Box>
   )
 }
 
