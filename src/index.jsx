@@ -311,9 +311,9 @@ class Character {
     this.initiative = new Initiative('', '', '')
     this.ac = new ArmorClass('', '', '', '', '', '', '', '', '', '', '', '', '')
     this.savingThrows = [
-      new SavingThrow('頑健【耐久力】', '', '', '', '', '', ''),
-      new SavingThrow('反応【敏捷力】', '', '', '', '', '', ''),
-      new SavingThrow('意志【判断力】', '', '', '', '', '', ''),
+      new SavingThrow('頑健【耐久力】', '', '', '', '', '', '', '【耐】'),
+      new SavingThrow('反応【敏捷力】', '', '', '', '', '', '', '【敏】'),
+      new SavingThrow('意志【判断力】', '', '', '', '', '', '', '【判】'),
     ]
     this.savingThrowConditionalModifier = ''
     this.bab = ''
@@ -498,9 +498,15 @@ const ABILITY_POSITION = {
   '【魅】': 5,
 }
 
-const getAbilityPosition = (ability) => {
-  return ABILITY_POSITION[ability]
+const getAbilityPosition = ability => ABILITY_POSITION[ability]
+
+const ST_CORRESPONTING_ABILITY = {
+  '頑健【耐久力】':'【耐】',
+  '反応【敏捷力】':'【敏】',
+  '意志【判断力】':'【判】',
 }
+
+const getSTCorrespondingAbility = name => ST_CORRESPONTING_ABILITY[name]
 
 const INITIAL_SKILLS = [
   new Skill('威圧', '【魅】'),
@@ -1037,7 +1043,10 @@ function CharacterSheet({input, values, ...props}) {
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='center'>
               <Grid container item xs={9}>
-                <Value name='ac.dexModifier' input={input} {...props} align='center' />
+                <ComputeValue name='ac.dexModifier' input={input} {...props}
+                  subscribe={`abilities.${getAbilityPosition('【敏】')}.score`}
+                  compute={calcModifier}
+                  align='center' />
               </Grid>
               <Grid container item xs={3} justify='center'>
                 <Label align='center'>+</Label>
@@ -1201,7 +1210,10 @@ function CharacterSheet({input, values, ...props}) {
                   </Grid>
                   <Grid container item xs={2} justify='center' alignItems='center'>
                     <Grid item xs={8}>
-                      <Value name={`savingThrows.${index}.abilitiModifier`} input={input} {...props} align='center' />
+                      <ComputeValue name={`savingThrows.${index}.abilitiModifier`} input={input}
+                        subscribe={`abilities.${getAbilityPosition(getSTCorrespondingAbility(row.name))}.score`}
+                        compute={calcModifier}
+                        {...props} align='center' />
                     </Grid>
                     <Grid item xs={4}>
                       <Label align='center'>+</Label>
@@ -1298,7 +1310,10 @@ function CharacterSheet({input, values, ...props}) {
                 </Grid>
                 <Grid container item xs={2} justify='center' alignItems='center'>
                   <Grid item xs={8}>
-                    <Value name='grapplemodifier.strengthmodifier' input={input} {...props} align='center' />
+                    <ComputeValue name='grapplemodifier.strengthmodifier' input={input}
+                      subscribe={`abilities.${getAbilityPosition('【筋】')}.score`}
+                      compute={calcModifier}
+                      {...props} align='center' />
                   </Grid>
                   <Grid item xs={4}>
                     <Label align='center'>+</Label>
