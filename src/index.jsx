@@ -311,9 +311,9 @@ class Character {
     this.initiative = new Initiative('', '', '')
     this.ac = new ArmorClass('', '', '', '', '', '', '', '', '', '', '', '', '')
     this.savingThrows = [
-      new SavingThrow('頑健【耐久力】', '', '', '', '', '', '', '【耐】'),
-      new SavingThrow('反応【敏捷力】', '', '', '', '', '', '', '【敏】'),
-      new SavingThrow('意志【判断力】', '', '', '', '', '', '', '【判】'),
+      new SavingThrow('頑健【耐久力】', '', '', '', '', '', ''),
+      new SavingThrow('反応【敏捷力】', '', '', '', '', '', ''),
+      new SavingThrow('意志【判断力】', '', '', '', '', '', ''),
     ]
     this.savingThrowConditionalModifier = ''
     this.bab = ''
