@@ -9,7 +9,7 @@
     "@types/react-dom": "^16.9.9",
     "@types/react-router-dom": "^5.1.6",
     "@types/yup": "^0.29.9",
-    "firebase": "^8.1.1",
+    "firebase": "^8.1.2",
     "formik": "^2.2.5",
     "formik-material-ui": "^3.0.0",
     "jssha": "^3.1.2",
