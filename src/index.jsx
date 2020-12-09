@@ -985,7 +985,10 @@ function CharacterSheet({input, values, ...props}) {
               </Grid>
               <Grid container item xs={4} justify='center'>
                 <Grid container item xs={9}>
-                  <Value name='initiative.dexModifier' input={input} {...props} align='center' />
+                  <ComputeValue name='initiative.dexModifier' input={input}
+                    subscribe={`abilities.${getAbilityPosition('【敏】')}.score`}
+                    compute={calcModifier}
+                    {...props} align='center' />
                 </Grid>
                 <Grid container item xs={3} justify='center'>
                   <Label align='center'>+</Label>
@@ -1043,10 +1046,7 @@ function CharacterSheet({input, values, ...props}) {
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='center'>
               <Grid container item xs={9}>
-                <ComputeValue name='ac.dexModifier' input={input} {...props}
-                  subscribe={`abilities.${getAbilityPosition('【敏】')}.score`}
-                  compute={calcModifier}
-                  align='center' />
+                <Value name='ac.dexModifier' input={input} {...props} align='center' />
               </Grid>
               <Grid container item xs={3} justify='center'>
                 <Label align='center'>+</Label>
