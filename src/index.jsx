@@ -50,7 +50,7 @@ import firebase from 'firebase/app'
 import "firebase/analytics"
 import 'firebase/firestore'
 
-const calcModifier = x => Math.floor((x-10)/2)
+const calcModifier = x => Math.floor((x - 10) / 2)
 
 function Label(props) {
   return (
@@ -68,24 +68,24 @@ function Label2(props) {
   )
 }
 
-function Value({input, ...props}) {
+function Value({ input, ...props }) {
   const [, meta] = useField(props.name)
-  const {value} = meta
+  const { value } = meta
 
   return (
     input ?
-      <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' {...props}/>
-    :
-    <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
-      {value}
-    </Box>
+      <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' {...props} />
+      :
+      <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
+        {value}
+      </Box>
   )
 }
 
-function ComputeValue({input, ...props}) {
+function ComputeValue({ input, ...props }) {
   const [, meta] = useField(props.name)
-  const {value} = meta
-  const {values, touched, setFieldValue} = useFormikContext()
+  const { value } = meta
+  const { values, touched, setFieldValue } = useFormikContext()
 
   useEffect(() => {
     const publisher = getIn(values, props.subscribe)
@@ -97,64 +97,64 @@ function ComputeValue({input, ...props}) {
 
   return (
     input ?
-      <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' disabled {...props} compute=''/>
-    :
-    <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
-      {value}
-    </Box>
+      <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' disabled {...props} compute='' />
+      :
+      <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
+        {value}
+      </Box>
   )
 }
 
-function ImageValue({input, ...props}) {
+function ImageValue({ input, ...props }) {
   const [, meta] = useField(props.name)
-  const {value} = meta
+  const { value } = meta
 
   return (
     input ?
       <React.Fragment>
-        <Label>画像URL</Label><br/>
-        <Value input={true} {...props}/>
+        <Label>画像URL</Label><br />
+        <Value input={true} {...props} />
       </React.Fragment>
-    :
-    <Box width='100%' border={1} style={{maxHeight:'250px'}}>
-      <img src={value} style={{maxWidth:'100%', maxHeight:'100%', display:'block', margin:'auto'}}/>
-    </Box>
+      :
+      <Box width='100%' border={1} style={{ maxHeight: '250px' }}>
+        <img src={value} style={{ maxWidth: '100%', maxHeight: '100%', display: 'block', margin: 'auto' }} />
+      </Box>
   )
 }
 
-function MultiLineValue({input, ...props}) {
+function MultiLineValue({ input, ...props }) {
   const [, meta] = useField(props.name)
-  const {value} = meta
+  const { value } = meta
 
   return (
     input ?
-      <FastField component={TextField} multiline={true} fullWidth={true} rows={10} size='small' style={{width: '100%'}} {...props}/>
-    :
-    <Box width='100%' minHeight='200px' fontSize='caption2.fontSize' border={1} {...props}>
-      {value.split(/\r\n|\r|\n/).map((item, key) => {
-        return <React.Fragment key={key}>{item}<br/></React.Fragment>
-      })}
-    </Box>
+      <FastField component={TextField} multiline={true} fullWidth={true} rows={10} size='small' style={{ width: '100%' }} {...props} />
+      :
+      <Box width='100%' minHeight='200px' fontSize='caption2.fontSize' border={1} {...props}>
+        {value.split(/\r\n|\r|\n/).map((item, key) => {
+          return <React.Fragment key={key}>{item}<br /></React.Fragment>
+        })}
+      </Box>
   )
 }
 
-function BooleanValue({input, ...props}) {
+function BooleanValue({ input, ...props }) {
   const [, meta] = useField(props.name)
-  const {value} = meta
+  const { value } = meta
 
   return (
     input ?
-      <FastField component={Checkbox} size='small' color='primary' checked={value} type='checkbox' indeterminate={false} {...props}/>
-    :
-    <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
-      {value ? <Check style={{fontSize:12}}/> : ''}
-    </Box>
+      <FastField component={Checkbox} size='small' color='primary' checked={value} type='checkbox' indeterminate={false} {...props} />
+      :
+      <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
+        {value ? <Check style={{ fontSize: 12 }} /> : ''}
+      </Box>
   )
 }
 
-function DateValue({input, ...props}) {
+function DateValue({ input, ...props }) {
   const [, meta] = useField(props.name)
-  const {value} = meta
+  const { value } = meta
   const displayValue = value.toLocaleString()
   return (
     <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
@@ -163,49 +163,49 @@ function DateValue({input, ...props}) {
   )
 }
 
-function SkillNameValue({input, name, subName, skill, ...props}) {
+function SkillNameValue({ input, name, subName, skill, ...props }) {
   const [, meta] = useField(name)
-  const {value} = meta
+  const { value } = meta
 
   if (input && skill.hasSubName) {
     return (
       <React.Fragment>
         <Grid item xs={3}>
-        <Box minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
-          {value}
-          {skill.usableUntrained ? <Stop style={{fontSize:12}}/> : ''}
-        </Box>
+          <Box minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
+            {value}
+            {skill.usableUntrained ? <Stop style={{ fontSize: 12 }} /> : ''}
+          </Box>
         </Grid>
         <Grid item xs={9}>
-          <FastField name={subName} component={TextField} size='small' fullWidth margin='none' variant='outlined' {...props}/>
+          <FastField name={subName} component={TextField} size='small' fullWidth margin='none' variant='outlined' {...props} />
         </Grid>
       </React.Fragment>
     )
   } else if (input && skill.fullEditable) {
-    return <FastField name={name} component={TextField} size='small' fullWidth margin='none' variant='outlined' {...props}/>
-  } 
+    return <FastField name={name} component={TextField} size='small' fullWidth margin='none' variant='outlined' {...props} />
+  }
 
   return (
     <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
       {value}
-      {skill.usableUntrained ? <Stop style={{fontSize:12}}/> : ''}
+      {skill.usableUntrained ? <Stop style={{ fontSize: 12 }} /> : ''}
       {skill.hasSubName ? skill.subName : ''}
     </Box>
   )
 }
 
-function SkillAbilityValue({input, skill, ...props}) {
+function SkillAbilityValue({ input, skill, ...props }) {
   const [, meta] = useField(props.name)
-  const {value} = meta
+  const { value } = meta
 
   return (
     (input && skill.fullEditable) ?
-      <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' {...props}/>
-    :
-    <Box width='100%' minHeight='20px' fontSize='caption.fontSize' border={1} {...props}>
-      {value}
-      {skill.hasArmorPenalty ? '*' : ''}
-    </Box>
+      <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' {...props} />
+      :
+      <Box width='100%' minHeight='20px' fontSize='caption.fontSize' border={1} {...props}>
+        {value}
+        {skill.hasArmorPenalty ? '*' : ''}
+      </Box>
   )
 }
 
@@ -227,7 +227,7 @@ const theme = createMuiTheme({
         padding: '1px',
         paddingTop: '1px',
         paddingBottom: '1px',
-      }
+      },
     }
   }
 })
@@ -421,7 +421,7 @@ class Attack {
 }
 
 class Skill {
-  constructor(name, ability, usableUntrained=true, hasArmorPenalty=false, hasSubName=false, fullEditable=false) {
+  constructor(name, ability, usableUntrained = true, hasArmorPenalty = false, hasSubName = false, fullEditable = false) {
     this.classSkill = false
     this.name = name
     this.usableUntrained = usableUntrained
@@ -501,9 +501,9 @@ const ABILITY_POSITION = {
 const getAbilityPosition = ability => ABILITY_POSITION[ability]
 
 const ST_CORRESPONTING_ABILITY = {
-  '頑健【耐久力】':'【耐】',
-  '反応【敏捷力】':'【敏】',
-  '意志【判断力】':'【判】',
+  '頑健【耐久力】': '【耐】',
+  '反応【敏捷力】': '【敏】',
+  '意志【判断力】': '【判】',
 }
 
 const getSTCorrespondingAbility = name => ST_CORRESPONTING_ABILITY[name]
@@ -592,15 +592,15 @@ function NewCharForm() {
       }}
       validationSchema={schema}
     >
-      {({values, errors, ...props}) => (
+      {({ values, errors, ...props }) => (
         <Form>
-          <CharacterSheet input={true} values={values}/>
+          <CharacterSheet input={true} values={values} />
           <Label>パスワード</Label>
-          <Field name='password' type='password' component={TextField} size='small' margin='none' variant='outlined'/>
+          <Field name='password' type='password' component={TextField} size='small' margin='none' variant='outlined' />
           <Label>パスワード(確認用)</Label>
-          <Field name='passwordConfirm' type='password' component={TextField} size='small' margin='none' variant='outlined'/>
-          <br/>
-          <br/>
+          <Field name='passwordConfirm' type='password' component={TextField} size='small' margin='none' variant='outlined' />
+          <br />
+          <br />
           <Button onClick={props.handleSubmit} variant='contained' color='primary'>保存</Button>
         </Form>
       )}
@@ -610,7 +610,7 @@ function NewCharForm() {
 
 function ViewCharForm() {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
-  const {id} = useParams()
+  const { id } = useParams()
   const [character, setCharacter] = useState(new Character())
 
   useEffect(() => {
@@ -632,9 +632,9 @@ function ViewCharForm() {
       initialValues={character}
       enableReinitialize={true}
     >
-      {({values}) => (
+      {({ values }) => (
         <Form>
-          <CharacterSheet input={false} values={values}/>
+          <CharacterSheet input={false} values={values} />
         </Form>
       )}
     </Formik>
@@ -663,7 +663,7 @@ const validatePassword = async (id, values) => {
       console.log('wrong password.')
       throw new Error('wrong password.')
     }
-  } catch (err){
+  } catch (err) {
     console.error("Error :", err)
     throw err
   }
@@ -671,7 +671,7 @@ const validatePassword = async (id, values) => {
 
 function EditCharForm() {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
-  const {id} = useParams()
+  const { id } = useParams()
   const [character, setCharacter] = useState(new Character())
 
   useEffect(() => {
@@ -712,13 +712,13 @@ function EditCharForm() {
           })
       }}
     >
-      {({values, errors, ...props}) => (
+      {({ values, errors, ...props }) => (
         <Form>
-          <CharacterSheet input={true} values={values}/>
+          <CharacterSheet input={true} values={values} />
           <Label>パスワード</Label>
-          <Field name='passwordForUpdate' type='password' component={TextField} size='small' margin='none' variant='outlined'/>
-          <br/>
-          <br/>
+          <Field name='passwordForUpdate' type='password' component={TextField} size='small' margin='none' variant='outlined' />
+          <br />
+          <br />
           <Button onClick={props.handleSubmit} variant='contained' color='primary'>保存</Button>
         </Form>
       )}
@@ -742,7 +742,7 @@ function ListChars() {
           result.push(doc.data())
         })
         setCharacters(result)
-    })
+      })
     return unsubscribe;
   }, []);
 
@@ -751,9 +751,9 @@ function ListChars() {
       {characters.map(character => (
         <ListItemLink href={`/char/${character.id}`} key={character.id}>
           <ListItemAvatar>
-            <Avatar src={character.image}/>
+            <Avatar src={character.image} />
           </ListItemAvatar>
-          <ListItemText primary={character.pcName} secondary={`PL名:${character.plName}, クラスレベル:${character.classLevel}`}/>
+          <ListItemText primary={character.pcName} secondary={`PL名:${character.plName}, クラスレベル:${character.classLevel}`} />
           <ListItemSecondaryAction>
             <Button variant='contained' component={Link} to={`/editchar/${character.id}`}>
               編集
@@ -767,26 +767,28 @@ function ListChars() {
 
 function App() {
   return (
-    <ErrorBoundary>
-    <Router>
-      <div>
-        <Switch>
-          <Route path='/char/:id'>
-            <ViewCharForm />
-          </Route>
-          <Route path='/newchar'>
-            <NewCharForm />
-          </Route>
-          <Route path='/editchar/:id'>
-            <EditCharForm />
-          </Route>
-          <Route path='/'>
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-    </ErrorBoundary>
+    <ThemeProvider theme={theme}>
+      <ErrorBoundary>
+        <Router>
+          <div>
+            <Switch>
+              <Route path='/char/:id'>
+                <ViewCharForm />
+              </Route>
+              <Route path='/newchar'>
+                <NewCharForm />
+              </Route>
+              <Route path='/editchar/:id'>
+                <EditCharForm />
+              </Route>
+              <Route path='/'>
+                <Home />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </ErrorBoundary>
+    </ThemeProvider>
   )
 }
 
@@ -802,16 +804,16 @@ function Home() {
           新規作成
         </Button>
       </Grid>
-      <br/>
+      <br />
       <ListChars />
     </React.Fragment>
   )
 }
 
-function CharacterSheet({input, values, ...props}) {
+function CharacterSheet({ input, values, ...props }) {
   const classes = useStyles()
   return (
-    <ThemeProvider theme={theme}>
+    <React.Fragment>
       <Grid container item xs={12} spacing={1}>
         <Grid container item xs={3}>
           <ImageValue name='image' input={input} {...props} />
@@ -820,7 +822,7 @@ function CharacterSheet({input, values, ...props}) {
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={12}>
               <Label>タグ</Label>
-              <Value name='tags' input={input} {...props}/>
+              <Value name='tags' input={input} {...props} />
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>
@@ -910,13 +912,13 @@ function CharacterSheet({input, values, ...props}) {
                 <Label align='center'>能力値</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>能力<br/>修正値</Label>
+                <Label align='center'>能力<br />修正値</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>一時的<br/>能力値</Label>
+                <Label align='center'>一時的<br />能力値</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>一時的<br/>修正値</Label>
+                <Label align='center'>一時的<br />修正値</Label>
               </Grid>
               {values.abilities.map((row, index) => (
                 <Grid container item key={index} spacing={1}>
@@ -972,7 +974,7 @@ function CharacterSheet({input, values, ...props}) {
               </Grid>
             </Grid>
             <Grid container item xs={4} justify='center' alignItems='center'>
-              <Label2 align='center' className={classes.bgblack}>イニシアチブ<br/>修正値</Label2>
+              <Label2 align='center' className={classes.bgblack}>イニシアチブ<br />修正値</Label2>
             </Grid>
             <Grid container item xs={8}>
               <Grid container item xs={4} justify='center'>
@@ -1001,10 +1003,10 @@ function CharacterSheet({input, values, ...props}) {
                 <Label align='center'>合計</Label>
               </Grid>
               <Grid container item xs={4} justify='center' alignItems='flex-start'>
-                <Label align='center'>【敏】<br/>修正値</Label>
+                <Label align='center'>【敏】<br />修正値</Label>
               </Grid>
               <Grid container item xs={4} justify='center' alignItems='flex-start'>
-                <Label align='center'>その他の<br/>修正値</Label>
+                <Label align='center'>その他の<br />修正値</Label>
               </Grid>
             </Grid>
           </Grid>
@@ -1113,45 +1115,45 @@ function CharacterSheet({input, values, ...props}) {
             <Grid container item xs={1} justify='center' alignItems='center'>
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='flex-start'>
-              <Label align='center'>鎧<br/>ボーナス</Label>
+              <Label align='center'>鎧<br />ボーナス</Label>
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='flex-start'>
-              <Label align='center'>盾<br/>ボーナス</Label>
+              <Label align='center'>盾<br />ボーナス</Label>
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='flex-start'>
-              <Label align='center'>【敏】<br/>修正値</Label>
+              <Label align='center'>【敏】<br />修正値</Label>
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='flex-start'>
-              <Label align='center'>サイズ<br/>修正値</Label>
+              <Label align='center'>サイズ<br />修正値</Label>
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='flex-start'>
-              <Label align='center'>外皮<br/>ボーナス</Label>
+              <Label align='center'>外皮<br />ボーナス</Label>
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='flex-start'>
-              <Label align='center'>反発<br/>ボーナス</Label>
+              <Label align='center'>反発<br />ボーナス</Label>
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='flex-start'>
-              <Label align='center'>幸運<br/>ボーナス</Label>
+              <Label align='center'>幸運<br />ボーナス</Label>
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='flex-start'>
-              <Label align='center'>洞察<br/>ボーナス</Label>
+              <Label align='center'>洞察<br />ボーナス</Label>
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='flex-start'>
-              <Label align='center'>士気<br/>ボーナス</Label>
+              <Label align='center'>士気<br />ボーナス</Label>
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='flex-start'>
-              <Label align='center'>その他の<br/>修正値</Label>
+              <Label align='center'>その他の<br />修正値</Label>
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={3} justify='center' alignItems='center'>
-              <Label2 align='center' className={classes.bgblack}>接触<br/>アーマークラス</Label2>
+              <Label2 align='center' className={classes.bgblack}>接触<br />アーマークラス</Label2>
             </Grid>
             <Grid container item xs={3} justify='center' alignItems='center'>
               <Value name='ac.touchAc' input={input} {...props} align='center' />
             </Grid>
             <Grid container item xs={3} justify='center' alignItems='center'>
-              <Label2 align='center' className={classes.bgblack}>立ちすくみ<br/>アーマークラス</Label2>
+              <Label2 align='center' className={classes.bgblack}>立ちすくみ<br />アーマークラス</Label2>
             </Grid>
             <Grid container item xs={3} justify='center' alignItems='center'>
               <Value name='ac.flatFootedAc' input={input} {...props} align='center' />
@@ -1161,7 +1163,7 @@ function CharacterSheet({input, values, ...props}) {
           <Grid container item xs={10} spacing={1}>
             <Grid container item xs={3}>
               <Grid container item xs={12} justify='center' alignItems='flex-end'>
-                <Label align='center'>セーヴィング<br/>・スロー</Label>
+                <Label align='center'>セーヴィング<br />・スロー</Label>
               </Grid>
             </Grid>
             <Grid container item xs={9}>
@@ -1169,19 +1171,19 @@ function CharacterSheet({input, values, ...props}) {
                 <Label align='center'>合計</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>基本<br/>セーヴ</Label>
+                <Label align='center'>基本<br />セーヴ</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>能力<br/>修正値</Label>
+                <Label align='center'>能力<br />修正値</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>魔法による<br/>修正値</Label>
+                <Label align='center'>魔法による<br />修正値</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>その他<br/>修正値</Label>
+                <Label align='center'>その他<br />修正値</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>一時的<br/>修正値</Label>
+                <Label align='center'>一時的<br />修正値</Label>
               </Grid>
             </Grid>
             {values.savingThrows.map((row, index) => (
@@ -1246,7 +1248,7 @@ function CharacterSheet({input, values, ...props}) {
           </Grid>
           <Grid container item xs={2} spacing={1}>
             <Label>条件付きの修正値</Label>
-            <MultiLineValue name='savingThrowConditionalModifier' input={input} {...props} align='center' style={{height: '80%'}} />
+            <MultiLineValue name='savingThrowConditionalModifier' input={input} {...props} align='center' style={{ height: '80%' }} />
           </Grid>
           <Grid item xs={12}></Grid>
           <Grid container item xs={12} spacing={1}>
@@ -1273,16 +1275,16 @@ function CharacterSheet({input, values, ...props}) {
                 <Label align='center'>合計</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>基本攻撃<br/>ボーナス</Label>
+                <Label align='center'>基本攻撃<br />ボーナス</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>【筋】<br/>修正値</Label>
+                <Label align='center'>【筋】<br />修正値</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>サイズ<br/>修正値</Label>
+                <Label align='center'>サイズ<br />修正値</Label>
               </Grid>
               <Grid container item xs={2} justify='center' alignItems='flex-end'>
-                <Label align='center'>その他<br/>修正値</Label>
+                <Label align='center'>その他<br />修正値</Label>
               </Grid>
             </Grid>
             <Grid container item spacing={1}>
@@ -1341,7 +1343,7 @@ function CharacterSheet({input, values, ...props}) {
                 <Grid item xs={12}></Grid>
                 <Grid item xs={12}></Grid>
                 <Grid container item xs={6} justify='center' alignItems='center'>
-                  <Label2 align='center' className={classes.bgblack}>攻撃{index+1}</Label2>
+                  <Label2 align='center' className={classes.bgblack}>攻撃{index + 1}</Label2>
                 </Grid>
                 <Grid container item xs={3} justify='center' alignItems='center'>
                   <Label align='center' className={classes.bgblack}>攻撃ボーナス</Label>
@@ -1356,13 +1358,13 @@ function CharacterSheet({input, values, ...props}) {
                   <Value name={`attacks.${index}.attack`} input={input} {...props} align='center' />
                 </Grid>
                 <Grid container item xs={3} justify='center' alignItems='center'>
-                  <Value name={`attacks.${index}.attackBonus`}  input={input} {...props} align='center' />
+                  <Value name={`attacks.${index}.attackBonus`} input={input} {...props} align='center' />
                 </Grid>
                 <Grid container item xs={2} justify='center' alignItems='center'>
-                  <Value name={`attacks.${index}.critical`}  input={input} {...props} align='center' />
+                  <Value name={`attacks.${index}.critical`} input={input} {...props} align='center' />
                 </Grid>
                 <Grid container item xs={1} justify='center' alignItems='center'>
-                  <Value name={`attacks.${index}.weight`}  input={input} {...props} align='center' />
+                  <Value name={`attacks.${index}.weight`} input={input} {...props} align='center' />
                 </Grid>
                 <Grid container item xs={2} justify='center' alignItems='center'>
                   <Label align='center' className={classes.bgblack}>タイプ</Label>
@@ -1377,16 +1379,16 @@ function CharacterSheet({input, values, ...props}) {
                   <Label align='center' className={classes.bgblack}>ダメージ</Label>
                 </Grid>
                 <Grid container item xs={2} justify='center' alignItems='center'>
-                  <Value name={`attacks.${index}.type`}  input={input} {...props} align='center' />
+                  <Value name={`attacks.${index}.type`} input={input} {...props} align='center' />
                 </Grid>
                 <Grid container item xs={1} justify='center' alignItems='center'>
-                  <Value name={`attacks.${index}.range`}  input={input} {...props} align='center' />
+                  <Value name={`attacks.${index}.range`} input={input} {...props} align='center' />
                 </Grid>
                 <Grid container item xs={3} justify='center' alignItems='center'>
-                  <Value name={`attacks.${index}.notes`}  input={input} {...props} align='center' />
+                  <Value name={`attacks.${index}.notes`} input={input} {...props} align='center' />
                 </Grid>
                 <Grid container item xs={6} justify='center' alignItems='center'>
-                  <Value name={`attacks.${index}.damage`}  input={input} {...props} align='center' />
+                  <Value name={`attacks.${index}.damage`} input={input} {...props} align='center' />
                 </Grid>
               </Grid>
             ))}
@@ -1406,28 +1408,28 @@ function CharacterSheet({input, values, ...props}) {
               <Label2 align='center' className={classes.bgblack}>技能</Label2>
             </Grid>
             <Grid container item xs={1} justify='center' alignItems='center'>
-              <Label align='center'>クラス<br/>技能</Label>
+              <Label align='center'>クラス<br />技能</Label>
             </Grid>
             <Grid container item xs={4} justify='center' alignItems='center'>
               <Label align='center'>技能名</Label>
             </Grid>
             <Grid container item xs={1} justify='center' alignItems='center'>
-              <Label align='center'>対応<br/>能力値</Label>
+              <Label align='center'>対応<br />能力値</Label>
             </Grid>
             <Grid container item xs={1} justify='center' alignItems='center'>
-              <Label align='center'>技能<br/>修正値</Label>
+              <Label align='center'>技能<br />修正値</Label>
             </Grid>
             <Grid container item xs={1} justify='center' alignItems='center'>
-              <Label align='center'>能力<br/>修正値</Label>
+              <Label align='center'>能力<br />修正値</Label>
             </Grid>
             <Grid container item xs={1} justify='center' alignItems='center'>
               <Label align='center'>ランク</Label>
             </Grid>
             <Grid container item xs={1} justify='center' alignItems='center'>
-              <Label align='center'>防具<br/>による<br/>ペナルティ</Label>
+              <Label align='center'>防具<br />による<br />ペナルティ</Label>
             </Grid>
             <Grid container item xs={2} justify='center' alignItems='center'>
-              <Label align='center'>その他<br/>修正値</Label>
+              <Label align='center'>その他<br />修正値</Label>
             </Grid>
             {values.skills.map((skill, index) => (
               <Grid container item key={index} spacing={1}>
@@ -1482,7 +1484,7 @@ function CharacterSheet({input, values, ...props}) {
             ))}
           </Grid>
           <Label>
-            <Stop style={{fontSize:12}}/>...未修得でも使用できる技能<br/>
+            <Stop style={{ fontSize: 12 }} />...未修得でも使用できる技能<br />
             *...防具によるペナルティがあれば適用する技能(水泳技能には2倍のペナルティが適用される)
           </Label>
         </Grid>
@@ -1493,19 +1495,19 @@ function CharacterSheet({input, values, ...props}) {
           <Label2 align='center' className={classes.bgblack}>鎧・防御アイテム</Label2>
         </Grid>
         <Grid container item xs={1} justify='center'>
-          <Label align='center' className={classes.bgblack}>AC<br/>ボーナス</Label>
+          <Label align='center' className={classes.bgblack}>AC<br />ボーナス</Label>
         </Grid>
         <Grid container item xs={2} justify='center'>
           <Label align='center' className={classes.bgblack}>タイプ</Label>
         </Grid>
         <Grid container item xs={1} justify='center'>
-          <Label align='center' className={classes.bgblack}>ACへの【敏】<br/>ボーナス上限</Label>
+          <Label align='center' className={classes.bgblack}>ACへの【敏】<br />ボーナス上限</Label>
         </Grid>
         <Grid container item xs={1} justify='center'>
           <Label align='center' className={classes.bgblack}>判定ペナルティ</Label>
         </Grid>
         <Grid container item xs={1} justify='center'>
-          <Label align='center' className={classes.bgblack}>秘術呪文<br/>失敗確率</Label>
+          <Label align='center' className={classes.bgblack}>秘術呪文<br />失敗確率</Label>
         </Grid>
         <Grid container item xs={1} justify='center'>
           <Label align='center' className={classes.bgblack}>重量</Label>
@@ -1653,13 +1655,13 @@ function CharacterSheet({input, values, ...props}) {
             <Label align='center'>重荷重</Label>
           </Grid>
           <Grid container item xs={2} justify='center'>
-            <Label align='center'>頭上に<br/>持ち上げる<br/>=最大荷重</Label>
+            <Label align='center'>頭上に<br />持ち上げる<br />=最大荷重</Label>
           </Grid>
           <Grid container item xs={2} justify='center'>
-            <Label align='center'>地面から<br/>持ち上げる<br/>=最大荷重x2</Label>
+            <Label align='center'>地面から<br />持ち上げる<br />=最大荷重x2</Label>
           </Grid>
           <Grid container item xs={2} justify='center'>
-            <Label align='center'>押し引き<br/>=最大荷重x3</Label>
+            <Label align='center'>押し引き<br />=最大荷重x3</Label>
           </Grid>
         </Grid>
         <Grid container item xs={4} spacing={1}>
@@ -1705,7 +1707,7 @@ function CharacterSheet({input, values, ...props}) {
           <MultiLineValue name='setting' input={input} {...props}></MultiLineValue>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </React.Fragment>
   )
 }
 

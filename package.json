@@ -1,11 +1,12 @@
 {
   "scripts": {
     "build": "env NODE_ENV=production webpack",
-    "start": "env NODE_ENV=development webpack-dev-server"
+    "start": "env NODE_ENV=development webpack serve"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/styles": "^4.11.2",
     "@types/react-dom": "^16.9.9",
     "@types/react-router-dom": "^5.1.6",
     "@types/yup": "^0.29.10",
