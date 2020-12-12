@@ -767,26 +767,28 @@ function ListChars() {
 
 function App() {
   return (
-    <ErrorBoundary>
-    <Router>
-      <div>
-        <Switch>
-          <Route path='/char/:id'>
-            <ViewCharForm />
-          </Route>
-          <Route path='/newchar'>
-            <NewCharForm />
-          </Route>
-          <Route path='/editchar/:id'>
-            <EditCharForm />
-          </Route>
-          <Route path='/'>
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-    </ErrorBoundary>
+    <ThemeProvider theme={theme}>
+      <ErrorBoundary>
+        <Router>
+          <div>
+            <Switch>
+              <Route path='/char/:id'>
+                <ViewCharForm />
+              </Route>
+              <Route path='/newchar'>
+                <NewCharForm />
+              </Route>
+              <Route path='/editchar/:id'>
+                <EditCharForm />
+              </Route>
+              <Route path='/'>
+                <Home />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </ErrorBoundary>
+    </ThemeProvider>
   )
 }
 
@@ -811,7 +813,7 @@ function Home() {
 function CharacterSheet({input, values, ...props}) {
   const classes = useStyles()
   return (
-    <ThemeProvider theme={theme}>
+    <React.Fragment>
       <Grid container item xs={12} spacing={1}>
         <Grid container item xs={3}>
           <ImageValue name='image' input={input} {...props} />
@@ -1705,7 +1707,7 @@ function CharacterSheet({input, values, ...props}) {
           <MultiLineValue name='setting' input={input} {...props}></MultiLineValue>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </React.Fragment>
   )
 }
 
