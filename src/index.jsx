@@ -656,9 +656,6 @@ const validatePassword = async (id, values) => {
       throw new Error('document does not exist.')
     }
 
-    console.log('passwordOnServer', passwordOnServer)
-    console.log('passwordForUpdate', values.passwordForUpdate)
-    console.log('hashForUpdate', hashForUpdate)
     if (passwordOnServer !== hashForUpdate) {
       console.log('wrong password.')
       throw new Error('wrong password.')
