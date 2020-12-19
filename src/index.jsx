@@ -155,7 +155,7 @@ function BooleanValue({ input, ...props }) {
 function DateValue({ input, ...props }) {
   const [, meta] = useField(props.name)
   const { value } = meta
-  const displayValue = value.toLocaleString()
+  const displayValue = new Date(value).toLocaleString()
   return (
     <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
       {displayValue}
