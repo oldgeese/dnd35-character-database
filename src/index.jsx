@@ -41,6 +41,7 @@ import {
   Switch,
   Route,
   Link,
+  Prompt,
   useParams,
 } from 'react-router-dom'
 
@@ -51,6 +52,16 @@ import "firebase/analytics"
 import 'firebase/firestore'
 
 const calcModifier = x => Math.floor((x - 10) / 2)
+
+const PromptIfDirty = () => {
+  const formik = useFormikContext();
+  return (
+    <Prompt
+      when={formik.dirty && formik.submitCount === 0}
+      message="本当にこのページを離れますか? 未保存の変更があります。"
+    />
+  )
+}
 
 function Label(props) {
   return (
@@ -602,6 +613,7 @@ function NewCharForm() {
     >
       {({ values, errors, ...props }) => (
         <Form>
+          <PromptIfDirty />
           <CharacterSheet input={true} values={values} />
           <Label>パスワード</Label>
           <Field name='password' type='password' component={TextField} size='small' margin='none' variant='outlined' />
@@ -720,6 +732,7 @@ function EditCharForm() {
     >
       {({ values, errors, ...props }) => (
         <Form>
+          <PromptIfDirty />
           <CharacterSheet input={true} values={values} />
           <Label>パスワード</Label>
           <Field name='passwordForUpdate' type='password' component={TextField} size='small' margin='none' variant='outlined' />
