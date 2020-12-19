@@ -1701,7 +1701,7 @@ function CharacterSheet({ input, values, ...props }) {
             <Label2 align='center' className={classes.bgblack}>呪文</Label2>
           </Grid>
           <Grid container item xs={12} justify='center'>
-            <MultiLineValue name='spell' input={input} {...props}></MultiLineValue>
+            <MultiLineValue name='spell' input={input} rows={50} {...props}></MultiLineValue>
           </Grid>
         </Grid>
       </Grid>
