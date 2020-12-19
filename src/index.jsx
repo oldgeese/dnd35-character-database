@@ -228,6 +228,11 @@ const theme = createMuiTheme({
         paddingTop: '1px',
         paddingBottom: '1px',
       },
+    },
+    MuiInputBase: {
+      root: {
+        backgroundColor: 'white',
+      },
     }
   }
 })
@@ -236,6 +241,9 @@ const useStyles = makeStyles({
   bgblack: {
     background: 'black',
     color: 'white',
+  },
+  bgslightgray: {
+    background: 'rgb(248,248,248)',
   },
   acGridWidth: {
     flexGrow: 0,
@@ -811,7 +819,7 @@ function Home() {
 function CharacterSheet({ input, values, ...props }) {
   const classes = useStyles()
   return (
-    <React.Fragment>
+    <div className={classes.bgslightgray}>
       <Grid container item xs={12} spacing={1}>
         <Grid container item xs={3}>
           <ImageValue name='image' input={input} {...props} />
@@ -1705,7 +1713,7 @@ function CharacterSheet({ input, values, ...props }) {
           <MultiLineValue name='setting' input={input} {...props}></MultiLineValue>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </div>
   )
 }
 
