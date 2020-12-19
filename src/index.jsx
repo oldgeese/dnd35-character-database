@@ -779,12 +779,15 @@ function App() {
           <div>
             <Switch>
               <Route path='/char/:id'>
+                <Label><LinkToHome/></Label>
                 <ViewCharForm />
               </Route>
               <Route path='/newchar'>
+                <Label><LinkToHome/></Label>
                 <NewCharForm />
               </Route>
               <Route path='/editchar/:id'>
+                <Label><LinkToHome/></Label>
                 <EditCharForm />
               </Route>
               <Route path='/'>
@@ -812,6 +815,14 @@ function Home() {
       </Grid>
       <br />
       <ListChars />
+    </React.Fragment>
+  )
+}
+
+function LinkToHome() {
+  return (
+    <React.Fragment>
+      <Link to='/'>キャラクター一覧へ</Link>
     </React.Fragment>
   )
 }
