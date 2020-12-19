@@ -699,6 +699,7 @@ function EditCharForm() {
         const editDocRef = db.collection('characters').doc(id)
         values.updateTime = new Date()
         values.id = editDocRef.id
+        values.passwordConfirm = ''
         editDocRef.set(JSON.parse(JSON.stringify(values)))
           .then(function() {
             console.log("Document successfully written!");
