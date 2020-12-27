@@ -11,6 +11,11 @@ import {
   Avatar,
   Button,
   Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from '@material-ui/core'
 import {
   createMuiTheme,
@@ -784,11 +789,69 @@ function ListChars() {
   )
 }
 
+const DirtyDialog = (props) => {
+  const [, setOpen] = useState(false)
+
+  const handleCancel = () => {
+    setOpen(false)
+    props.onCancel()
+  }
+
+  const handleConfirm = () => {
+    setOpen(false)
+    props.onConfirm()
+  }
+
+  return (
+    <Dialog
+      open={true}
+      onClose={handleCancel}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">未保存の変更があります</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {props.message}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCancel} color="primary" autoFocus>
+          編集に戻る
+        </Button>
+        <Button onClick={handleConfirm} color="primary">
+          離れる
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+const getUserConfirmation = (message, callback) => {
+  const modal = document.createElement('div')
+  document.body.appendChild(modal)
+
+  const withCleanup = (answer) => {
+    ReactDOM.unmountComponentAtNode(modal)
+    document.body.removeChild(modal)
+    callback(answer)
+  }
+
+  ReactDOM.render(
+    <DirtyDialog
+      message={message}
+      onCancel={() => withCleanup(false)}
+      onConfirm={() => withCleanup(true)}
+    />,
+    modal
+  )
+}
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <ErrorBoundary>
-        <Router>
+        <Router getUserConfirmation={getUserConfirmation}>
           <div>
             <Switch>
               <Route path='/char/:id'>
@@ -1757,5 +1820,12 @@ firebase.initializeApp(firebaseConfig)
 
 const db = firebase.firestore()
 firebase.analytics()
+
+// prevent back-forward cache in Safari
+window.addEventListener('pageshow', e => {
+  if (e.persisted) {
+    window.location.reload()
+  }
+})
 
 ReactDOM.render(<App />, document.querySelector('#app'))
