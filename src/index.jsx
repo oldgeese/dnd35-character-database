@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import ReactDOM from 'react-dom'
 import {
   Grid,
@@ -68,23 +68,23 @@ const PromptIfDirty = () => {
   )
 }
 
-function Label(props) {
+const Label = React.memo((props) => {
   return (
     <Box width='100%' padding='2px' fontSize='caption.fontSize' {...props}>
       {props.children}
     </Box>
   )
-}
+}, (prev, next) => { return prev.children === next.children })
 
-function Label2(props) {
+const Label2 = React.memo((props) => {
   return (
     <Box width='100%' padding='2px' fontSize='caption2.fontSize' {...props}>
       {props.children}
     </Box>
   )
-}
+}, (prev, next) => { return prev.children === next.children })
 
-function Value({ input, ...props }) {
+const Value = React.memo(({ input, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
 
@@ -96,9 +96,10 @@ function Value({ input, ...props }) {
         {value}
       </Box>
   )
-}
+})
 
-function ComputeValue({ input, ...props }) {
+const ComputeValue = React.memo(({ input, ...props }) => {
+  console.log('compute')
   const [, meta] = useField(props.name)
   const { value } = meta
   const { values, touched, setFieldValue } = useFormikContext()
@@ -115,13 +116,13 @@ function ComputeValue({ input, ...props }) {
     input ?
       <FastField component={TextField} size='small' fullWidth margin='none' variant='outlined' disabled {...props} compute='' />
       :
-      <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props}>
+      <Box width='100%' minHeight='20px' fontSize='caption2.fontSize' border={1} {...props} compute=''>
         {value}
       </Box>
   )
-}
+})
 
-function ImageValue({ input, ...props }) {
+const ImageValue = React.memo(({ input, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
 
@@ -136,9 +137,9 @@ function ImageValue({ input, ...props }) {
         <img src={value} style={{ maxWidth: '100%', maxHeight: '100%', display: 'block', margin: 'auto' }} />
       </Box>
   )
-}
+})
 
-function MultiLineValue({ input, ...props }) {
+const MultiLineValue = React.memo(({ input, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
 
@@ -152,9 +153,9 @@ function MultiLineValue({ input, ...props }) {
         })}
       </Box>
   )
-}
+})
 
-function BooleanValue({ input, ...props }) {
+const BooleanValue = React.memo(({ input, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
 
@@ -166,9 +167,9 @@ function BooleanValue({ input, ...props }) {
         {value ? <Check style={{ fontSize: 12 }} /> : ''}
       </Box>
   )
-}
+})
 
-function DateValue({ input, ...props }) {
+const DateValue = React.memo(({ input, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
   const displayValue = new Date(value).toLocaleString()
@@ -177,9 +178,9 @@ function DateValue({ input, ...props }) {
       {displayValue}
     </Box>
   )
-}
+})
 
-function SkillNameValue({ input, name, subName, skill, ...props }) {
+const SkillNameValue = React.memo(({ input, name, subName, skill, ...props }) => {
   const [, meta] = useField(name)
   const { value } = meta
 
@@ -208,9 +209,9 @@ function SkillNameValue({ input, name, subName, skill, ...props }) {
       {skill.hasSubName ? skill.subName : ''}
     </Box>
   )
-}
+})
 
-function SkillAbilityValue({ input, skill, ...props }) {
+const SkillAbilityValue = React.memo(({ input, skill, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
 
@@ -223,7 +224,7 @@ function SkillAbilityValue({ input, skill, ...props }) {
         {skill.hasArmorPenalty ? '*' : ''}
       </Box>
   )
-}
+})
 
 const theme = createMuiTheme({
   typography: {
@@ -657,11 +658,17 @@ function ViewCharForm() {
       initialValues={character}
       enableReinitialize={true}
     >
-      {({ values }) => (
-        <Form>
-          <CharacterSheet input={false} values={values} />
-        </Form>
-      )}
+      {({ values }) => {
+        if (!values.id) {
+          return <div></div>
+        }
+
+        return (
+          <Form>
+            <CharacterSheet input={false} values={values} />
+          </Form>
+        )
+      }}
     </Formik>
   )
 }
@@ -735,17 +742,23 @@ function EditCharForm() {
           })
       }}
     >
-      {({ values, errors, ...props }) => (
-        <Form>
-          <PromptIfDirty />
-          <CharacterSheet input={true} values={values} />
-          <Label>パスワード</Label>
-          <Field name='passwordForUpdate' type='password' component={TextField} size='small' margin='none' variant='outlined' />
-          <br />
-          <br />
-          <Button onClick={props.handleSubmit} variant='contained' color='primary'>保存</Button>
-        </Form>
-      )}
+      {({ values, errors, ...props }) => {
+        if (!values.id) {
+          return <div></div>
+        }
+
+        return (
+          <Form>
+            <PromptIfDirty />
+            <CharacterSheet input={true} values={values} />
+            <Label>パスワード</Label>
+            <Field name='passwordForUpdate' type='password' component={TextField} size='small' margin='none' variant='outlined' />
+            <br />
+            <br />
+            <Button onClick={props.handleSubmit} variant='contained' color='primary'>保存</Button>
+          </Form>
+        )
+      }}
     </Formik>
   )
 }
@@ -855,15 +868,15 @@ function App() {
           <div>
             <Switch>
               <Route path='/char/:id'>
-                <Label><LinkToHome/></Label>
+                <Label><LinkToHome /></Label>
                 <ViewCharForm />
               </Route>
               <Route path='/newchar'>
-                <Label><LinkToHome/></Label>
+                <Label><LinkToHome /></Label>
                 <NewCharForm />
               </Route>
               <Route path='/editchar/:id'>
-                <Label><LinkToHome/></Label>
+                <Label><LinkToHome /></Label>
                 <EditCharForm />
               </Route>
               <Route path='/'>
@@ -1197,7 +1210,7 @@ function CharacterSheet({ input, values, ...props }) {
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='center'>
               <Grid container item xs={12}>
-                <Value name='miscModifier' input={input} {...props} align='center' />
+                <Value name='ac.miscModifier' input={input} {...props} align='center' />
               </Grid>
             </Grid>
             <Grid container item xs={1} justify='center' alignItems='center'>
@@ -1305,7 +1318,7 @@ function CharacterSheet({ input, values, ...props }) {
                   </Grid>
                   <Grid container item xs={2} justify='center' alignItems='center'>
                     <Grid item xs={8}>
-                      <ComputeValue name={`savingThrows.${index}.abilitiModifier`} input={input}
+                      <ComputeValue name={`savingThrows.${index}.abilityModifier`} input={input}
                         subscribe={`abilities.${getAbilityPosition(getSTCorrespondingAbility(row.name))}.score`}
                         compute={calcModifier}
                         {...props} align='center' />
