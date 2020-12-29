@@ -99,18 +99,20 @@ const Value = React.memo(({ input, ...props }) => {
 })
 
 const ComputeValue = React.memo(({ input, ...props }) => {
-  console.log('compute')
   const [, meta] = useField(props.name)
   const { value } = meta
-  const { values, touched, setFieldValue } = useFormikContext()
+  const { values, touched, setFieldValue, setTouched } = useFormikContext()
+
+  const subscribes = props.subscribe.split(',')
+  const publishers = subscribes.map(x => getIn(values, x)).filter(x => { return (typeof x !== 'undefined') })
+  const touchedPublishers = subscribes.map(x => getIn(touched, x)).filter(x => { return (typeof x !== 'undefined') })
 
   useEffect(() => {
-    const publisher = getIn(values, props.subscribe)
-    const touchedPublisher = getIn(touched, props.subscribe)
-    if (touchedPublisher) {
-      setFieldValue(props.name, props.compute(publisher));
+    if (touchedPublishers.length) {
+      setFieldValue(props.name, props.compute(publishers), false);
+      setTouched({}, false)
     }
-  }, [getIn(values, props.subscribe), getIn(touched, props.subscribe), setFieldValue, props.name])
+  }, [publishers, touchedPublishers, setFieldValue, props.name])
 
   return (
     input ?
