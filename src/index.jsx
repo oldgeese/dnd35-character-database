@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import {
   Grid,
@@ -56,7 +56,12 @@ import firebase from 'firebase/app'
 import "firebase/analytics"
 import 'firebase/firestore'
 
-const calcModifier = x => Math.floor((x - 10) / 2)
+const calcModifier = xs => Math.floor((Number(xs[0]) - 10) / 2)
+const calcArmorClass = xs => xs.reduce((acc, cur) => Number(acc) + Number(cur), 10)
+const calcInitiative = ([dex, misc]) => calcModifier([dex]) + Number(misc)
+const calcSavingThrow = ([base, dex, magic, misc, temp]) => Number(base) + calcModifier([dex]) + Number(magic) + Number(misc) + Number(temp)
+const calcGrappleModifier = ([bab, str, size, misc]) => Number(bab) + calcModifier([str]) + Number(size) + Number(misc)
+const calcSkillModifier = ([ability, rank, penalty, misc]) => calcModifier([ability]) + Number(rank) + Number(penalty) + Number(misc)
 
 const PromptIfDirty = () => {
   const formik = useFormikContext();
@@ -99,18 +104,20 @@ const Value = React.memo(({ input, ...props }) => {
 })
 
 const ComputeValue = React.memo(({ input, ...props }) => {
-  console.log('compute')
   const [, meta] = useField(props.name)
   const { value } = meta
-  const { values, touched, setFieldValue } = useFormikContext()
+  const { values, touched, setFieldValue, setTouched } = useFormikContext()
+
+  const subscribes = props.subscribe.split(',')
+  const publishers = subscribes.map(x => getIn(values, x)).filter(x => { return (typeof x !== 'undefined') })
+  const touchedPublishers = subscribes.map(x => getIn(touched, x)).filter(x => { return (typeof x !== 'undefined') })
 
   useEffect(() => {
-    const publisher = getIn(values, props.subscribe)
-    const touchedPublisher = getIn(touched, props.subscribe)
-    if (touchedPublisher) {
-      setFieldValue(props.name, props.compute(publisher));
+    if (touchedPublishers.length) {
+      setFieldValue(props.name, props.compute(publishers), false);
+      setTouched({}, false)
     }
-  }, [getIn(values, props.subscribe), getIn(touched, props.subscribe), setFieldValue, props.name])
+  }, [publishers, touchedPublishers, setFieldValue, props.name])
 
   return (
     input ?
@@ -1085,7 +1092,10 @@ function CharacterSheet({ input, values, ...props }) {
             <Grid container item xs={8}>
               <Grid container item xs={4} justify='center'>
                 <Grid container item xs={9}>
-                  <Value name='initiative.total' input={input} {...props} align='center' />
+                  <ComputeValue name='initiative.total' input={input}
+                    subscribe='abilities.1.score,initiative.miscModifier'
+                    compute={calcInitiative}
+                    {...props} align='center' />
                 </Grid>
                 <Grid container item xs={3} justify='center'>
                   <Label align='center'>=</Label>
@@ -1122,7 +1132,10 @@ function CharacterSheet({ input, values, ...props }) {
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='center'>
               <Grid container item xs={9}>
-                <Value name='ac.total' input={input} {...props} align='center' />
+                <ComputeValue name='ac.total' input={input}
+                  subscribe='ac.armorBonus,ac.shieldBonus,ac.dexModifier,ac.sizeModifier,ac.naturalArmor,ac.deflectionBonus,ac.luckBonus,ac.insightBonus,ac.moraleBonus,ac.miscModifier'
+                  compute={calcArmorClass}
+                  {...props} align='center' />
               </Grid>
               <Grid container item xs={3} justify='center'>
                 <Label align='center'>=</Label>
@@ -1302,7 +1315,10 @@ function CharacterSheet({ input, values, ...props }) {
                 <Grid container item xs={9}>
                   <Grid container item xs={2} justify='center' alignItems='center'>
                     <Grid item xs={8}>
-                      <Value name={`savingThrows.${index}.total`} input={input} {...props} align='center' />
+                      <ComputeValue name={`savingThrows.${index}.total`} input={input}
+                        subscribe={`savingThrows.${index}.baseSave,abilities.${getAbilityPosition(getSTCorrespondingAbility(row.name))}.score,savingThrows.${index}.magicModifier,savingThrows.${index}.miscModifier,savingThrows.${index}.temporaryModifier`}
+                        compute={calcSavingThrow}
+                        {...props} align='center' />
                     </Grid>
                     <Grid item xs={4}>
                       <Label align='center'>=</Label>
@@ -1402,7 +1418,10 @@ function CharacterSheet({ input, values, ...props }) {
               <Grid container item xs={9}>
                 <Grid container item xs={2} justify='center' alignItems='center'>
                   <Grid item xs={8}>
-                    <Value name='grappleModifier.total' input={input} {...props} align='center' />
+                    <ComputeValue name='grappleModifier.total' input={input}
+                      subscribe={`grappleModifier.bab,abilities.${getAbilityPosition('【筋】')}.score,grappleModifier.sizeModifier,grappleModifier.miscModifier`}
+                      compute={calcGrappleModifier}
+                      {...props} align='center' />
                   </Grid>
                   <Grid item xs={4}>
                     <Label align='center'>=</Label>
@@ -1418,7 +1437,7 @@ function CharacterSheet({ input, values, ...props }) {
                 </Grid>
                 <Grid container item xs={2} justify='center' alignItems='center'>
                   <Grid item xs={8}>
-                    <ComputeValue name='grapplemodifier.strengthmodifier' input={input}
+                    <ComputeValue name='grappleModifier.strengthModifier' input={input}
                       subscribe={`abilities.${getAbilityPosition('【筋】')}.score`}
                       compute={calcModifier}
                       {...props} align='center' />
@@ -1429,7 +1448,7 @@ function CharacterSheet({ input, values, ...props }) {
                 </Grid>
                 <Grid container item xs={2} justify='center' alignItems='center'>
                   <Grid item xs={9}>
-                    <Value name='grapplemodifier.sizeModifier' input={input} {...props} align='center' />
+                    <Value name='grappleModifier.sizeModifier' input={input} {...props} align='center' />
                   </Grid>
                   <Grid item xs={3}>
                     <Label align='center'>+</Label>
@@ -1437,7 +1456,7 @@ function CharacterSheet({ input, values, ...props }) {
                 </Grid>
                 <Grid container item xs={2} justify='center' alignItems='center'>
                   <Grid item xs={12}>
-                    <Value name='grapplemodifier.miscModifier' input={input} {...props} align='center' />
+                    <Value name='grappleModifier.miscModifier' input={input} {...props} align='center' />
                   </Grid>
                 </Grid>
               </Grid>
@@ -1550,7 +1569,10 @@ function CharacterSheet({ input, values, ...props }) {
                 </Grid>
                 <Grid container item xs={1} justify='center' alignItems='center'>
                   <Grid item xs={9}>
-                    <Value name={`skills.${index}.skillModifier`} input={input} {...props} align='center' />
+                    <ComputeValue name={`skills.${index}.skillModifier`} input={input}
+                      subscribe={`abilities.${getAbilityPosition(skill.ability)}.score,skills.${index}.ranks,skills.${index}.penalty,skills.${index}.miscModifier`}
+                      compute={calcSkillModifier}
+                      {...props} align='center' />
                   </Grid>
                   <Grid item xs={3}>
                     <Label align='center'>=</Label>
