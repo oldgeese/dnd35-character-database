@@ -56,7 +56,8 @@ import firebase from 'firebase/app'
 import "firebase/analytics"
 import 'firebase/firestore'
 
-const calcModifier = x => Math.floor((x - 10) / 2)
+const calcModifier = xs => Math.floor((Number(xs[0]) - 10) / 2)
+const calcArmorClass = xs => xs.reduce((acc, cur) => Number(acc) + Number(cur), 10)
 
 const PromptIfDirty = () => {
   const formik = useFormikContext();
@@ -1124,7 +1125,10 @@ function CharacterSheet({ input, values, ...props }) {
             </Grid>
             <Grid container item className={classes.acGridWidth} justify='center' alignItems='center'>
               <Grid container item xs={9}>
-                <Value name='ac.total' input={input} {...props} align='center' />
+                <ComputeValue name='ac.total' input={input}
+                  subscribe='ac.armorBonus,ac.shieldBonus,ac.dexModifier,ac.sizeModifier,ac.naturalArmor,ac.deflectionBonus,ac.luckBonus,ac.insightBonus,ac.moraleBonus,ac.miscModifier'
+                  compute={calcArmorClass}
+                  {...props} align='center' />
               </Grid>
               <Grid container item xs={3} justify='center'>
                 <Label align='center'>=</Label>
