@@ -4,8 +4,11 @@ module.exports = {
     es2020: true,
   },
   extends: [
-    'plugin:react/recommended',
     'airbnb',
+    'plugin:react/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:jsx-a11y/recommended',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -16,8 +19,14 @@ module.exports = {
   },
   plugins: [
     'react',
+    'react-hooks',
+    'jsx-a11y',
+    'import',
   ],
   rules: {
-   semi: ['error', 'never'],
+    semi: ['error', 'never'],
+    'import/order': ['error', { 'alphabetize': { 'order': 'asc' } }],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 }
