@@ -313,6 +313,7 @@ class ErrorBoundary extends React.Component {
 
   render() {
     const { error, errorInfo } = this.state
+    const { children } = this.props
 
     if (errorInfo) {
       // Error path
@@ -328,7 +329,7 @@ class ErrorBoundary extends React.Component {
       )
     }
     // Normally, just render children
-    return this.props.children
+    return children
   }
 }
 
@@ -860,15 +861,16 @@ function ListChars() {
 
 const DirtyDialog = (props) => {
   const [, setOpen] = useState(false)
+  const { message, onCancel, onConfirm } = props
 
   const handleCancel = () => {
     setOpen(false)
-    props.onCancel()
+    onCancel()
   }
 
   const handleConfirm = () => {
     setOpen(false)
-    props.onConfirm()
+    onConfirm()
   }
 
   return (
@@ -881,7 +883,7 @@ const DirtyDialog = (props) => {
       <DialogTitle id="alert-dialog-title">未保存の変更があります</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {props.message}
+          {message}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
