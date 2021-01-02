@@ -25,7 +25,7 @@ module.exports = {
   ],
   rules: {
     semi: ['error', 'never'],
-    'import/order': ['error', { 'alphabetize': { 'order': 'asc' } }],
+    'import/order': ['error', { alphabetize: { order: 'asc' } }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
   },

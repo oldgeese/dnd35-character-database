@@ -1,4 +1,5 @@
 const path = require('path')
+
 const env = process.env.NODE_ENV || 'production'
 
 module.exports = {
@@ -7,7 +8,7 @@ module.exports = {
   mode: env,
   entry: './src/index.jsx',
   output: {
-    path: __dirname + '/public',
+    path: `${__dirname}/public`,
     filename: 'bundle.js',
   },
   module: {
@@ -21,9 +22,9 @@ module.exports = {
             presets: [
               [
                 '@babel/preset-env', {
-                  "targets": {
-                    "node": "current"
-                  }
+                  targets: {
+                    node: 'current',
+                  },
                 }],
               '@babel/preset-react',
             ],
