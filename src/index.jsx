@@ -58,9 +58,12 @@ import 'firebase/firestore'
 const calcModifier = (xs) => Math.floor((Number(xs[0]) - 10) / 2)
 const calcArmorClass = (xs) => xs.reduce((acc, cur) => Number(acc) + Number(cur), 10)
 const calcInitiative = ([dex, misc]) => calcModifier([dex]) + Number(misc)
-const calcSavingThrow = ([base, dex, magic, misc, temp]) => Number(base) + calcModifier([dex]) + Number(magic) + Number(misc) + Number(temp)
-const calcGrappleModifier = ([bab, str, size, misc]) => Number(bab) + calcModifier([str]) + Number(size) + Number(misc)
-const calcSkillModifier = ([ability, rank, penalty, misc]) => calcModifier([ability]) + Number(rank) + Number(penalty) + Number(misc)
+const calcSavingThrow = ([base, dex, magic, misc, temp]) => Number(base) + calcModifier([dex])
+  + Number(magic) + Number(misc) + Number(temp)
+const calcGrappleModifier = ([bab, str, size, misc]) => Number(bab) + calcModifier([str])
+  + Number(size) + Number(misc)
+const calcSkillModifier = ([ability, rank, penalty, misc]) => calcModifier([ability])
+  + Number(rank) + Number(penalty) + Number(misc)
 
 const PromptIfDirty = () => {
   const formik = useFormikContext()
@@ -115,7 +118,7 @@ const ComputeValue = React.memo(({ input, ...props }) => {
       setFieldValue(props.name, props.compute(publishers), false)
       setTouched({}, false)
     }
-  }, [publishers, touchedPublishers, setFieldValue, props.name])
+  }, [publishers, touchedPublishers, setFieldValue, setTouched, props.name, props])
 
   return (
     input
@@ -144,6 +147,7 @@ const ImageValue = React.memo(({ input, ...props }) => {
       : (
         <Box width="100%" border={1} style={{ maxHeight: '250px' }}>
           <img
+            alt=""
             src={value}
             style={{
               maxWidth: '100%', maxHeight: '100%', display: 'block', margin: 'auto',
@@ -163,8 +167,8 @@ const MultiLineValue = React.memo(({ input, ...props }) => {
       ? <FastField component={TextField} multiline fullWidth rows={10} size="small" style={{ width: '100%' }} {...props} />
       : (
         <Box width="100%" minHeight="200px" fontSize="caption2.fontSize" border={1} {...props}>
-          {value.split(/\r\n|\r|\n/).map((item, key) => (
-            <React.Fragment key={key}>
+          {value.split(/\r\n|\r|\n/).map((item) => (
+            <React.Fragment key={item}>
               {item}
               <br />
             </React.Fragment>
@@ -308,83 +312,23 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (this.state.errorInfo) {
+    const { error, errorInfo } = this.state
+
+    if (errorInfo) {
       // Error path
       return (
         <div>
           <h2>Something went wrong.</h2>
           <details style={{ whiteSpace: 'pre-wrap' }}>
-            {this.state.error && this.state.error.toString()}
+            {error && error.toString()}
             <br />
-            {this.state.errorInfo.componentStack}
+            {errorInfo.componentStack}
           </details>
         </div>
       )
     }
     // Normally, just render children
     return this.props.children
-  }
-}
-
-class Character {
-  constructor() {
-    this.id = ''
-    this.image = ''
-    this.tags = []
-    this.pcName = ''
-    this.alignment = ''
-    this.plName = ''
-    this.updateTime = new Date()
-    this.classLevel = ''
-    this.deity = ''
-    this.race = ''
-    this.size = ''
-    this.gender = ''
-    this.age = ''
-    this.height = ''
-    this.weight = ''
-    this.hairColor = ''
-    this.eyeColor = ''
-    this.skinColor = ''
-    this.memo = ''
-    this.abilities = [
-      new Ability('筋力'),
-      new Ability('敏捷力'),
-      new Ability('耐久力'),
-      new Ability('知力'),
-      new Ability('判断力'),
-      new Ability('魅力'),
-    ]
-    this.hp = new HitPoint('', '', '', '')
-    this.initiative = new Initiative('', '', '')
-    this.ac = new ArmorClass('', '', '', '', '', '', '', '', '', '', '', '', '')
-    this.savingThrows = [
-      new SavingThrow('頑健【耐久力】', '', '', '', '', '', ''),
-      new SavingThrow('反応【敏捷力】', '', '', '', '', '', ''),
-      new SavingThrow('意志【判断力】', '', '', '', '', '', ''),
-    ]
-    this.savingThrowConditionalModifier = ''
-    this.bab = ''
-    this.spellResistance = ''
-    this.grappleModifier = new GrappleModifier('', '', '', '', '')
-    this.attacks = new Array(6).fill(new Attack('', '', '', '', '', '', '', ''))
-    this.speed = ''
-    this.skills = INITIAL_SKILLS
-    this.protectiveItems = new Array(10).fill(new ProtectiveItem('', '', '', '', '', '', '', ''))
-    this.protectiveItemsTotal = new ProtectiveItemsTotal('', '', '', '', '', '')
-    this.posessions = new Array(30).fill(new Posession('', ''))
-    this.totalWeightCarried = ''
-    this.feat = ''
-    this.specialAbility = ''
-    this.language = ''
-    this.experiencePoint = ''
-    this.spell = ''
-    this.money = new Money('', '', '', '')
-    this.load = new Load('', '', '', '', '', '')
-    this.setting = ''
-    this.password = ''
-    this.passwordConfirm = ''
-    this.passwordForUpdate = ''
   }
 }
 
@@ -416,7 +360,19 @@ class Initiative {
 }
 
 class ArmorClass {
-  constructor(total, armorBonus, shieldBonus, dexModifier, sizeModifier, naturalArmor, deflectionBonus, luckBonus, insightBonus, moraleBonus, miscModifier, touchAc, flatFootedAc) {
+  constructor(total,
+    armorBonus,
+    shieldBonus,
+    dexModifier,
+    sizeModifier,
+    naturalArmor,
+    deflectionBonus,
+    luckBonus,
+    insightBonus,
+    moraleBonus,
+    miscModifier,
+    touchAc,
+    flatFootedAc) {
     this.total = total
     this.armorBonus = armorBonus
     this.shieldBonus = shieldBonus
@@ -434,7 +390,13 @@ class ArmorClass {
 }
 
 class SavingThrow {
-  constructor(name, total, baseSave, abilityModifier, magicModifier, miscModifier, temporaryModifier) {
+  constructor(name,
+    total,
+    baseSave,
+    abilityModifier,
+    magicModifier,
+    miscModifier,
+    temporaryModifier) {
     this.name = name
     this.total = total
     this.baseSave = baseSave
@@ -469,7 +431,12 @@ class Attack {
 }
 
 class Skill {
-  constructor(name, ability, usableUntrained = true, hasArmorPenalty = false, hasSubName = false, fullEditable = false) {
+  constructor(name,
+    ability,
+    usableUntrained = true,
+    hasArmorPenalty = false,
+    hasSubName = false,
+    fullEditable = false) {
     this.classSkill = false
     this.name = name
     this.usableUntrained = usableUntrained
@@ -611,6 +578,68 @@ const INITIAL_SKILLS = [
   new Skill('', '', false, false, false, true),
 ]
 
+class Character {
+  constructor() {
+    this.id = ''
+    this.image = ''
+    this.tags = []
+    this.pcName = ''
+    this.alignment = ''
+    this.plName = ''
+    this.updateTime = new Date()
+    this.classLevel = ''
+    this.deity = ''
+    this.race = ''
+    this.size = ''
+    this.gender = ''
+    this.age = ''
+    this.height = ''
+    this.weight = ''
+    this.hairColor = ''
+    this.eyeColor = ''
+    this.skinColor = ''
+    this.memo = ''
+    this.abilities = [
+      new Ability('筋力'),
+      new Ability('敏捷力'),
+      new Ability('耐久力'),
+      new Ability('知力'),
+      new Ability('判断力'),
+      new Ability('魅力'),
+    ]
+    this.hp = new HitPoint('', '', '', '')
+    this.initiative = new Initiative('', '', '')
+    this.ac = new ArmorClass('', '', '', '', '', '', '', '', '', '', '', '', '')
+    this.savingThrows = [
+      new SavingThrow('頑健【耐久力】', '', '', '', '', '', ''),
+      new SavingThrow('反応【敏捷力】', '', '', '', '', '', ''),
+      new SavingThrow('意志【判断力】', '', '', '', '', '', ''),
+    ]
+    this.savingThrowConditionalModifier = ''
+    this.bab = ''
+    this.spellResistance = ''
+    this.grappleModifier = new GrappleModifier('', '', '', '', '')
+    this.attacks = new Array(6).fill(new Attack('', '', '', '', '', '', '', ''))
+    this.speed = ''
+    this.skills = INITIAL_SKILLS
+    this.protectiveItems = new Array(10).fill(new ProtectiveItem('', '', '', '', '', '', '', ''))
+    this.protectiveItemsTotal = new ProtectiveItemsTotal('', '', '', '', '', '')
+    this.posessions = new Array(30).fill(new Posession('', ''))
+    this.totalWeightCarried = ''
+    this.feat = ''
+    this.specialAbility = ''
+    this.language = ''
+    this.experiencePoint = ''
+    this.spell = ''
+    this.money = new Money('', '', '', '')
+    this.load = new Load('', '', '', '', '', '')
+    this.setting = ''
+    this.password = ''
+    this.passwordConfirm = ''
+    this.passwordForUpdate = ''
+  }
+}
+
 function NewCharForm() {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
   const schema = Yup.object().shape({
@@ -621,15 +650,17 @@ function NewCharForm() {
       initialValues={new Character()}
       onSubmit={async (values) => {
         const newDocRef = db.collection('characters').doc()
-        values.updateTime = new Date()
-        values.id = newDocRef.id
+        const newValues = { ...values }
+        newValues.updateTime = new Date()
+        newValues.id = newDocRef.id
 
+        // eslint-disable-next-line new-cap
         const shaObj = new jsSHA('SHA-256', 'TEXT')
         shaObj.update(values.password)
-        values.password = shaObj.getHash('HEX')
-        values.passwordConfirm = ''
+        newValues.password = shaObj.getHash('HEX')
+        newValues.passwordConfirm = ''
 
-        newDocRef.set(JSON.parse(JSON.stringify(values)))
+        newDocRef.set(JSON.parse(JSON.stringify(newValues)))
           .then(() => {
             console.log('Document successfully written!')
             document.location.href = '/'
@@ -666,8 +697,8 @@ function ViewCharForm() {
     const docRef = db.collection('characters').doc(id)
     docRef.get().then((doc) => {
       if (doc.exists) {
-        const character = Object.assign(new Character(), doc.data())
-        setCharacter(character)
+        const retrievedChar = Object.assign(new Character(), doc.data())
+        setCharacter(retrievedChar)
       } else {
         console.log('No such document!')
       }
@@ -697,6 +728,7 @@ function ViewCharForm() {
 }
 
 const validatePassword = async (id, values) => {
+  // eslint-disable-next-line new-cap
   const shaObj = new jsSHA('SHA-256', 'TEXT')
   shaObj.update(values.passwordForUpdate)
   const hashForUpdate = shaObj.getHash('HEX')
@@ -730,8 +762,8 @@ function EditCharForm() {
     const docRef = db.collection('characters').doc(id)
     docRef.get().then((doc) => {
       if (doc.exists) {
-        const character = Object.assign(new Character(), doc.data())
-        setCharacter(character)
+        const retrievedChar = Object.assign(new Character(), doc.data())
+        setCharacter(retrievedChar)
       } else {
         console.log('No such document!')
       }
@@ -752,10 +784,11 @@ function EditCharForm() {
           return
         }
         const editDocRef = db.collection('characters').doc(id)
-        values.updateTime = new Date()
-        values.id = editDocRef.id
-        values.passwordForUpdate = ''
-        editDocRef.set(JSON.parse(JSON.stringify(values)))
+        const newValues = { ...values }
+        newValues.updateTime = new Date()
+        newValues.id = editDocRef.id
+        newValues.passwordForUpdate = ''
+        editDocRef.set(JSON.parse(JSON.stringify(newValues)))
           .then(() => {
             console.log('Document successfully written!')
             document.location.href = '/'
@@ -1062,7 +1095,7 @@ function CharacterSheet({ input, values, ...props }) {
                 </Label>
               </Grid>
               {values.abilities.map((row, index) => (
-                <Grid container item key={index} spacing={1}>
+                <Grid container item key={row.name} spacing={1}>
                   <Grid container item xs={3} justify="center" alignItems="center">
                     <Label2 align="center" className={classes.bgblack}>{row.name}</Label2>
                   </Grid>
@@ -1431,7 +1464,7 @@ function CharacterSheet({ input, values, ...props }) {
               </Grid>
             </Grid>
             {values.savingThrows.map((row, index) => (
-              <Grid container item key={index} spacing={1}>
+              <Grid container item key={row.name} spacing={1}>
                 <Grid container item xs={3}>
                   <Grid container item xs={12} justify="center" alignItems="center">
                     <Label2 align="center" className={classes.bgblack}>{row.name}</Label2>
@@ -1619,7 +1652,8 @@ function CharacterSheet({ input, values, ...props }) {
             </Grid>
           </Grid>
           <Grid container item xs={12}>
-            {values.attacks.map((row, index) => (
+            {values.attacks.map((_, index) => (
+              // eslint-disable-next-line react/no-array-index-key
               <Grid container item key={index} spacing={1}>
                 <Grid item xs={12} />
                 <Grid item xs={12} />
@@ -1742,6 +1776,7 @@ function CharacterSheet({ input, values, ...props }) {
               </Label>
             </Grid>
             {values.skills.map((skill, index) => (
+              // eslint-disable-next-line react/no-array-index-key
               <Grid container item key={index} spacing={1}>
                 <Grid container item xs={1} justify="center" alignItems="center">
                   <BooleanValue name={`skills.${index}.classSkill`} input={input} {...props} align="center">{skill.classSkill}</BooleanValue>
@@ -1850,7 +1885,8 @@ function CharacterSheet({ input, values, ...props }) {
         <Grid container item xs={2} justify="center">
           <Label align="center" className={classes.bgblack}>特性・その他</Label>
         </Grid>
-        {values.protectiveItems.map((row, index) => (
+        {values.protectiveItems.map((_, index) => (
+          // eslint-disable-next-line react/no-array-index-key
           <Grid container item key={index} spacing={1}>
             <Grid container item xs={3} justify="center">
               <Value name={`protectiveItems.${index}.name`} input={input} {...props} align="center" />
@@ -1913,7 +1949,8 @@ function CharacterSheet({ input, values, ...props }) {
           <Grid container item xs={3} justify="center">
             <Label align="center">重量</Label>
           </Grid>
-          {values.posessions.map((row, index) => (
+          {values.posessions.map((_, index) => (
+            // eslint-disable-next-line react/no-array-index-key
             <Grid container item key={index} spacing={1}>
               <Grid container item xs={9} justify="center">
                 <Value name={`posessions.${index}.item`} input={input} {...props} />
