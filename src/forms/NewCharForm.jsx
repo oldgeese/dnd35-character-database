@@ -60,7 +60,7 @@ const NewCharForm = () => {
           <Field name="passwordConfirm" type="password" component={TextField} size="small" margin="none" variant="outlined" />
           <br />
           <br />
-          <Button onClick={props.handleSubmit} variant="contained" color="primary">保存</Button>
+          <Button onClick={props.handleSubmit} variant="contained" color="primary" disabled={props.isSubmitting}>保存</Button>
         </Form>
       )}
     </Formik>
