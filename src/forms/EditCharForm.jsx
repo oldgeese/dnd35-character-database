@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button, CircularProgress } from '@material-ui/core'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import {
@@ -81,14 +81,13 @@ const EditCharForm = () => {
         newValues.updateTime = new Date()
         newValues.id = editDocRef.id
         newValues.passwordForUpdate = ''
-        editDocRef.set(JSON.parse(JSON.stringify(newValues)))
-          .then(() => {
-            console.log('Document successfully written!')
-            document.location.href = '/'
-          })
-          .catch((error) => {
-            console.error('Error writing document: ', error)
-          })
+        try {
+          await editDocRef.set(JSON.parse(JSON.stringify(newValues)))
+          console.log('Document successfully written!')
+          document.location.href = '/'
+        } catch (error) {
+          console.error('Error writing document: ', error)
+        }
       }}
     >
       {({ values, errors, ...props }) => {
@@ -104,7 +103,9 @@ const EditCharForm = () => {
             <Field name="passwordForUpdate" type="password" component={TextField} size="small" margin="none" variant="outlined" />
             <br />
             <br />
-            <Button onClick={props.handleSubmit} variant="contained" color="primary" disabled={props.isSubmitting}>保存</Button>
+            {props.isSubmitting
+              ? <CircularProgress />
+              : <Button onClick={props.handleSubmit} variant="contained" color="primary" disabled={props.isSubmitting}>保存</Button>}
           </Form>
         )
       }}

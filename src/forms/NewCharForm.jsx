@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button, CircularProgress } from '@material-ui/core'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import {
@@ -39,14 +39,13 @@ const NewCharForm = () => {
         newValues.password = shaObj.getHash('HEX')
         newValues.passwordConfirm = ''
 
-        newDocRef.set(JSON.parse(JSON.stringify(newValues)))
-          .then(() => {
-            console.log('Document successfully written!')
-            document.location.href = '/'
-          })
-          .catch((error) => {
-            console.error('Error writing document: ', error)
-          })
+        try {
+          await newDocRef.set(JSON.parse(JSON.stringify(newValues)))
+          console.log('Document successfully written!')
+          document.location.href = '/'
+        } catch (error) {
+          console.error('Error writing document: ', error)
+        }
       }}
       validationSchema={schema}
     >
@@ -60,7 +59,9 @@ const NewCharForm = () => {
           <Field name="passwordConfirm" type="password" component={TextField} size="small" margin="none" variant="outlined" />
           <br />
           <br />
-          <Button onClick={props.handleSubmit} variant="contained" color="primary" disabled={props.isSubmitting}>保存</Button>
+          {props.isSubmitting
+            ? <CircularProgress />
+            : <Button onClick={props.handleSubmit} variant="contained" color="primary" disabled={props.isSubmitting}>保存</Button>}
         </Form>
       )}
     </Formik>
