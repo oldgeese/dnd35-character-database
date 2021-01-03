@@ -3,7 +3,7 @@
     "build": "env NODE_ENV=production webpack",
     "start": "env NODE_ENV=development webpack serve",
     "deploy": "npm run build && firebase deploy",
-    "lint": "eslint src/*"
+    "lint": "eslint 'src/**'"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
@@ -26,7 +26,10 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
+    "@types/circular-dependency-plugin": "^5.0.1",
+    "@types/webpack-bundle-analyzer": "^3.9.0",
     "babel-loader": "^8.1.0",
+    "circular-dependency-plugin": "^5.2.2",
     "eslint": "^7.16.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
@@ -35,6 +38,7 @@
     "eslint-plugin-react-hooks": "^4.1.0",
     "firebase-tools": "^9.1.0",
     "webpack": "^5.11.1",
+    "webpack-bundle-analyzer": "^4.3.0",
     "webpack-cli": "^4.3.1",
     "webpack-dev-server": "^3.11.1"
   },
