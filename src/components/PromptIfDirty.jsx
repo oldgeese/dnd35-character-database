@@ -3,10 +3,10 @@ import React from 'react'
 import { Prompt } from 'react-router-dom'
 
 const PromptIfDirty = () => {
-  const formik = useFormikContext()
+  const { dirty } = useFormikContext()
   return (
     <Prompt
-      when={formik.dirty && formik.submitCount === 0}
+      when={dirty}
       message="本当にこのページを離れますか? 未保存の変更があります。"
     />
   )
