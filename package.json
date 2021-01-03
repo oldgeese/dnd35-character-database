@@ -3,7 +3,7 @@
     "build": "env NODE_ENV=production webpack",
     "start": "env NODE_ENV=development webpack serve",
     "deploy": "npm run build && firebase deploy",
-    "lint": "eslint src/*"
+    "lint": "eslint 'src/**'"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
