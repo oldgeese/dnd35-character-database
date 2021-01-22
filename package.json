@@ -12,7 +12,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/yup": "^0.29.11",
-    "firebase": "^8.2.3",
+    "firebase": "^8.2.4",
     "formik": "^2.2.6",
     "formik-material-ui": "^3.0.1",
     "jssha": "^3.2.0",
