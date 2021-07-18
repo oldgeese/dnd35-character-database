@@ -111,6 +111,10 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
 firebase.analytics()
+const useEmulator = window.location.hostname === 'localhost'
+if (useEmulator) {
+  firebase.firestore().useEmulator('localhost', 8081)
+}
 
 // prevent back-forward cache in Safari
 window.addEventListener('pageshow', (e) => {
