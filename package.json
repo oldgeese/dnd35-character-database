@@ -3,7 +3,8 @@
     "build": "env NODE_ENV=production webpack",
     "start": "env NODE_ENV=development webpack serve",
     "deploy": "npm run build && firebase deploy",
-    "lint": "eslint 'src/**'"
+    "lint": "eslint 'src/**'",
+    "emu": "firebase emulators:start"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
@@ -30,7 +31,7 @@
     "@types/webpack-bundle-analyzer": "^3.9.0",
     "babel-loader": "^8.1.0",
     "circular-dependency-plugin": "^5.2.2",
-    "eslint": "^7.18.0",
+    "eslint": "^7.31.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
