@@ -24,7 +24,11 @@ const ImageValue = React.memo(({ input, ...props }) => {
             alt=""
             src={value}
             style={{
-              maxWidth: '100%', maxHeight: '100%', display: 'block', margin: 'auto',
+              height: '100%',
+              maxWidth: '100%',
+              maxHeight: '100%',
+              display: 'block',
+              margin: 'auto',
             }}
           />
         </Box>
