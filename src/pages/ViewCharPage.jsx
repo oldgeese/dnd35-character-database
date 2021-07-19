@@ -1,11 +1,16 @@
 import React from 'react'
 
-import { Label, LinkToHome } from '../components'
+import { Label, LinkToHome, LinkToEdit } from '../components'
 import { ViewCharForm } from '../forms'
 
 const ViewCharPage = () => (
   <>
-    <Label><LinkToHome /></Label>
+    <Label component="span">
+      <LinkToHome />
+    </Label>
+    <Label component="span">
+      <LinkToEdit />
+    </Label>
     <ViewCharForm />
   </>
 )
