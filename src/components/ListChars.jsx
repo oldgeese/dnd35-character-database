@@ -33,7 +33,11 @@ const ListChars = () => {
   return (
     <List>
       {characters.map((character) => (
-        <ListItemLink href={`/char/${character.id}`} key={character.id}>
+        <ListItemLink
+          href={`/char/${character.id}`}
+          key={character.id}
+          alignItems="flex-start"
+        >
           <ListItemAvatar>
             <Avatar src={character.image} />
           </ListItemAvatar>
