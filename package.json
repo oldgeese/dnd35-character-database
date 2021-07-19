@@ -9,7 +9,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
-    "@material-ui/styles": "^4.11.2",
+    "@material-ui/styles": "^4.11.4",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/yup": "^0.29.11",
@@ -24,7 +24,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
+    "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.12.10",
     "@types/circular-dependency-plugin": "^5.0.1",
@@ -37,9 +37,9 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.1.0",
-    "firebase-tools": "^9.10.2",
-    "webpack": "^5.37.0",
-    "webpack-bundle-analyzer": "^4.4.1",
+    "firebase-tools": "^9.16.0",
+    "webpack": "^5.45.1",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2"
   },
