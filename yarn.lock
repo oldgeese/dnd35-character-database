@@ -1036,18 +1036,18 @@
   resolved "https://registry.yarnpkg.com/@firebase/app-check-interop-types/-/app-check-interop-types-0.1.0.tgz#83afd9d41f99166c2bdb2d824e5032e9edd8fe53"
   integrity sha512-uZfn9s4uuRsaX5Lwx+gFP3B6YsyOKUE+Rqa6z9ojT4VSRAsZFko9FRn6OxQUA1z5t5d08fY4pf+/+Dkd5wbdbA==
 
-"@firebase/app-check-types@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@firebase/app-check-types/-/app-check-types-0.3.0.tgz#0467876f48773e009e6cad92387dc7a42f13b04b"
-  integrity sha512-+NYD7wbbHF8dU+DCw4uOwxKE4VCwYKYnSuaiTnKmWJFZahrGdXZCqaBmhl0RnvuKb7RW06y2QJ5fJq1m5oQYDA==
+"@firebase/app-check-types@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@firebase/app-check-types/-/app-check-types-0.3.1.tgz#1084723debad3ad9e7997d3b356165d275c25fcc"
+  integrity sha512-KJ+BqJbdNsx4QT/JIT1yDj5p6D+QN97iJs3GuHnORrqL+DU3RWc9nSYQsrY6Tv9jVWcOkMENXAgDT484vzsm2w==
 
-"@firebase/app-check@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@firebase/app-check/-/app-check-0.3.0.tgz#9d00687fd03ed6be99a248d4ec588602e31eb8c1"
-  integrity sha512-L+lwN4ECHBPLI2yreXU5qVmQjLlL9g96JrC0vWAQJZQKXP4zU0e4B8B9e4NO0KmHBoWR4BSgZrWdBljqGNhbeQ==
+"@firebase/app-check@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@firebase/app-check/-/app-check-0.3.1.tgz#78210513455ea6da437cb5fcf18239db9cd1e7de"
+  integrity sha512-5OWXzhXdtrmOqn2aN44FyNTwjlZJrip/3WC7UlMeUBPi3apuUgChHTolZ1oITszGdw52lP3r5SOCDtRsNtbkJg==
   dependencies:
     "@firebase/app-check-interop-types" "0.1.0"
-    "@firebase/app-check-types" "0.3.0"
+    "@firebase/app-check-types" "0.3.1"
     "@firebase/component" "0.5.5"
     "@firebase/logger" "0.2.6"
     "@firebase/util" "1.2.0"
@@ -4363,10 +4363,10 @@ find-up@^4.0.0, find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
-firebase-tools@^9.16.0:
-  version "9.16.0"
-  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-9.16.0.tgz#e6a1f5bf5efeb8fd940612815bb3b28810fe63bc"
-  integrity sha512-H/zyDDrQuZKM6ZFyI8t2kDEC+/Ewhk771sM8NLZyEXIQnX5qKAwhi3sJUB+5yrXt+SJQYqUYksBLK6/gqxe9Eg==
+firebase-tools@^9.16.3:
+  version "9.16.3"
+  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-9.16.3.tgz#db17fa57d5ff7db512efc1bc0262d402ca7fdfc1"
+  integrity sha512-I60LPd0iBgIvULvxL0yCZCM2t827RBDViMVT+Lm3QKKpFroxEgNBrEOfy1GgLe63g20SnJUC9qTy5b27QQDX4A==
   dependencies:
     "@google-cloud/pubsub" "^2.7.0"
     "@types/archiver" "^5.1.0"
@@ -4427,14 +4427,14 @@ firebase-tools@^9.16.0:
     winston-transport "^4.4.0"
     ws "^7.2.3"
 
-firebase@^8.9.0:
-  version "8.9.0"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-8.9.0.tgz#7a886716c32302671c1ac43d758b81b01cf41ae9"
-  integrity sha512-pjswkdqBzL03T3keqKOgar8Le2Xj+Fk9cIZA/VSuAQI26SOhsQMKQUiy+xEKJwKFe76NStz8pBae3DdPTZ0p3w==
+firebase@^8.9.1:
+  version "8.9.1"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-8.9.1.tgz#9b3bc8e69830cd8bcabd3d296068e9d9ff481f35"
+  integrity sha512-4aKRynB0LSWneYTPwWlAUbcJbgSS11lZRIo9MLNQh1uCo9BxRIYq/r3CCDJOx59tI2nwyv4RXf7hdkgSTF5FYw==
   dependencies:
     "@firebase/analytics" "0.6.17"
     "@firebase/app" "0.6.29"
-    "@firebase/app-check" "0.3.0"
+    "@firebase/app-check" "0.3.1"
     "@firebase/app-types" "0.6.3"
     "@firebase/auth" "0.16.8"
     "@firebase/database" "0.10.9"
@@ -7141,9 +7141,9 @@ path-key@^3.0.0, path-key@^3.1.0:
   integrity sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
 
 path-parse@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
-  integrity sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
+  integrity sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==
 
 path-to-regexp@0.1.7:
   version "0.1.7"
@@ -9114,9 +9114,9 @@ url-parse-lax@^3.0.0:
     prepend-http "^2.0.0"
 
 url-parse@^1.4.3, url-parse@^1.4.7:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.1.tgz#d5fa9890af8a5e1f274a2c98376510f6425f6e3b"
-  integrity sha512-HOfCOUJt7iSYzEx/UqgtwKRMC6EU91NFhsCHMv9oM03VJcVo2Qrp8T8kI9D7amFf1cu+/3CEhgb3rF9zL7k85Q==
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.3.tgz#71c1303d38fb6639ade183c2992c8cc0686df862"
+  integrity sha512-IIORyIQD9rvj0A4CLWsHkBBJuNqWpFQe224b6j9t/ABmquIS0qDU2pY6kl6AuOrL5OkCXHMCFNe1jBcuAggjvQ==
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"

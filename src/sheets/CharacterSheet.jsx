@@ -44,7 +44,7 @@ const useStyles = makeStyles({
 const CharacterSheet = ({ input, values, ...props }) => {
   const classes = useStyles()
   return (
-    <div className={classes.bgslightgray}>
+    <div className={input ? classes.bgslightgray : ''}>
       <Grid container item xs={12} spacing={1}>
         <Grid container item xs={3}>
           <ImageValue name="image" input={input} {...props} />

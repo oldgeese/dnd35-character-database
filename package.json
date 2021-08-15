@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "env NODE_ENV=production webpack",
+    "build": "yarn install && env NODE_ENV=production webpack",
     "start": "env NODE_ENV=development webpack serve",
     "deploy": "npm run build && firebase deploy",
     "lint": "eslint 'src/**'",
@@ -13,7 +13,7 @@
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",
     "@types/yup": "^0.29.13",
-    "firebase": "^8.9.0",
+    "firebase": "^8.9.1",
     "formik": "^2.2.9",
     "formik-material-ui": "^3.0.1",
     "jssha": "^3.2.0",
@@ -37,7 +37,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.1.0",
-    "firebase-tools": "^9.16.0",
+    "firebase-tools": "^9.16.3",
     "webpack": "^5.50.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.2",
