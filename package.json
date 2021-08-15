@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "env NODE_ENV=production webpack",
+    "build": "yarn install && env NODE_ENV=production webpack",
     "start": "env NODE_ENV=development webpack serve",
     "deploy": "npm run build && firebase deploy",
     "lint": "eslint 'src/**'",
