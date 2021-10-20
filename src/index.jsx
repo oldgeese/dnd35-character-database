@@ -1,5 +1,5 @@
 import {
-  createMuiTheme,
+  createTheme,
   ThemeProvider,
 } from '@material-ui/core/styles'
 import 'firebase/analytics'
@@ -22,7 +22,7 @@ import {
   ViewCharPage,
 } from './pages'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     caption: {
       fontSize: '0.5rem',
