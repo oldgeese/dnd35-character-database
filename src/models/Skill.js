@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid'
+
 export class Skill {
   constructor(name,
     ability,
@@ -5,6 +7,7 @@ export class Skill {
     hasArmorPenalty = false,
     hasSubName = false,
     fullEditable = false) {
+    this.id = uuidv4()
     this.classSkill = false
     this.name = name
     this.usableUntrained = usableUntrained
