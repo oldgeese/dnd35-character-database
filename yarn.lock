@@ -1657,10 +1657,10 @@
   dependencies:
     "@types/glob" "*"
 
-"@types/circular-dependency-plugin@^5.0.3":
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/@types/circular-dependency-plugin/-/circular-dependency-plugin-5.0.3.tgz#b11a2e65aa5e44f704ce17ba67b944366cc7e22e"
-  integrity sha512-W/52yZN9WDij9DfLAlWYKVP00Cq5X1qBmURI5/UyMmlyVyDaLZpeRq09PcB4oH2L1swh1Hrmt4ih9le/v2fsLA==
+"@types/circular-dependency-plugin@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@types/circular-dependency-plugin/-/circular-dependency-plugin-5.0.4.tgz#c5ccbd1d2bbb39b60e9859b39c6b826f60567ef2"
+  integrity sha512-J4XkMJfkGv3o3q2Ca821cufIBNBFms45fz+xD9tEESR0YqL5BlwETOwm2desSCdki2zdcPRhG9ZQCm/WITCEPQ==
   dependencies:
     "@types/webpack" "^4"
 
