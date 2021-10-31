@@ -16,12 +16,18 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 firebase.firestore().useEmulator('localhost', 8081)
 const db = firebase.firestore()
-const batch = db.batch();
+let batch = db.batch()
+let operationCount = 0
 
 const main = async () => {
   const snapshots = await db.collection('characters').get()
   snapshots.docs.map((doc) => {
     Object.entries(doc.data()).map(([key, value]) => {
+      if ((operationCount + 1) % 500 === 0) {
+        batch.commit()
+        console.log('commited')
+        batch = db.batch()
+      }
       if (Array.isArray(value)) {
         value.map((item)=> {
           item['id'] = uuidv4()
@@ -30,17 +36,19 @@ const main = async () => {
         updateData[key] = value
         console.log(updateData)
         batch.update(doc.ref, updateData)
+        operationCount++
       } else if (value !== null && typeof value === 'object') {
         value['id'] = uuidv4()
         const updateData = {}
         updateData[key] = value
         console.log(updateData)
         batch.update(doc.ref, updateData)
+        operationCount++
       }
     })
   })
   console.log('updated')
-  await batch.commit()
+  batch.commit()
   console.log('commited')
 }
 

@@ -50,9 +50,10 @@ var firebaseConfig = {
     measurementId: 'G-0M7NMCXK1Y'
 };
 app_1["default"].initializeApp(firebaseConfig);
-app_1["default"].firestore().useEmulator('localhost', 8081);
+// firebase.firestore().useEmulator('localhost', 8081)
 var db = app_1["default"].firestore();
 var batch = db.batch();
+var operationCount = 0;
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var snapshots;
     return __generator(this, function (_a) {
@@ -63,6 +64,11 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                 snapshots.docs.map(function (doc) {
                     Object.entries(doc.data()).map(function (_a) {
                         var key = _a[0], value = _a[1];
+                        if ((operationCount + 1) % 500 === 0) {
+                            batch.commit();
+                            console.log('commited');
+                            batch = db.batch();
+                        }
                         if (Array.isArray(value)) {
                             value.map(function (item) {
                                 item['id'] = (0, uuid_1.v4)();
@@ -71,6 +77,7 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                             updateData[key] = value;
                             console.log(updateData);
                             batch.update(doc.ref, updateData);
+                            operationCount++;
                         }
                         else if (value !== null && typeof value === 'object') {
                             value['id'] = (0, uuid_1.v4)();
@@ -78,13 +85,12 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                             updateData[key] = value;
                             console.log(updateData);
                             batch.update(doc.ref, updateData);
+                            operationCount++;
                         }
                     });
                 });
                 console.log('updated');
-                return [4 /*yield*/, batch.commit()];
-            case 2:
-                _a.sent();
+                batch.commit();
                 console.log('commited');
                 return [2 /*return*/];
         }
