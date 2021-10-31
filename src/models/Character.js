@@ -41,7 +41,7 @@ class Character {
       new Ability('判断力'),
       new Ability('魅力'),
     ]
-    this.hp = new HitPoint('', '', '', '')
+    this.hitPoint = new HitPoint('', '', '', '')
     this.initiative = new Initiative('', '', '')
     this.ac = new ArmorClass('', '', '', '', '', '', '', '', '', '', '', '', '')
     this.savingThrows = [
