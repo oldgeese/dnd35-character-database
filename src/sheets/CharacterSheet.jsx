@@ -1036,7 +1036,7 @@ const CharacterSheet = ({ input, values, ...props }) => {
               <>
                 {values.posessions.length > 0 ? values.posessions.map((posession, index) => (
                   <Grid container item key={posession.id} spacing={1}>
-                    <Grid container item xs={input ? 7 : 9} justify="center">
+                    <Grid container item xs={input ? 6 : 9} justify="center">
                       <Value name={`posessions.${index}.item`} input={input} {...props} />
                     </Grid>
                     <Grid container item xs={3} justify="center">
@@ -1044,7 +1044,7 @@ const CharacterSheet = ({ input, values, ...props }) => {
                     </Grid>
                     {input
                       && (
-                        <Grid container item xs={2} justify="center">
+                        <Grid container item xs={3} justify="center">
                           <Grid container item xs={3} justify="center">
                             <button type="button" className="secondary" onClick={() => insert(index + 1, new Posession('', ''))}><AddIcon style={{ fontSize: 9 }} /></button>
                           </Grid>
