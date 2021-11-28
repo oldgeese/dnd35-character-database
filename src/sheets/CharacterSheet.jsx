@@ -1017,7 +1017,7 @@ const CharacterSheet = ({ input, values, ...props }) => {
           <Grid container item xs={12} justify="center">
             <Label2 align="center" className={classes.bgblack}>装備品</Label2>
           </Grid>
-          <Grid container item xs={input ? 7 : 9} justify="center">
+          <Grid container item xs={input ? 6 : 9} justify="center">
             <Label align="center">アイテム</Label>
           </Grid>
           <Grid container item xs={3} justify="center">
@@ -1025,7 +1025,7 @@ const CharacterSheet = ({ input, values, ...props }) => {
           </Grid>
           {input
             && (
-              <Grid container item xs={2} justify="center">
+              <Grid container item xs={3} justify="center">
                 <Label align="center">操作</Label>
               </Grid>
             )}
