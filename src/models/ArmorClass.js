@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid'
+
 class ArmorClass {
   constructor(total,
     armorBonus,
@@ -12,6 +14,7 @@ class ArmorClass {
     miscModifier,
     touchAc,
     flatFootedAc) {
+    this.id = uuidv4()
     this.total = total
     this.armorBonus = armorBonus
     this.shieldBonus = shieldBonus

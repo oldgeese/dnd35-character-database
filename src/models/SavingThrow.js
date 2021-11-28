@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid'
+
 class SavingThrow {
   constructor(name,
     total,
@@ -6,6 +8,7 @@ class SavingThrow {
     magicModifier,
     miscModifier,
     temporaryModifier) {
+    this.id = uuidv4()
     this.name = name
     this.total = total
     this.baseSave = baseSave

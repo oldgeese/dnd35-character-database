@@ -1,6 +1,11 @@
 import { Box, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Stop } from '@material-ui/icons'
+import AddIcon from '@material-ui/icons/Add'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
+import RemoveIcon from '@material-ui/icons/Remove'
+import StopIcon from '@material-ui/icons/Stop'
+import { FieldArray } from 'formik'
 import React from 'react'
 
 import {
@@ -15,6 +20,9 @@ import {
   SkillNameValue,
   Value,
 } from '../components'
+import {
+  Posession,
+} from '../models'
 import {
   calcArmorClass,
   calcGrappleModifier,
@@ -164,7 +172,7 @@ const CharacterSheet = ({ input, values, ...props }) => {
                 </Label>
               </Grid>
               {values.abilities.map((row, index) => (
-                <Grid container item key={row.name} spacing={1}>
+                <Grid container item key={row.id} spacing={1}>
                   <Grid container item xs={3} justify="center" alignItems="center">
                     <Label2 align="center" className={classes.bgblack}>{row.name}</Label2>
                   </Grid>
@@ -533,7 +541,7 @@ const CharacterSheet = ({ input, values, ...props }) => {
               </Grid>
             </Grid>
             {values.savingThrows.map((row, index) => (
-              <Grid container item key={row.name} spacing={1}>
+              <Grid container item key={row.id} spacing={1}>
                 <Grid container item xs={3}>
                   <Grid container item xs={12} justify="center" alignItems="center">
                     <Label2 align="center" className={classes.bgblack}>{row.name}</Label2>
@@ -721,9 +729,8 @@ const CharacterSheet = ({ input, values, ...props }) => {
             </Grid>
           </Grid>
           <Grid container item xs={12}>
-            {values.attacks.map((_, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <Grid container item key={index} spacing={1}>
+            {values.attacks.map((row, index) => (
+              <Grid container item key={row.id} spacing={1}>
                 <Grid item xs={12} />
                 <Grid item xs={12} />
                 <Grid container item xs={6} justify="center" alignItems="center">
@@ -845,8 +852,7 @@ const CharacterSheet = ({ input, values, ...props }) => {
               </Label>
             </Grid>
             {values.skills.map((skill, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <Grid container item key={index} spacing={1}>
+              <Grid container item key={skill.id} spacing={1}>
                 <Grid container item xs={1} justify="center" alignItems="center">
                   <BooleanValue name={`skills.${index}.classSkill`} input={input} {...props} align="center">{skill.classSkill}</BooleanValue>
                 </Grid>
@@ -909,7 +915,7 @@ const CharacterSheet = ({ input, values, ...props }) => {
             ))}
           </Grid>
           <Label>
-            <Stop style={{ fontSize: 12 }} />
+            <StopIcon style={{ fontSize: 12 }} />
             ...未修得でも使用できる技能
             <br />
             *...防具によるペナルティがあれば適用する技能(水泳技能には2倍のペナルティが適用される)
@@ -954,9 +960,8 @@ const CharacterSheet = ({ input, values, ...props }) => {
         <Grid container item xs={2} justify="center">
           <Label align="center" className={classes.bgblack}>特性・その他</Label>
         </Grid>
-        {values.protectiveItems.map((_, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <Grid container item key={index} spacing={1}>
+        {values.protectiveItems.map((row, index) => (
+          <Grid container item key={row.id} spacing={1}>
             <Grid container item xs={3} justify="center">
               <Value name={`protectiveItems.${index}.name`} input={input} {...props} align="center" />
             </Grid>
@@ -1012,23 +1017,53 @@ const CharacterSheet = ({ input, values, ...props }) => {
           <Grid container item xs={12} justify="center">
             <Label2 align="center" className={classes.bgblack}>装備品</Label2>
           </Grid>
-          <Grid container item xs={9} justify="center">
+          <Grid container item xs={input ? 7 : 9} justify="center">
             <Label align="center">アイテム</Label>
           </Grid>
           <Grid container item xs={3} justify="center">
             <Label align="center">重量</Label>
           </Grid>
-          {values.posessions.map((_, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Grid container item key={index} spacing={1}>
-              <Grid container item xs={9} justify="center">
-                <Value name={`posessions.${index}.item`} input={input} {...props} />
+          {input
+            && (
+              <Grid container item xs={2} justify="center">
+                <Label align="center">操作</Label>
               </Grid>
-              <Grid container item xs={3} justify="center">
-                <Value name={`posessions.${index}.weight`} input={input} {...props} />
-              </Grid>
-            </Grid>
-          ))}
+            )}
+          <FieldArray name="posessions">
+            {({
+              insert, remove, move, push,
+            }) => (
+              <>
+                {values.posessions.length > 0 ? values.posessions.map((posession, index) => (
+                  <Grid container item key={posession.id} spacing={1}>
+                    <Grid container item xs={input ? 6 : 9} justify="center">
+                      <Value name={`posessions.${index}.item`} input={input} {...props} />
+                    </Grid>
+                    <Grid container item xs={3} justify="center">
+                      <Value name={`posessions.${index}.weight`} input={input} {...props} />
+                    </Grid>
+                    {input
+                      && (
+                        <Grid container item xs={3} justify="center">
+                          <Grid container item xs={3} justify="center">
+                            <button type="button" className="secondary" onClick={() => insert(index + 1, new Posession('', ''))}><AddIcon style={{ fontSize: 9 }} /></button>
+                          </Grid>
+                          <Grid container item xs={3} justify="center">
+                            <button type="button" className="secondary" onClick={() => remove(index)}><RemoveIcon style={{ fontSize: 9 }} /></button>
+                          </Grid>
+                          <Grid container item xs={3} justify="center">
+                            {index === 0 ? '' : <button type="button" className="secondary" onClick={() => move(index, index - 1)}><ArrowUpwardIcon style={{ fontSize: 9 }} /></button> }
+                          </Grid>
+                          <Grid container item xs={3} justify="center">
+                            {index === values.posessions.length - 1 ? '' : <button type="button" className="secondary" onClick={() => move(index, index + 1)}><ArrowDownwardIcon style={{ fontSize: 9 }} /></button> }
+                          </Grid>
+                        </Grid>
+                      )}
+                  </Grid>
+                )) : <Grid container item xs={12} justify="flex-end"><button type="button" className="secondary" onClick={() => push(new Posession('', ''))}><AddIcon style={{ fontSize: 9 }} /></button></Grid>}
+              </>
+            )}
+          </FieldArray>
           <Grid container item xs={9} justify="center">
             <Label2 align="center" className={classes.bgblack}>運搬重量の合計</Label2>
           </Grid>

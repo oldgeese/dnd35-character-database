@@ -41,7 +41,7 @@ class Character {
       new Ability('判断力'),
       new Ability('魅力'),
     ]
-    this.hp = new HitPoint('', '', '', '')
+    this.hitPoint = new HitPoint('', '', '', '')
     this.initiative = new Initiative('', '', '')
     this.ac = new ArmorClass('', '', '', '', '', '', '', '', '', '', '', '', '')
     this.savingThrows = [
@@ -53,12 +53,21 @@ class Character {
     this.bab = ''
     this.spellResistance = ''
     this.grappleModifier = new GrappleModifier('', '', '', '', '')
-    this.attacks = new Array(6).fill(new Attack('', '', '', '', '', '', '', ''))
+    this.attacks = []
+    for (let i = 0; i < 6; i++) {
+      this.attacks.push(new Attack('', '', '', '', '', '', '', ''))
+    }
     this.speed = ''
     this.skills = INITIAL_SKILLS
-    this.protectiveItems = new Array(10).fill(new ProtectiveItem('', '', '', '', '', '', '', ''))
+    this.protectiveItems = []
+    for (let i = 0; i < 10; i++) {
+      this.protectiveItems.push(new ProtectiveItem('', '', '', '', '', '', '', ''))
+    }
     this.protectiveItemsTotal = new ProtectiveItemsTotal('', '', '', '', '', '')
-    this.posessions = new Array(30).fill(new Posession('', ''))
+    this.posessions = []
+    for (let i = 0; i < 30; i++) {
+      this.posessions.push(new Posession('', ''))
+    }
     this.totalWeightCarried = ''
     this.feat = ''
     this.specialAbility = ''

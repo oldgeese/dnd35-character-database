@@ -7,7 +7,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import Character from '../models'
+import { Character } from '../models'
 import CharacterSheet from '../sheets'
 
 const ViewCharForm = () => {

@@ -15,7 +15,7 @@ import {
   Label,
   PromptIfDirty,
 } from '../components'
-import Character from '../models'
+import { Character } from '../models'
 import CharacterSheet from '../sheets'
 
 const NewCharForm = () => {
