@@ -2146,6 +2146,11 @@ ansi-regex@^5.0.0:
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.0.tgz#388539f55179bf39339c81af30a654d69f87cb75"
   integrity sha512-bY6fj56OUQ0hU1KjFNDQuJFezqKdrAyFdIevADiqrWHwSlbmBNMHp5ak2f40Pm8JTFyM2mqxkG6ngkHO11f/lg==
 
+ansi-regex@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"
+  integrity sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==
+
 ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
@@ -2967,12 +2972,13 @@ cli-spinners@^2.0.0:
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.5.0.tgz#12763e47251bf951cb75c201dfa58ff1bcb2d047"
   integrity sha512-PC+AmIuK04E6aeSs/pUccSujsTzBhu4HzC2dL+CfJB/Jcc2qTRbEwZQDfIUpt2Xl8BodYBEq8w4fc0kU2I9DjQ==
 
-cli-table@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/cli-table/-/cli-table-0.3.1.tgz#f53b05266a8b1a0b934b3d0821e6e2dc5914ae23"
-  integrity sha1-9TsFJmqLGguTSz0IIebi3FkUriM=
+cli-table@^0.3.1, cli-table@^0.3.8:
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/cli-table/-/cli-table-0.3.9.tgz#c0570b079296608a31761a67d9af9841dbee8300"
+  integrity sha512-7eA6hFtAZwVx3dWAGoaBqTrzWko5jRUFKpHT64ZHkJpaA3y5wf5NlLjguqTRmqycatJZiwftODYYyGNLbQ7MuA==
   dependencies:
     colors "1.0.3"
+    strip-ansi "^6.0.1"
 
 cli-width@^2.0.0:
   version "2.2.1"
@@ -4436,10 +4442,10 @@ find-up@^4.0.0, find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
-firebase-tools@^9.21.0:
-  version "9.21.0"
-  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-9.21.0.tgz#1895563f67f16d505541a0933cd48c27fc776f6e"
-  integrity sha512-/Zp9dHhofgKhCSfeLmlecNQ7YX1//db80sFHDHonBxJMqThju8LVpeppHvszJF2WmlkyV3PWeikmB2zB8jvdmg==
+firebase-tools@^9.23.0:
+  version "9.23.0"
+  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-9.23.0.tgz#d69efa48b075fb34b496f98b628c4285ba84e856"
+  integrity sha512-m5Yj8EBk6kyLktSV0qgvjjjjxZpp6p/ujDH5c6wQpq3dcH3LquK9D4gjmz7XJtfd7F5ww0XkjWsXra5mHcg5Iw==
   dependencies:
     "@google-cloud/pubsub" "^2.7.0"
     "@types/archiver" "^5.1.0"
@@ -4451,7 +4457,7 @@ firebase-tools@^9.21.0:
     chokidar "^3.0.2"
     cjson "^0.3.1"
     cli-color "^1.2.0"
-    cli-table "^0.3.1"
+    cli-table "^0.3.8"
     commander "^4.0.1"
     configstore "^5.0.1"
     cors "^2.8.5"
@@ -4495,7 +4501,7 @@ firebase-tools@^9.21.0:
     universal-analytics "^0.4.16"
     unzipper "^0.10.10"
     update-notifier "^5.1.0"
-    uuid "^3.0.0"
+    uuid "^8.3.2"
     winston "^3.0.0"
     winston-transport "^4.4.0"
     ws "^7.2.3"
@@ -8551,6 +8557,13 @@ strip-ansi@^6.0.0:
   integrity sha512-AuvKTrTfQNYNIctbR1K/YGTR1756GycPsg7b9bdV9Duqur4gv6aKqHXah67Z8ImS7WEz5QVcOtlfW2rZEugt6w==
   dependencies:
     ansi-regex "^5.0.0"
+
+strip-ansi@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
 
 strip-bom@^3.0.0:
   version "3.0.0"
