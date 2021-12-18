@@ -98,7 +98,9 @@ module.exports = {
   },
   plugins,
   devServer: {
-    contentBase: path.resolve(__dirname, 'public'),
+    static: {
+      directory: path.resolve(__dirname, 'public'),
+    },
     historyApiFallback: true,
     host: '0.0.0.0',
   },
