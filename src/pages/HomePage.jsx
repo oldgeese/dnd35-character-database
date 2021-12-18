@@ -8,8 +8,11 @@ import { Link } from 'react-router-dom'
 
 import ListChars from '../components/ListChars'
 
+import { getHomeTitle } from '../utils'
+
 const HomePage = () => {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1')
+  document.title = getHomeTitle()
   return (
     <>
       <Typography component="h3" variant="h4" align="center" color="textPrimary">

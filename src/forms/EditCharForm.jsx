@@ -18,6 +18,8 @@ import {
 import { Character } from '../models'
 import CharacterSheet from '../sheets'
 
+import { getTitle } from '../utils'
+
 const validatePassword = async (id, values) => {
   const db = firebase.firestore()
   // eslint-disable-next-line new-cap
@@ -57,6 +59,7 @@ const EditCharForm = () => {
       if (doc.exists) {
         const retrievedChar = Object.assign(new Character(), doc.data())
         setCharacter(retrievedChar)
+        document.title = getTitle(retrievedChar)
       } else {
         console.log('No such document!')
       }
