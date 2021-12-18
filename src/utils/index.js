@@ -25,3 +25,6 @@ export const calcGrappleModifier = ([bab, str, size, misc]) => Number(bab) + cal
   + Number(size) + Number(misc)
 export const calcSkillModifier = ([ability, rank, penalty, misc]) => calcModifier([ability])
   + Number(rank) + Number(penalty) + Number(misc)
+
+export const getTitle = (char) => ( char.pcName === '' ? '名前なし' : char.pcName ) + ' - ' + getHomeTitle()
+export const getHomeTitle = () => 'D&D 3.5版 キャラクターデータベース'

@@ -18,12 +18,16 @@ import {
 import { Character } from '../models'
 import CharacterSheet from '../sheets'
 
+import { getTitle } from '../utils'
+
 const NewCharForm = () => {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
   const schema = Yup.object().shape({
     passwordConfirm: Yup.mixed().oneOf([Yup.ref('password')], 'パスワードが一致しません。'),
   })
   const db = firebase.firestore()
+  document.title = getTitle(new Character())
+
   return (
     <Formik
       initialValues={new Character()}

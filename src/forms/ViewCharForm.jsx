@@ -10,6 +10,8 @@ import { useParams } from 'react-router-dom'
 import { Character } from '../models'
 import CharacterSheet from '../sheets'
 
+import { getTitle } from '../utils'
+
 const ViewCharForm = () => {
   document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
   const { id } = useParams()
@@ -22,6 +24,7 @@ const ViewCharForm = () => {
       if (doc.exists) {
         const retrievedChar = Object.assign(new Character(), doc.data())
         setCharacter(retrievedChar)
+        document.title = getTitle(retrievedChar)
       } else {
         console.log('No such document!')
       }
