@@ -1,7 +1,4 @@
-import {
-  createTheme,
-  ThemeProvider,
-} from '@material-ui/core/styles'
+import { createTheme, ThemeProvider, Theme, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
 import 'firebase/analytics'
 import firebase from 'firebase/app'
 import React from 'react'
@@ -22,7 +19,14 @@ import {
   ViewCharPage,
 } from './pages'
 
-const theme = createTheme({
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
+
+const theme = createTheme(adaptV4Theme({
   typography: {
     caption: {
       fontSize: '0.5rem',
@@ -48,7 +52,7 @@ const theme = createTheme({
       },
     },
   },
-})
+}))
 
 const getUserConfirmation = (message: string, callback: (answer: boolean)=> void) => {
   const modal = document.createElement('div')
@@ -72,29 +76,31 @@ const getUserConfirmation = (message: string, callback: (answer: boolean)=> void
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <ErrorBoundary>
-        <Router getUserConfirmation={getUserConfirmation}>
-          <div>
-            <Switch>
-              <Route path="/char/:id">
-                <ViewCharPage />
-              </Route>
-              <Route path="/newchar">
-                <NewCharPage />
-              </Route>
-              <Route path="/editchar/:id">
-                <EditCharPage />
-              </Route>
-              <Route path="/">
-                <HomePage />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
-      </ErrorBoundary>
-    </ThemeProvider>
-  )
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <ErrorBoundary>
+          <Router getUserConfirmation={getUserConfirmation}>
+            <div>
+              <Switch>
+                <Route path="/char/:id">
+                  <ViewCharPage />
+                </Route>
+                <Route path="/newchar">
+                  <NewCharPage />
+                </Route>
+                <Route path="/editchar/:id">
+                  <EditCharPage />
+                </Route>
+                <Route path="/">
+                  <HomePage />
+                </Route>
+              </Switch>
+            </div>
+          </Router>
+        </ErrorBoundary>
+      </ThemeProvider>
+    </StyledEngineProvider>
+  );
 }
 
 const firebaseConfig = {

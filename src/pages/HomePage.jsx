@@ -2,7 +2,7 @@ import {
   Button,
   Grid,
   Typography,
-} from '@material-ui/core'
+} from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -18,7 +18,7 @@ const HomePage = () => {
       <Typography component="h3" variant="h4" align="center" color="textPrimary">
         D&amp;D 3.5版 キャラクターデータベース
       </Typography>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <Button variant="contained" color="primary" component={Link} to="/newchar">
           新規作成
         </Button>

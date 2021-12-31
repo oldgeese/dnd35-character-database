@@ -1,5 +1,5 @@
-import { Box, Grid } from '@material-ui/core'
-import { Stop } from '@material-ui/icons'
+import { Box, Grid } from '@mui/material'
+import { Stop } from '@mui/icons-material'
 import {
   FastField,
   useField,

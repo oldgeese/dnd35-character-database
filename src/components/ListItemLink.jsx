@@ -1,5 +1,5 @@
-import { ListItem } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { ListItem } from '@mui/material'
+import withStyles from '@mui/styles/withStyles';
 import React from 'react'
 
 const ListItemLink = withStyles({

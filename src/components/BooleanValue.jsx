@@ -1,5 +1,5 @@
-import { Box } from '@material-ui/core'
-import { Check } from '@material-ui/icons'
+import { Box } from '@mui/material'
+import { Check } from '@mui/icons-material'
 import {
   FastField,
   useField,

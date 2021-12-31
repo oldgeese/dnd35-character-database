@@ -5,7 +5,7 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   ListItemText,
-} from '@material-ui/core'
+} from '@mui/material'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
