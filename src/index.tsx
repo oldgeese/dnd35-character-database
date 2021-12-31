@@ -1,4 +1,4 @@
-import { createTheme, ThemeProvider, Theme, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
+import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import 'firebase/analytics'
 import firebase from 'firebase/app'
 import React from 'react'
@@ -19,14 +19,25 @@ import {
   ViewCharPage,
 } from './pages'
 
+declare module '@mui/material/styles' {
+  interface TypographyVariants {
+    caption2: React.CSSProperties;
+  }
 
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
+  // allow configuration using `createTheme`
+  interface TypographyVariantsOptions {
+    caption2?: React.CSSProperties;
+  }
 }
 
+// Update the Typography's variant prop options
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    caption2: true;
+  }
+}
 
-const theme = createTheme(adaptV4Theme({
+const theme = createTheme({
   typography: {
     caption: {
       fontSize: '0.5rem',
@@ -35,24 +46,28 @@ const theme = createTheme(adaptV4Theme({
       fontSize: '0.75rem',
     },
   },
-  overrides: {
+  components: {
     MuiOutlinedInput: {
-      input: {
-        padding: '1px',
-      },
-      inputMarginDense: {
-        padding: '1px',
-        paddingTop: '1px',
-        paddingBottom: '1px',
-      },
+      styleOverrides: {
+        input: {
+          padding: '1px',
+        },
+        inputSizeSmall: {
+          padding: '1px',
+          paddingTop: '1px',
+          paddingBottom: '1px',
+        },
+      }
     },
     MuiInputBase: {
-      root: {
-        backgroundColor: 'white',
-      },
+      styleOverrides: {
+        root: {
+          backgroundColor: 'white',
+        },
+      }
     },
   },
-}))
+})
 
 const getUserConfirmation = (message: string, callback: (answer: boolean)=> void) => {
   const modal = document.createElement('div')
