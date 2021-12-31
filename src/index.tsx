@@ -50,11 +50,11 @@ const theme = createTheme({
   },
 })
 
-const getUserConfirmation = (message, callback) => {
+const getUserConfirmation = (message: string, callback: (answer: boolean)=> void) => {
   const modal = document.createElement('div')
   document.body.appendChild(modal)
 
-  const withCleanup = (answer) => {
+  const withCleanup = (answer: boolean) => {
     ReactDOM.unmountComponentAtNode(modal)
     document.body.removeChild(modal)
     callback(answer)

@@ -43,12 +43,13 @@ module.exports = {
   // development に設定するとソースマップ有効でJSファイルが出力される
   mode: env,
   entry: {
-    bundle: './src/index.jsx',
+    bundle: './src/index.tsx',
   },
   output: {
     path: path.join(__dirname, 'public'),
     filename: '[name].js',
   },
+  devtool: 'source-map',
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -73,6 +74,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: {
+          loader: 'ts-loader',
+        },
+      },
+      {
         test: /\.js[x]?$/,
         exclude: /node_modules/,
         use: {
@@ -94,7 +101,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx', '.json'],
   },
   plugins,
   devServer: {
