@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
 class Ability {
-  constructor(name) {
+  constructor(name: string) {
     this.id = uuidv4()
     this.name = name
     this.score = 10

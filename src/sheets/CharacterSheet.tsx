@@ -1,10 +1,10 @@
-import { Box, Grid } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles';
 import AddIcon from '@mui/icons-material/Add'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import RemoveIcon from '@mui/icons-material/Remove'
 import StopIcon from '@mui/icons-material/Stop'
+import { Box, Grid } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
 import { FieldArray } from 'formik'
 import React from 'react'
 
@@ -1199,7 +1199,7 @@ const CharacterSheet = ({ input, values, ...props }) => {
         </Grid>
       </Grid>
     </div>
-  );
+  )
 }
 
 export default CharacterSheet
