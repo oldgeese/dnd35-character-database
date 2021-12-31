@@ -1,27 +1,41 @@
 import { v4 as uuidv4 } from 'uuid'
 
 export class Skill {
-  constructor(name,
-    ability,
+  id: string
+  classSkill: boolean
+  name: string
+  usableUntrained: boolean
+  hasArmorPenalty: boolean
+  subName: string
+  hasSubName: boolean
+  ability: string
+  skillModifier: string
+  abilityModifier: string
+  ranks: string
+  penalty: string
+  miscModifier: string
+  fullEditable: boolean
+  constructor(name: string,
+    ability: string,
     usableUntrained = true,
     hasArmorPenalty = false,
     hasSubName = false,
     fullEditable = false) {
-    this.id = uuidv4()
-    this.classSkill = false
-    this.name = name
-    this.usableUntrained = usableUntrained
-    this.hasArmorPenalty = hasArmorPenalty
-    this.subName = ''
-    this.hasSubName = hasSubName
-    this.ability = ability
-    this.skillModifier = ''
-    this.abilityModifier = ''
-    this.ranks = ''
-    this.penalty = ''
-    this.miscModifier = ''
-    this.fullEditable = fullEditable
-  }
+      this.id = uuidv4()
+      this.classSkill = false
+      this.name = name
+      this.usableUntrained = usableUntrained
+      this.hasArmorPenalty = hasArmorPenalty
+      this.subName = ''
+      this.hasSubName = hasSubName
+      this.ability = ability
+      this.skillModifier = ''
+      this.abilityModifier = ''
+      this.ranks = ''
+      this.penalty = ''
+      this.miscModifier = ''
+      this.fullEditable = fullEditable
+    }
 }
 
 export const INITIAL_SKILLS = [

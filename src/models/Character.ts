@@ -10,9 +10,55 @@ import Posession from './Posession'
 import ProtectiveItem from './ProtectiveItem'
 import ProtectiveItemsTotal from './ProtectiveItemsTotal'
 import SavingThrow from './SavingThrow'
-import { INITIAL_SKILLS } from './Skill'
+import { INITIAL_SKILLS, Skill } from './Skill'
 
 class Character {
+  id: string
+  image: string
+  tags: string[]
+  pcName: string
+  alignment: string
+  plName: string
+  updateTime: Date
+  classLevel: string
+  deity: string
+  race: string
+  size: string
+  gender: string
+  age: string
+  height: string
+  weight: string
+  hairColor: string
+  eyeColor: string
+  skinColor: string
+  memo: string
+  abilities: Ability[]
+  hitPoint: HitPoint
+  initiative: Initiative
+  ac: ArmorClass
+  savingThrows: SavingThrow[]
+  savingThrowConditionalModifier: string
+  bab: string
+  spellResistance: string
+  grappleModifier: GrappleModifier
+  attacks: Attack[]
+  speed: string
+  skills: Skill[]
+  protectiveItems: ProtectiveItem[]
+  protectiveItemsTotal: ProtectiveItemsTotal
+  posessions: Posession[]
+  totalWeightCarried: string
+  feat: string
+  specialAbility: string
+  language: string
+  experiencePoint: string
+  spell: string
+  money: Money
+  load: Load
+  setting: string
+  password: string
+  passwordConfirm: string
+  passwordForUpdate: string
   constructor() {
     this.id = ''
     this.image = ''
