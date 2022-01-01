@@ -12,18 +12,19 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import ListItemLink from './ListItemLink'
+import { Character } from '../models'
 
 const ListChars = () => {
-  const [characters, setCharacters] = useState([])
+  const [characters, setCharacters] = useState<Character[]>([])
   const db = firebase.firestore()
 
   useEffect(() => {
     const unsubscribe = db.collection('characters')
       .orderBy('updateTime', 'desc')
       .onSnapshot((snapshot) => {
-        const result = []
+        const result: Character[] = []
         snapshot.forEach((doc) => {
-          result.push(doc.data())
+          result.push(doc.data() as Character)
         })
         setCharacters(result)
       })

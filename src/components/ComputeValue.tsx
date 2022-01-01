@@ -10,7 +10,14 @@ import {
 } from 'formik-material-ui'
 import React, { useEffect } from 'react'
 
-const ComputeValue = React.memo(({ input, ...props }) => {
+type ComputeValueProps = {
+  input: boolean
+  name: string
+  subscribe: string
+  compute: any
+}
+
+const ComputeValue: React.VFC<ComputeValueProps> = React.memo(({ input, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
   const {
@@ -32,9 +39,9 @@ const ComputeValue = React.memo(({ input, ...props }) => {
 
   return (
     input
-      ? <FastField component={TextField} size="small" fullWidth margin="none" variant="outlined" disabled {...props} compute="" />
+      ? <FastField component={TextField} size="small" fullWidth margin="none" variant="outlined" disabled {...props}/>
       : (
-        <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props} compute="">
+        <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
           {value}
         </Box>
       )

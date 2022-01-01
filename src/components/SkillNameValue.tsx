@@ -8,8 +8,16 @@ import {
   TextField,
 } from 'formik-material-ui'
 import React from 'react'
+import { Skill } from '../models'
 
-const SkillNameValue = React.memo(({
+type SkillNameValueProps = {
+  input: boolean
+  name: string
+  subName: string
+  skill: Skill
+}
+
+const SkillNameValue: React.VFC<SkillNameValueProps> = React.memo(({
   input, name, subName, skill, ...props
 }) => {
   const [, meta] = useField(name)

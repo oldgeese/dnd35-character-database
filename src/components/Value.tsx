@@ -8,7 +8,12 @@ import {
 } from 'formik-material-ui'
 import React from 'react'
 
-const Value = React.memo(({ input, ...props }) => {
+type ValueProps = {
+  input: boolean
+  name: string
+}
+
+const Value: React.VFC<ValueProps>= React.memo(({ input, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
 

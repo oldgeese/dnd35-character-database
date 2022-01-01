@@ -2,7 +2,12 @@ import { Box } from '@mui/material'
 import { useField } from 'formik'
 import React from 'react'
 
-const DateValue = React.memo(({ input, ...props }) => {
+type DateValueProps = {
+  input: boolean
+  name: string
+}
+
+const DateValue: React.VFC<DateValueProps> = React.memo(({ input, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
   const displayValue = new Date(value).toLocaleString()

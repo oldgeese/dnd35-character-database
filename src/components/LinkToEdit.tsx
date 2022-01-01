@@ -1,8 +1,11 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
 
+type LinkToEditParamType = {
+  id: string
+}
 const LinkToEdit = () => {
-  const { id } = useParams()
+  const { id } = useParams<LinkToEditParamType>()
 
   return (
     <>

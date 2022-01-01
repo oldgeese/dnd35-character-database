@@ -5,7 +5,12 @@ import React from 'react'
 import Label from './Label'
 import Value from './Value'
 
-const ImageValue = React.memo(({ input, ...props }) => {
+type ImageValueProps = {
+  input: boolean
+  name: string
+}
+
+const ImageValue: React.VFC<ImageValueProps> = React.memo(({ input, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
 

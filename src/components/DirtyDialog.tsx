@@ -8,7 +8,13 @@ import {
 } from '@mui/material'
 import React, { useState } from 'react'
 
-const DirtyDialog = (props) => {
+type DirtyDialogProps = {
+  message: string
+  onCancel: () => void
+  onConfirm: () => void
+}
+
+const DirtyDialog = (props: DirtyDialogProps) => {
   const [, setOpen] = useState(false)
   const { message, onCancel, onConfirm } = props
 

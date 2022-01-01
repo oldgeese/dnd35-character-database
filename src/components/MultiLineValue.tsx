@@ -8,7 +8,12 @@ import {
 } from 'formik-material-ui'
 import React from 'react'
 
-const MultiLineValue = React.memo(({ input, ...props }) => {
+type MultiLineValueProps = {
+  input: boolean
+  name: string
+}
+
+const MultiLineValue: React.VFC<MultiLineValueProps> = React.memo(({ input, ...props }) => {
   const [, meta] = useField(props.name)
   const { value } = meta
 
@@ -16,7 +21,7 @@ const MultiLineValue = React.memo(({ input, ...props }) => {
     ? <FastField component={TextField} multiline fullWidth rows={10} size="small" style={{ width: '100%' }} {...props} />
     : (
       <Box width="100%" minHeight="200px" fontSize="caption2.fontSize" border={1} {...props}>
-        {value.split(/\r\n|\r|\n/).map((item) => (
+        {value.split(/\r\n|\r|\n/).map((item: string) => (
           <React.Fragment key={item}>
             {item}
             <br />
