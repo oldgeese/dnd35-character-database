@@ -10,8 +10,10 @@ import {
 import React from 'react'
 
 type BooleanValueProps = {
+  align?: string
   input: boolean
   name: string
+  children: React.ReactNode
 }
 
 const BooleanValue: React.VFC<BooleanValueProps> = React.memo(({ input, ...props }) => {

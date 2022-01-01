@@ -20,7 +20,7 @@ import CharacterSheet from '../sheets'
 
 import { getTitle } from '../utils'
 
-const validatePassword = async (id, values) => {
+const validatePassword = async (id: string, values: Character) => {
   const db = firebase.firestore()
   // eslint-disable-next-line new-cap
   const shaObj = new jsSHA('SHA-256', 'TEXT')
@@ -32,7 +32,7 @@ const validatePassword = async (id, values) => {
     const snapshot = await editDocRef.get()
     let passwordOnServer
     if (snapshot.exists) {
-      passwordOnServer = snapshot.data().password
+      passwordOnServer = (snapshot.data() as Character)?.password
     } else {
       throw new Error('document does not exist.')
     }
@@ -47,9 +47,9 @@ const validatePassword = async (id, values) => {
   }
 }
 
-const EditCharForm = () => {
-  document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
-  const { id } = useParams()
+const EditCharForm: React.VFC<{}> = () => {
+  document.querySelector('meta[name="viewport"]')?.setAttribute('content', 'width=1024')
+  const { id } = useParams<{id: string}>()
   const [character, setCharacter] = useState(new Character())
   const db = firebase.firestore()
 
@@ -108,7 +108,7 @@ const EditCharForm = () => {
             <br />
             {props.isSubmitting
               ? <CircularProgress />
-              : <Button onClick={props.handleSubmit} variant="contained" color="primary" disabled={props.isSubmitting}>保存</Button>}
+              : <Button onClick={props.submitForm} variant="contained" color="primary" disabled={props.isSubmitting}>保存</Button>}
           </Form>
         )
       }}

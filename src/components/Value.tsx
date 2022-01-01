@@ -9,6 +9,7 @@ import {
 import React from 'react'
 
 type ValueProps = {
+  align?: string
   input: boolean
   name: string
 }

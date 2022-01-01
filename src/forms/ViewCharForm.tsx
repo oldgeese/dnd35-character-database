@@ -13,8 +13,8 @@ import CharacterSheet from '../sheets'
 import { getTitle } from '../utils'
 
 const ViewCharForm = () => {
-  document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
-  const { id } = useParams()
+  document.querySelector('meta[name="viewport"]')?.setAttribute('content', 'width=1024')
+  const { id } = useParams<{id: string}>()
   const [character, setCharacter] = useState(new Character())
   const db = firebase.firestore()
 
@@ -37,6 +37,7 @@ const ViewCharForm = () => {
     <Formik
       initialValues={character}
       enableReinitialize
+      onSubmit={async () => { return }}
     >
       {({ values }) => {
         if (!values.id) {

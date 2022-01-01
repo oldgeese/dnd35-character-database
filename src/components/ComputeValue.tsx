@@ -11,6 +11,7 @@ import {
 import React, { useEffect } from 'react'
 
 type ComputeValueProps = {
+  align?: string
   input: boolean
   name: string
   subscribe: string

@@ -9,8 +9,11 @@ import {
 import React from 'react'
 
 type MultiLineValueProps = {
+  align?: string
   input: boolean
   name: string
+  rows?: number
+  style?: object
 }
 
 const MultiLineValue: React.VFC<MultiLineValueProps> = React.memo(({ input, ...props }) => {
@@ -18,7 +21,7 @@ const MultiLineValue: React.VFC<MultiLineValueProps> = React.memo(({ input, ...p
   const { value } = meta
 
   return input
-    ? <FastField component={TextField} multiline fullWidth rows={10} size="small" style={{ width: '100%' }} {...props} />
+    ? <FastField component={TextField} multiline fullWidth size="small" style={{ width: '100%' }} {...props} rows={10} />
     : (
       <Box width="100%" minHeight="200px" fontSize="caption2.fontSize" border={1} {...props}>
         {value.split(/\r\n|\r|\n/).map((item: string) => (

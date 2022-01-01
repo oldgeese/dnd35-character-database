@@ -11,7 +11,7 @@ import ListChars from '../components/ListChars'
 import { getHomeTitle } from '../utils'
 
 const HomePage = () => {
-  document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1')
+  document.querySelector('meta[name="viewport"]')!.setAttribute('content', 'width=device-width, initial-scale=1')
   document.title = getHomeTitle()
   return (
     <>

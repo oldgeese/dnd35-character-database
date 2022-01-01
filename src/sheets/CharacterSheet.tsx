@@ -21,6 +21,7 @@ import {
   Value,
 } from '../components'
 import {
+  Character,
   Posession,
 } from '../models'
 import {
@@ -49,7 +50,12 @@ const useStyles = makeStyles({
   },
 })
 
-const CharacterSheet = ({ input, values, ...props }) => {
+type CharacterSheetProps = {
+  input: boolean
+  values: Character
+}
+
+const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...props }) => {
   const classes = useStyles()
   return (
     <div className={input ? classes.bgslightgray : ''}>
@@ -171,7 +177,7 @@ const CharacterSheet = ({ input, values, ...props }) => {
                   修正値
                 </Label>
               </Grid>
-              {values.abilities.map((row, index) => (
+              {values.abilities.map((row, index: number) => (
                 <Grid container item key={row.id} spacing={1}>
                   <Grid container item xs={3} justifyContent="center" alignItems="center">
                     <Label2 align="center" className={classes.bgblack}>{row.name}</Label2>

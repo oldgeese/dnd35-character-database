@@ -10,6 +10,7 @@ import React from 'react'
 import { Skill } from '../models'
 
 type SkillAbilityValueProps = {
+  align: string
   input: boolean
   name: string
   skill: Skill

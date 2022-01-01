@@ -21,7 +21,7 @@ import CharacterSheet from '../sheets'
 import { getTitle } from '../utils'
 
 const NewCharForm = () => {
-  document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024')
+  document.querySelector('meta[name="viewport"]')?.setAttribute('content', 'width=1024')
   const schema = Yup.object().shape({
     passwordConfirm: Yup.mixed().oneOf([Yup.ref('password')], 'パスワードが一致しません。'),
   })
@@ -65,7 +65,7 @@ const NewCharForm = () => {
           <br />
           {props.isSubmitting
             ? <CircularProgress />
-            : <Button onClick={props.handleSubmit} variant="contained" color="primary" disabled={props.isSubmitting}>保存</Button>}
+            : <Button onClick={props.submitForm} variant="contained" color="primary" disabled={props.isSubmitting}>保存</Button>}
         </Form>
       )}
     </Formik>
