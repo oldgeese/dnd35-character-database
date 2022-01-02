@@ -6,6 +6,7 @@ import { EditCharForm } from '../forms'
 const EditCharPage = () => (
   <>
     <Label><LinkToHome /></Label>
+    <br/>
     <EditCharForm />
   </>
 )

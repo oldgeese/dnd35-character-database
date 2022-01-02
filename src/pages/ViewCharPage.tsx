@@ -11,6 +11,7 @@ const ViewCharPage = () => (
     <Label component="span">
       <LinkToEdit />
     </Label>
+    <br/>
     <ViewCharForm />
   </>
 )
