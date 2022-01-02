@@ -54,7 +54,9 @@
   },
   "name": "dnd35-character-database",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./src/index.tsx",
   "repository": "git@github.com:oldgeese/dnd35-character-database.git",
-  "license": "MIT"
+  "license": "MIT",
+  "description": "D&D3.5 character database",
+  "author": "Hiroyuki ONODA <hiro.onoda@gmail.com>"
 }
