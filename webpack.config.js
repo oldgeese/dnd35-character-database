@@ -1,6 +1,5 @@
 const path = require('path')
 const CircularDependencyPlugin = require('circular-dependency-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const env = process.env.NODE_ENV || 'production'
 
@@ -34,21 +33,19 @@ plugins.push(
     },
   }),
 )
-if (env !== 'production') {
-  plugins.push(new BundleAnalyzerPlugin())
-}
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
   // development に設定するとソースマップ有効でJSファイルが出力される
   mode: env,
   entry: {
-    bundle: './src/index.jsx',
+    bundle: './src/index.tsx',
   },
   output: {
     path: path.join(__dirname, 'public'),
     filename: '[name].js',
   },
+  devtool: 'source-map',
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -62,9 +59,9 @@ module.exports = {
           name: 'firebase.vendor',
           chunks: 'all',
         },
-        materialui: {
-          test: /[\\/]node_modules[\\/](@material-ui)[\\/]/,
-          name: 'materialui.vendor',
+        mui: {
+          test: /[\\/]node_modules[\\/](@mui)[\\/]/,
+          name: 'mui.vendor',
           chunks: 'all',
         },
       },
@@ -72,6 +69,12 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: {
+          loader: 'ts-loader',
+        },
+      },
       {
         test: /\.js[x]?$/,
         exclude: /node_modules/,
@@ -94,7 +97,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx', '.json'],
   },
   plugins,
   devServer: {
