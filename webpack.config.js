@@ -1,6 +1,5 @@
 const path = require('path')
 const CircularDependencyPlugin = require('circular-dependency-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const env = process.env.NODE_ENV || 'production'
 
@@ -34,9 +33,6 @@ plugins.push(
     },
   }),
 )
-if (env !== 'production') {
-  // plugins.push(new BundleAnalyzerPlugin())
-}
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
