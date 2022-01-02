@@ -4,7 +4,7 @@
     "start": "env NODE_ENV=development webpack serve",
     "deploy": "npm run build && firebase deploy",
     "lint": "eslint 'src/**'",
-    "emu": "firebase emulators:start"
+    "emu": "firebase emulators:start --import emudata --export-on-exit emudata"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
