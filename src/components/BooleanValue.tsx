@@ -6,7 +6,7 @@ import {
 } from 'formik'
 import {
   Checkbox,
-} from 'formik-material-ui'
+} from 'formik-mui'
 import React from 'react'
 
 type BooleanValueProps = {

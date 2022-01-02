@@ -7,7 +7,7 @@ import {
 } from 'formik'
 import {
   TextField,
-} from 'formik-material-ui'
+} from 'formik-mui'
 import React, { useEffect } from 'react'
 
 type ComputeValueProps = {

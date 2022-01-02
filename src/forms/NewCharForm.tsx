@@ -6,7 +6,7 @@ import {
   Form,
   Formik,
 } from 'formik'
-import { TextField } from 'formik-material-ui'
+import { TextField } from 'formik-mui'
 import jsSHA from 'jssha'
 import React from 'react'
 import * as Yup from 'yup'

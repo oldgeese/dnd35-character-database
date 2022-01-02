@@ -5,7 +5,7 @@ import {
 } from 'formik'
 import {
   TextField,
-} from 'formik-material-ui'
+} from 'formik-mui'
 import React from 'react'
 
 type MultiLineValueProps = {
