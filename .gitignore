@@ -265,7 +265,9 @@ dist
 .pnp.*
 
 public/bundle.js
+public/bundle.js.map
 public/*vendor.js
+public/*vendor.js.map
 public/*LICENSE.txt
 
 firebase-debug.log*
