@@ -35,7 +35,7 @@ plugins.push(
   }),
 )
 if (env !== 'production') {
-  plugins.push(new BundleAnalyzerPlugin())
+  // plugins.push(new BundleAnalyzerPlugin())
 }
 
 module.exports = {
@@ -63,9 +63,9 @@ module.exports = {
           name: 'firebase.vendor',
           chunks: 'all',
         },
-        materialui: {
-          test: /[\\/]node_modules[\\/](@material-ui)[\\/]/,
-          name: 'materialui.vendor',
+        mui: {
+          test: /[\\/]node_modules[\\/](@mui)[\\/]/,
+          name: 'mui.vendor',
           chunks: 'all',
         },
       },
