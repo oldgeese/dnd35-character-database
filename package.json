@@ -12,7 +12,7 @@
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.6",
     "@mui/styles": "^5.2.3",
-    "firebase": "^8.10.0",
+    "firebase": "^9.9.1",
     "formik": "^2.2.9",
     "formik-mui": "^4.0.0-alpha.3",
     "jssha": "^3.2.0",
