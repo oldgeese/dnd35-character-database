@@ -2,7 +2,7 @@ import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/
 import 'firebase/analytics'
 import firebase from 'firebase/app'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import {
   BrowserRouter as Router,
   Route,
@@ -73,19 +73,20 @@ const getUserConfirmation = (message: string, callback: (answer: boolean)=> void
   const modal = document.createElement('div')
   document.body.appendChild(modal)
 
+  const root = createRoot(modal!)
+
   const withCleanup = (answer: boolean) => {
-    ReactDOM.unmountComponentAtNode(modal)
+    root.unmount()
     document.body.removeChild(modal)
     callback(answer)
   }
 
-  ReactDOM.render(
+  root.render(
     <DirtyDialog
       message={message}
       onCancel={() => withCleanup(false)}
       onConfirm={() => withCleanup(true)}
-    />,
-    modal,
+    />
   )
 }
 
@@ -144,4 +145,7 @@ window.addEventListener('pageshow', (e) => {
   }
 })
 
-ReactDOM.render(<App />, document.querySelector('#app'))
+const container = document.querySelector('#app')
+const root = createRoot(container!)
+
+root.render(<App />)
