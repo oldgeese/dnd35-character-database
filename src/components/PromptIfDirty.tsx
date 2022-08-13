@@ -1,12 +1,12 @@
-import { useFormikContext } from 'formik'
 import React from 'react'
+import { useFormContext } from 'react-hook-form'
 import { Prompt } from 'react-router-dom'
 
 const PromptIfDirty = () => {
-  const { dirty } = useFormikContext()
+  const { formState } = useFormContext()
   return (
     <Prompt
-      when={dirty}
+      when={formState.isDirty}
       message="本当にこのページを離れますか? 未保存の変更があります。"
     />
   )

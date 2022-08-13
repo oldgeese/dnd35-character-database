@@ -1,12 +1,6 @@
-import { Box } from '@mui/material'
-import {
-  FastField,
-  useField,
-} from 'formik'
-import {
-  TextField,
-} from 'formik-mui'
+import { Box, TextField } from '@mui/material'
 import React from 'react'
+import { Controller, useFormContext } from 'react-hook-form'
 
 type MultiLineValueProps = {
   align?: string
@@ -17,11 +11,17 @@ type MultiLineValueProps = {
 }
 
 const MultiLineValue: React.VFC<MultiLineValueProps> = React.memo(({ input, ...props }) => {
-  const [, meta] = useField(props.name)
-  const { value } = meta
+  const { control, getValues } = useFormContext()
+  const value = getValues(props.name)
 
   return input
-    ? <FastField component={TextField} multiline fullWidth size="small" style={{ width: '100%' }} {...props} rows={10} />
+    ? <Controller
+        control={control}
+        name={props.name}
+        render={({field}) => (
+        <TextField multiline fullWidth size="small" style={{ width: '100%' }} {...field} rows={10} />
+      )}
+      />
     : (
       <Box width="100%" minHeight="200px" fontSize="caption2.fontSize" border={1} {...props}>
         {value.split(/\r\n|\r|\n/).map((item: string) => (

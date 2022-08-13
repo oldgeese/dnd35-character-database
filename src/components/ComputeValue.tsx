@@ -1,14 +1,6 @@
-import { Box } from '@mui/material'
-import {
-  FastField,
-  useField,
-  useFormikContext,
-  getIn,
-} from 'formik'
-import {
-  TextField,
-} from 'formik-mui'
+import { Box, TextField } from '@mui/material'
 import React, { useEffect } from 'react'
+import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
 type ComputeValueProps = {
   align?: string
@@ -18,36 +10,36 @@ type ComputeValueProps = {
   compute: any
 }
 
-const ComputeValue: React.VFC<ComputeValueProps> = React.memo(({ input, ...props }) => {
-  const [, meta] = useField(props.name)
-  const { value } = meta
-  const {
-    values, touched, setFieldValue, setFieldTouched,
-  } = useFormikContext()
-
-  const subscribes = props.subscribe.split(',')
-  const publishers = subscribes.map((x) => getIn(values, x)).filter((x) => (typeof x !== 'undefined'))
-  const touchedPublishers = subscribes.map((x) => getIn(touched, x)).filter((x) => (x === true))
-  const { name, compute } = props
-
+const ComputeValue: React.VFC<ComputeValueProps> = ({ input, ...props }) => {
+  const { control, getValues, setValue } = useFormContext()
+  const value = getValues(props.name)
+  const watchFields = useWatch({
+    control,
+    name: props.subscribe.split(','),
+    disabled: !input,
+  })
   useEffect(() => {
-    if (touchedPublishers.length) {
-      setFieldValue(name, compute(publishers), false)
-      setFieldTouched(name, false, false)
-      subscribes.forEach((s) => setFieldTouched(s, false, false))
+    if (input && watchFields.every(v => v !== undefined)) {
+      setValue(props.name, props.compute(watchFields))
     }
-  }, [subscribes, publishers, touchedPublishers, setFieldValue, setFieldTouched, name, compute])
+  },[setValue, input, value, ...watchFields])
 
   return (
     input
-      ? <FastField component={TextField} size="small" fullWidth margin="none" variant="outlined" disabled {...props}/>
+      ? <Controller
+          control={control}
+          name={props.name}
+          render={({field}) => (
+          <TextField size="small" fullWidth margin="none" variant="outlined" disabled {...field}/>
+        )}
+        />
       : (
         <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
           {value}
         </Box>
       )
   )
-})
+}
 ComputeValue.displayName = 'ComputeValue'
 
 export default ComputeValue

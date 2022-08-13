@@ -1,14 +1,8 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, TextField } from '@mui/material'
 import { Stop } from '@mui/icons-material'
-import {
-  FastField,
-  useField,
-} from 'formik'
-import {
-  TextField,
-} from 'formik-mui'
 import React from 'react'
 import { Skill } from '../models'
+import { Controller, useFormContext } from 'react-hook-form'
 
 type SkillNameValueProps = {
   align: string
@@ -18,11 +12,9 @@ type SkillNameValueProps = {
   skill: Skill
 }
 
-const SkillNameValue: React.VFC<SkillNameValueProps> = React.memo(({
-  input, name, subName, skill, ...props
-}) => {
-  const [, meta] = useField(name)
-  const { value } = meta
+const SkillNameValue: React.VFC<SkillNameValueProps> = React.memo(({ input, name, subName, skill, ...props }) => {
+  const { control, getValues } = useFormContext()
+  const value = getValues(name)
 
   if (input && skill.hasSubName) {
     return (
@@ -34,12 +26,27 @@ const SkillNameValue: React.VFC<SkillNameValueProps> = React.memo(({
           </Box>
         </Grid>
         <Grid item xs={9}>
-          <FastField name={subName} component={TextField} size="small" fullWidth margin="none" variant="outlined" {...props} />
+          <Controller
+            control={control}
+            name={subName}
+            render={({field}) => (
+              <TextField size="small" fullWidth margin="none" variant="outlined" {...field} />
+            )}
+            />
         </Grid>
-      </>
+        </>
     )
-  } if (input && skill.fullEditable) {
-    return <FastField name={name} component={TextField} size="small" fullWidth margin="none" variant="outlined" {...props} />
+  } 
+  if (input && skill.fullEditable) {
+    return (
+      <Controller
+        control={control}
+        name={name}
+        render={({field}) => (
+          <TextField size="small" fullWidth margin="none" variant="outlined" {...field} />
+        )}
+        />
+    )
   }
 
   return (

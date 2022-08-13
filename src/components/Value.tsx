@@ -1,12 +1,6 @@
-import { Box } from '@mui/material'
-import {
-  FastField,
-  useField,
-} from 'formik'
-import {
-  TextField,
-} from 'formik-mui'
+import { Box, TextField } from '@mui/material'
 import React from 'react'
+import { Controller, useFormContext } from 'react-hook-form'
 
 type ValueProps = {
   align?: string
@@ -15,12 +9,18 @@ type ValueProps = {
 }
 
 const Value: React.VFC<ValueProps>= React.memo(({ input, ...props }) => {
-  const [, meta] = useField(props.name)
-  const { value } = meta
+  const { control, getValues } = useFormContext()
+  const value = getValues(props.name)
 
   return (
     input
-      ? <FastField component={TextField} size="small" fullWidth margin="none" variant="outlined" {...props} />
+      ? <Controller
+          control={control}
+          name={props.name}
+          render={({field}) => (
+          <TextField size="small" fullWidth margin="none" variant="outlined" {...field}/>
+        )}
+        />
       : (
         <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
           {value}
