@@ -1,23 +1,16 @@
-import { Button, CircularProgress } from '@mui/material'
+import { Button, CircularProgress, TextField } from '@mui/material'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-import {
-  Field,
-  Form,
-  Formik,
-} from 'formik'
-import { TextField } from 'formik-mui'
 import jsSHA from 'jssha'
 import React, { useEffect, useState } from 'react'
+import { Controller, FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
-
 import {
-  Label,
-  PromptIfDirty,
+    Label,
+    PromptIfDirty
 } from '../components'
 import { Character } from '../models'
 import CharacterSheet from '../sheets'
-
 import { getTitle } from '../utils'
 
 const validatePassword = async (id: string, values: Character) => {
@@ -50,8 +43,13 @@ const validatePassword = async (id: string, values: Character) => {
 const EditCharForm: React.VFC<{}> = () => {
   document.querySelector('meta[name="viewport"]')?.setAttribute('content', 'width=1024')
   const { id } = useParams<{id: string}>()
-  const [character, setCharacter] = useState(new Character())
+  const [_, setCharacter] = useState(new Character())
   const db = firebase.firestore()
+
+  const methods = useForm({
+    defaultValues: new Character(),
+  })
+  const { control, formState:{isSubmitting, errors}, handleSubmit, reset, getValues, setError } = methods
 
   useEffect(() => {
     const docRef = db.collection('characters').doc(id)
@@ -59,60 +57,65 @@ const EditCharForm: React.VFC<{}> = () => {
       if (doc.exists) {
         const retrievedChar = Object.assign(new Character(), doc.data())
         setCharacter(retrievedChar)
+        reset(retrievedChar)
         document.title = getTitle(retrievedChar)
       } else {
         console.log('No such document!')
       }
     }).catch((error) => {
-      console.log('Error getting document:', error)
-    })
+        console.log('Error getting document:', error)
+      })
   }, [id, db])
 
-  return (
-    <Formik
-      initialValues={character}
-      enableReinitialize
-      onSubmit={async (values, actions) => {
-        try {
-          await validatePassword(id, values)
-        } catch (err) {
-          actions.setFieldError('passwordForUpdate', 'パスワードが誤っています。')
-          return
-        }
-        const editDocRef = db.collection('characters').doc(id)
-        const newValues = { ...values }
-        newValues.updateTime = new Date()
-        newValues.id = editDocRef.id
-        newValues.passwordForUpdate = ''
-        try {
-          await editDocRef.set(JSON.parse(JSON.stringify(newValues)))
-          console.log('Document successfully written!')
-          document.location.href = '/'
-        } catch (error) {
-          console.error('Error writing document: ', error)
-        }
-      }}
-    >
-      {({ values, errors, ...props }) => {
-        if (!values.id) {
-          return <div />
-        }
+  const character = getValues()
 
-        return (
-          <Form>
+  const onSubmit: SubmitHandler<Character> = async (values) => {
+    try {
+      await validatePassword(id, values)
+    } catch (err) {
+      setError('passwordForUpdate', {type:'manual', message:'パスワードが誤っています。' })
+      return
+    }
+    const editDocRef = db.collection('characters').doc(id)
+    const newValues = { ...values }
+    newValues.updateTime = new Date()
+    newValues.id = editDocRef.id
+    newValues.passwordForUpdate = ''
+    try {
+      await editDocRef.set(JSON.parse(JSON.stringify(newValues)))
+      console.log('Document successfully written!')
+      document.location.href = '/'
+    } catch (error) {
+      console.error('Error writing document: ', error)
+    }
+  }
+
+  return (
+    <>
+      {character.id ? 
+        <FormProvider {...methods}>
+          <form>
             <PromptIfDirty />
-            <CharacterSheet input values={values} />
+            <CharacterSheet input values={character} />
             <Label>パスワード</Label>
-            <Field name="passwordForUpdate" type="password" component={TextField} size="small" margin="none" variant="outlined" />
+            <Controller
+              control={control}
+              name="passwordForUpdate"
+              render={({field}) => (
+                <TextField error={errors.passwordForUpdate? true : false} helperText={errors.passwordForUpdate?.message && errors.passwordForUpdate?.message} type="password" size="small" margin="none" variant="outlined" {...field}/>
+              )}
+              />
             <br />
             <br />
-            {props.isSubmitting
+            {isSubmitting
               ? <CircularProgress />
-              : <Button onClick={props.submitForm} variant="contained" color="primary" disabled={props.isSubmitting}>保存</Button>}
-          </Form>
-        )
-      }}
-    </Formik>
+              : <Button onClick={handleSubmit(onSubmit)} variant="contained" color="primary" disabled={isSubmitting}>保存</Button>}
+          </form>
+        </FormProvider>
+        :
+        <div></div>
+    }
+      </>
   )
 }
 

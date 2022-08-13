@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
-import { useField } from 'formik'
 import React from 'react'
+import { Controller, useFormContext } from 'react-hook-form'
 
 import Label from './Label'
 import Value from './Value'
@@ -11,8 +11,8 @@ type ImageValueProps = {
 }
 
 const ImageValue: React.VFC<ImageValueProps> = React.memo(({ input, ...props }) => {
-  const [, meta] = useField(props.name)
-  const { value } = meta
+  const { getValues } = useFormContext()
+  const value = getValues(props.name)
 
   return (
     input
@@ -35,7 +35,7 @@ const ImageValue: React.VFC<ImageValueProps> = React.memo(({ input, ...props }) 
               display: 'block',
               margin: 'auto',
             }}
-          />
+            />
         </Box>
       )
   )

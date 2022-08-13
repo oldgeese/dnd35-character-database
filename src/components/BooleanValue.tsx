@@ -1,13 +1,7 @@
 import { Check } from '@mui/icons-material'
-import { Box } from '@mui/material'
-import {
-  FastField,
-  useField,
-} from 'formik'
-import {
-  Checkbox,
-} from 'formik-mui'
+import { Box, Checkbox } from '@mui/material'
 import React from 'react'
+import { Controller, useFormContext } from 'react-hook-form'
 
 type BooleanValueProps = {
   align?: string
@@ -17,12 +11,18 @@ type BooleanValueProps = {
 }
 
 const BooleanValue: React.VFC<BooleanValueProps> = React.memo(({ input, ...props }) => {
-  const [, meta] = useField(props.name)
-  const { value } = meta
+  const { control, getValues } = useFormContext()
+  const value = getValues(props.name)
 
   return (
     input
-      ? <FastField component={Checkbox} size="small" color="primary" checked={value} type="checkbox" indeterminate={false} {...props} />
+      ? <Controller
+          control={control}
+          name={props.name}
+          render={({field}) => (
+          <Checkbox size="small" color="primary" checked={field.value} indeterminate={false} {...field} />
+        )}
+        />
       : (
         <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
           {value ? <Check style={{ fontSize: 12 }} /> : ''}

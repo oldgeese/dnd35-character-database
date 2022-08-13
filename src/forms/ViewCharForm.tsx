@@ -1,10 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-import {
-  Form,
-  Formik,
-} from 'formik'
 import React, { useEffect, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 
 import { Character } from '../models'
@@ -15,8 +12,13 @@ import { getTitle } from '../utils'
 const ViewCharForm = () => {
   document.querySelector('meta[name="viewport"]')?.setAttribute('content', 'width=1024')
   const { id } = useParams<{id: string}>()
-  const [character, setCharacter] = useState(new Character())
+  const [_, setCharacter] = useState(new Character())
   const db = firebase.firestore()
+
+  const methods = useForm({
+    defaultValues: new Character(),
+  })
+  const { handleSubmit, reset, getValues } = methods
 
   useEffect(() => {
     const docRef = db.collection('characters').doc(id)
@@ -24,6 +26,7 @@ const ViewCharForm = () => {
       if (doc.exists) {
         const retrievedChar = Object.assign(new Character(), doc.data())
         setCharacter(retrievedChar)
+        reset(retrievedChar)
         document.title = getTitle(retrievedChar)
       } else {
         console.log('No such document!')
@@ -33,24 +36,15 @@ const ViewCharForm = () => {
     })
   }, [id, db])
 
-  return (
-    <Formik
-      initialValues={character}
-      enableReinitialize
-      onSubmit={async () => { return }}
-    >
-      {({ values }) => {
-        if (!values.id) {
-          return <div />
-        }
+  const onSubmit = async () => { return }
+  const character = getValues()
 
-        return (
-          <Form>
-            <CharacterSheet input={false} values={values} />
-          </Form>
-        )
-      }}
-    </Formik>
+  return (
+    <FormProvider {...methods} >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {character.id ? <CharacterSheet input={false} values={character} /> : <div></div> }
+      </form>
+    </FormProvider>
   )
 }
 

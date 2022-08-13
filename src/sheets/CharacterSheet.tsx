@@ -5,8 +5,8 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import StopIcon from '@mui/icons-material/Stop'
 import { Box, Grid } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
-import { FieldArray } from 'formik'
 import React from 'react'
+import { useFieldArray } from 'react-hook-form'
 
 import {
   BooleanValue,
@@ -57,6 +57,10 @@ type CharacterSheetProps = {
 
 const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...props }) => {
   const classes = useStyles()
+  const { fields: posessions, append, remove, move, insert } = useFieldArray({
+    name: "posessions",
+  });
+
   return (
     <div className={input ? classes.bgslightgray : ''}>
       <Grid container item xs={12} spacing={1}>
@@ -1035,41 +1039,34 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                 <Label align="center">操作</Label>
               </Grid>
             )}
-          <FieldArray name="posessions">
-            {({
-              insert, remove, move, push,
-            }) => (
-              <>
-                {values.posessions.length > 0 ? values.posessions.map((posession, index) => (
-                  <Grid container item key={posession.id} spacing={1}>
-                    <Grid container item xs={input ? 6 : 9} justifyContent="center">
-                      <Value name={`posessions.${index}.item`} input={input} {...props} />
+          {posessions.length > 0 ? posessions.map((posession, index) => (
+            <Grid container item key={posession.id} spacing={1}>
+              <Grid container item xs={input ? 6 : 9} justifyContent="center">
+                <Value name={`posessions.${index}.item`} input={input} {...props} />
+              </Grid>
+              <Grid container item xs={3} justifyContent="center">
+                <Value name={`posessions.${index}.weight`} input={input} {...props} />
+              </Grid>
+              {input
+                && (
+                  <Grid container item xs={3} justifyContent="center">
+                    <Grid container item xs={3} justifyContent="center">
+                      <button type="button" className="secondary" onClick={() => insert(index + 1, new Posession('', ''))}><AddIcon style={{ fontSize: 9 }} /></button>
                     </Grid>
                     <Grid container item xs={3} justifyContent="center">
-                      <Value name={`posessions.${index}.weight`} input={input} {...props} />
+                      <button type="button" className="secondary" onClick={() => remove(index)}><RemoveIcon style={{ fontSize: 9 }} /></button>
                     </Grid>
-                    {input
-                      && (
-                        <Grid container item xs={3} justifyContent="center">
-                          <Grid container item xs={3} justifyContent="center">
-                            <button type="button" className="secondary" onClick={() => insert(index + 1, new Posession('', ''))}><AddIcon style={{ fontSize: 9 }} /></button>
-                          </Grid>
-                          <Grid container item xs={3} justifyContent="center">
-                            <button type="button" className="secondary" onClick={() => remove(index)}><RemoveIcon style={{ fontSize: 9 }} /></button>
-                          </Grid>
-                          <Grid container item xs={3} justifyContent="center">
-                            {index === 0 ? '' : <button type="button" className="secondary" onClick={() => move(index, index - 1)}><ArrowUpwardIcon style={{ fontSize: 9 }} /></button> }
-                          </Grid>
-                          <Grid container item xs={3} justifyContent="center">
-                            {index === values.posessions.length - 1 ? '' : <button type="button" className="secondary" onClick={() => move(index, index + 1)}><ArrowDownwardIcon style={{ fontSize: 9 }} /></button> }
-                          </Grid>
-                        </Grid>
-                      )}
+                    <Grid container item xs={3} justifyContent="center">
+                      {index === 0 ? '' : <button type="button" className="secondary" onClick={() => move(index, index - 1)}><ArrowUpwardIcon style={{ fontSize: 9 }} /></button> }
+                    </Grid>
+                    <Grid container item xs={3} justifyContent="center">
+                      {index === values.posessions.length - 1 ? '' : <button type="button" className="secondary" onClick={() => move(index, index + 1)}><ArrowDownwardIcon style={{ fontSize: 9 }} /></button> }
+                    </Grid>
                   </Grid>
-                )) : <Grid container item xs={12} justifyContent="flex-end"><button type="button" className="secondary" onClick={() => push(new Posession('', ''))}><AddIcon style={{ fontSize: 9 }} /></button></Grid>}
-              </>
-            )}
-          </FieldArray>
+                )}
+            </Grid>
+          )) : <Grid container item xs={12} justifyContent="flex-end"><button type="button" className="secondary" onClick={() => append(new Posession('', ''))}><AddIcon style={{ fontSize: 9 }} /></button></Grid>
+        }
           <Grid container item xs={9} justifyContent="center">
             <Label2 align="center" className={classes.bgblack}>運搬重量の合計</Label2>
           </Grid>
