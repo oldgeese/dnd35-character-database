@@ -10,7 +10,7 @@
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@hookform/resolvers": "^2.9.7",
-    "@mui/icons-material": "^5.2.5",
+    "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.2.6",
     "@mui/styles": "^5.2.3",
     "firebase": "^8.10.0",
