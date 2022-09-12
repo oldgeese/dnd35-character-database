@@ -23,7 +23,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.5",
+    "@babel/core": "^7.19.0",
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.16.5",
     "@types/react": "^18.0.17",
