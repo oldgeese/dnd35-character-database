@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Avatar,
   Button,
@@ -5,31 +7,32 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   ListItemText,
-} from '@mui/material'
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+} from "@mui/material";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
-import ListItemLink from './ListItemLink'
-import { Character } from '../models'
+import ListItemLink from "./ListItemLink";
+import { Character } from "../models";
 
 const ListChars = () => {
-  const [characters, setCharacters] = useState<Character[]>([])
-  const db = firebase.firestore()
+  const [characters, setCharacters] = useState<Character[]>([]);
+  const db = firebase.firestore();
 
   useEffect(() => {
-    const unsubscribe = db.collection('characters')
-      .orderBy('updateTime', 'desc')
+    const unsubscribe = db
+      .collection("characters")
+      .orderBy("updateTime", "desc")
       .onSnapshot((snapshot) => {
-        const result: Character[] = []
+        const result: Character[] = [];
         snapshot.forEach((doc) => {
-          result.push(doc.data() as Character)
-        })
-        setCharacters(result)
-      })
-    return unsubscribe
-  }, [db])
+          result.push(doc.data() as Character);
+        });
+        setCharacters(result);
+      });
+    return unsubscribe;
+  }, [db]);
 
   return (
     <List>
@@ -42,16 +45,23 @@ const ListChars = () => {
           <ListItemAvatar>
             <Avatar src={character.image} />
           </ListItemAvatar>
-          <ListItemText primary={character.pcName} secondary={`PL名:${character.plName}, クラスレベル:${character.classLevel}`} />
+          <ListItemText
+            primary={character.pcName}
+            secondary={`PL名:${character.plName}, クラスレベル:${character.classLevel}`}
+          />
           <ListItemSecondaryAction>
-            <Button variant="contained" component={Link} to={`/editchar/${character.id}`}>
+            <Button
+              variant="contained"
+              component={Link}
+              href={`/edit/${character.id}`}
+            >
               編集
             </Button>
           </ListItemSecondaryAction>
         </ListItemLink>
       ))}
     </List>
-  )
-}
+  );
+};
 
-export default ListChars
+export default ListChars;
