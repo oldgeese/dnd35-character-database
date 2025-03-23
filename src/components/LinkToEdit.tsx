@@ -1,17 +1,9 @@
-import React from 'react'
-import { useParams, Link } from 'react-router-dom'
+import Link from "next/link"
 
-type LinkToEditParamType = {
-  id: string
-}
-const LinkToEdit = () => {
-  const { id } = useParams<LinkToEditParamType>()
-
+export default function LinkToEdit({ id }: { id: string }) {
   return (
     <>
-      <Link to={`/editchar/${id}`}>編集画面へ</Link>
+      <Link href={`/editchar/${id}`}>編集画面へ</Link>
     </>
   )
 }
-
-export default LinkToEdit

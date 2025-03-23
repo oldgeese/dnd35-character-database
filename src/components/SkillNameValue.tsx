@@ -1,8 +1,11 @@
-import { Box, Grid, TextField } from '@mui/material'
-import { Stop } from '@mui/icons-material'
-import React from 'react'
-import { Skill } from '../models'
-import { Controller, useFormContext } from 'react-hook-form'
+"use client"
+
+import { Stop } from "@mui/icons-material"
+import { Box, Grid, TextField } from "@mui/material"
+import { get } from "es-toolkit/compat"
+import React from "react"
+import { Controller } from "react-hook-form"
+import type { Character, Skill } from "../models"
 
 type SkillNameValueProps = {
   align: string
@@ -10,11 +13,11 @@ type SkillNameValueProps = {
   name: string
   subName: string
   skill: Skill
+  values: Character
 }
 
-const SkillNameValue: React.VFC<SkillNameValueProps> = React.memo(({ input, name, subName, skill, ...props }) => {
-  const { control, getValues } = useFormContext()
-  const value = getValues(name)
+const SkillNameValue = ({ input, name, subName, skill, ...props }: SkillNameValueProps) => {
+  const value = get(props.values, name, "")
 
   if (input && skill.hasSubName) {
     return (
@@ -22,41 +25,34 @@ const SkillNameValue: React.VFC<SkillNameValueProps> = React.memo(({ input, name
         <Grid item xs={3}>
           <Box minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
             {value}
-            {skill.usableUntrained ? <Stop style={{ fontSize: 12 }} /> : ''}
+            {skill.usableUntrained ? <Stop style={{ fontSize: 12 }} /> : ""}
           </Box>
         </Grid>
         <Grid item xs={9}>
           <Controller
-            control={control}
             name={subName}
-            render={({field}) => (
-              <TextField size="small" fullWidth margin="none" variant="outlined" {...field} />
-            )}
-            />
+            render={({ field }) => <TextField size="small" fullWidth margin="none" variant="outlined" {...field} />}
+          />
         </Grid>
-        </>
+      </>
     )
-  } 
+  }
   if (input && skill.fullEditable) {
     return (
       <Controller
-        control={control}
         name={name}
-        render={({field}) => (
-          <TextField size="small" fullWidth margin="none" variant="outlined" {...field} />
-        )}
-        />
+        render={({ field }) => <TextField size="small" fullWidth margin="none" variant="outlined" {...field} />}
+      />
     )
   }
 
   return (
     <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
       {value}
-      {skill.usableUntrained ? <Stop style={{ fontSize: 12 }} /> : ''}
-      {skill.hasSubName ? skill.subName : ''}
+      {skill.usableUntrained ? <Stop style={{ fontSize: 12 }} /> : ""}
+      {skill.hasSubName ? skill.subName : ""}
     </Box>
   )
-})
-SkillNameValue.displayName = 'SkillNameValue'
+}
 
 export default SkillNameValue

@@ -1,12 +1,13 @@
-import AddIcon from '@mui/icons-material/Add'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-import RemoveIcon from '@mui/icons-material/Remove'
-import StopIcon from '@mui/icons-material/Stop'
-import { Box, Grid } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
-import React from 'react'
-import { useFieldArray } from 'react-hook-form'
+"use client"
+
+import AddIcon from "@mui/icons-material/Add"
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward"
+import RemoveIcon from "@mui/icons-material/Remove"
+import StopIcon from "@mui/icons-material/Stop"
+import { Box, Grid } from "@mui/material"
+import makeStyles from "@mui/styles/makeStyles"
+import { useFieldArray } from "react-hook-form"
 
 import {
   BooleanValue,
@@ -19,11 +20,8 @@ import {
   SkillAbilityValue,
   SkillNameValue,
   Value,
-} from '../components'
-import {
-  Character,
-  Posession,
-} from '../models'
+} from "@/src/components"
+import { type Character, Posession } from "@/src/models"
 import {
   calcArmorClass,
   calcGrappleModifier,
@@ -33,20 +31,20 @@ import {
   calcSkillModifier,
   getAbilityPosition,
   getSTCorrespondingAbility,
-} from '../utils'
+} from "@/src/utils"
 
 const useStyles = makeStyles({
   bgblack: {
-    background: 'black',
-    color: 'white',
+    background: "black",
+    color: "white",
   },
   bgslightgray: {
-    background: 'rgb(248,248,248)',
+    background: "rgb(248,248,248)",
   },
   acGridWidth: {
     flexGrow: 0,
-    maxWidth: '7.3%',
-    flexBasis: '7.3%',
+    maxWidth: "7.3%",
+    flexBasis: "7.3%",
   },
 })
 
@@ -55,97 +53,100 @@ type CharacterSheetProps = {
   values: Character
 }
 
-const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...props }) => {
+const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
   const classes = useStyles()
-  const { fields: posessions, append, remove, move, insert } = useFieldArray({
-    name: "posessions",
-  });
+
+  const { append, remove, move, insert } = input
+    ? useFieldArray({
+      name: "posessions",
+    })
+    : {}
 
   return (
-    <div className={input ? classes.bgslightgray : ''}>
+    <div className={input ? classes.bgslightgray : ""}>
       <Grid container item xs={12} spacing={1}>
         <Grid container item xs={3}>
-          <ImageValue name="image" input={input} {...props} />
+          <ImageValue name="image" input={input} values={values} {...props} />
         </Grid>
         <Grid container item xs={9}>
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={12}>
               <Label>タグ</Label>
-              <Value name="tags" input={input} {...props} />
+              <Value name="tags" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={3}>
               <Label>キャラクター名</Label>
-              <Value name="pcName" input={input} {...props} />
+              <Value name="pcName" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={3}>
               <Label>属性</Label>
-              <Value name="alignment" input={input} {...props} />
+              <Value name="alignment" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={3}>
               <Label>プレイヤー名</Label>
-              <Value name="plName" input={input} {...props} />
+              <Value name="plName" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={3}>
               <Label>最終更新</Label>
-              <DateValue name="updateTime" input={input} {...props} />
+              <DateValue name="updateTime" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={9}>
               <Label>クラス/キャラクターレベル</Label>
-              <Value name="classLevel" input={input} {...props} />
+              <Value name="classLevel" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={3}>
               <Label>信仰する神</Label>
-              <Value name="deity" input={input} {...props} />
+              <Value name="deity" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={2}>
               <Label>種族</Label>
-              <Value name="race" input={input} {...props} />
+              <Value name="race" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={2}>
               <Label>サイズ</Label>
-              <Value name="size" input={input} {...props} />
+              <Value name="size" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={2}>
               <Label>性別</Label>
-              <Value name="gender" input={input} {...props} />
+              <Value name="gender" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={2}>
               <Label>年齢</Label>
-              <Value name="age" input={input} {...props} />
+              <Value name="age" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={2}>
               <Label>身長</Label>
-              <Value name="height" input={input} {...props} />
+              <Value name="height" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={2}>
               <Label>体重</Label>
-              <Value name="weight" input={input} {...props} />
+              <Value name="weight" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={4}>
               <Label>髪の色</Label>
-              <Value name="hairColor" input={input} {...props} />
+              <Value name="hairColor" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={4}>
               <Label>瞳の色</Label>
-              <Value name="eyeColor" input={input} {...props} />
+              <Value name="eyeColor" input={input} values={values} {...props} />
             </Grid>
             <Grid container item xs={4}>
               <Label>肌の色</Label>
-              <Value name="skinColor" input={input} {...props} />
+              <Value name="skinColor" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={12}>
               <Label>メモ欄</Label>
-              <Value name="memo" input={input} {...props} />
+              <Value name="memo" input={input} values={values} {...props} />
             </Grid>
           </Grid>
         </Grid>
@@ -184,10 +185,12 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
               {values.abilities.map((row, index: number) => (
                 <Grid container item key={row.id} spacing={1}>
                   <Grid container item xs={3} justifyContent="center" alignItems="center">
-                    <Label2 align="center" className={classes.bgblack}>{row.name}</Label2>
+                    <Label2 align="center" className={classes.bgblack}>
+                      {row.name}
+                    </Label2>
                   </Grid>
                   <Grid container item xs={3} justifyContent="center" alignItems="center">
-                    <Value name={`abilities.${index}.score`} input={input} {...props} align="center" />
+                    <Value name={`abilities.${index}.score`} input={input} values={values} {...props} align="center" />
                   </Grid>
                   <Grid container item xs={2} justifyContent="center" alignItems="center">
                     <ComputeValue
@@ -195,15 +198,28 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                       input={input}
                       subscribe={`abilities.${index}.score`}
                       compute={calcModifier}
+                      values={values}
                       {...props}
                       align="center"
                     />
                   </Grid>
                   <Grid container item xs={2} justifyContent="center" alignItems="center">
-                    <Value name={`abilities.${index}.temporaryScore`} input={input} {...props} align="center" />
+                    <Value
+                      name={`abilities.${index}.temporaryScore`}
+                      input={input}
+                      values={values}
+                      {...props}
+                      align="center"
+                    />
                   </Grid>
                   <Grid container item xs={2} justifyContent="center" alignItems="center">
-                    <Value name={`abilities.${index}.temporaryModifier`} input={input} {...props} align="center" />
+                    <Value
+                      name={`abilities.${index}.temporaryModifier`}
+                      input={input}
+                      values={values}
+                      {...props}
+                      align="center"
+                    />
                   </Grid>
                 </Grid>
               ))}
@@ -220,21 +236,23 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                 <Label>ダメージ減少</Label>
               </Grid>
               <Grid container item xs={4} justifyContent="center" alignItems="center">
-                <Label2 align="center" className={classes.bgblack}>HP</Label2>
+                <Label2 align="center" className={classes.bgblack}>
+                  HP
+                </Label2>
               </Grid>
               <Grid container item xs={4} justifyContent="center" alignItems="center">
-                <Value name="hitPoint.total" input={input} {...props} align="center" />
+                <Value name="hitPoint.total" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={4} justifyContent="center" alignItems="center">
-                <Value name="hitPoint.damageReduction" input={input} {...props} align="center" />
+                <Value name="hitPoint.damageReduction" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={12} spacing={1}>
                 <Label>負傷/現在のHP</Label>
-                <Value name="hitPoint.current" input={input} {...props} />
+                <Value name="hitPoint.current" input={input} values={values} {...props} />
               </Grid>
               <Grid container item xs={12} spacing={1}>
                 <Label>非致傷ダメージ</Label>
-                <Value name="hitPoint.nonlethalDamage" input={input} {...props} />
+                <Value name="hitPoint.nonlethalDamage" input={input} values={values} {...props} />
               </Grid>
             </Grid>
             <Grid container item xs={4} justifyContent="center" alignItems="center">
@@ -252,6 +270,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                     input={input}
                     subscribe="abilities.1.score,initiative.miscModifier"
                     compute={calcInitiative}
+                    values={values}
                     {...props}
                     align="center"
                   />
@@ -265,8 +284,9 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                   <ComputeValue
                     name="initiative.dexModifier"
                     input={input}
-                    subscribe={`abilities.${getAbilityPosition('【敏】')}.score`}
+                    subscribe={`abilities.${getAbilityPosition("【敏】")}.score`}
                     compute={calcModifier}
+                    values={values}
                     {...props}
                     align="center"
                   />
@@ -276,7 +296,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                 </Grid>
               </Grid>
               <Grid container item xs={4} justifyContent="center">
-                <Value name="initiative.miscModifier" input={input} {...props} align="center" />
+                <Value name="initiative.miscModifier" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={4} justifyContent="center" alignItems="flex-start">
                 <Label align="center">合計</Label>
@@ -299,7 +319,9 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
           </Grid>
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={1} justifyContent="center" alignItems="center">
-              <Label2 align="center" className={classes.bgblack}>AC</Label2>
+              <Label2 align="center" className={classes.bgblack}>
+                AC
+              </Label2>
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={9}>
@@ -308,6 +330,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                   input={input}
                   subscribe="ac.armorBonus,ac.shieldBonus,ac.dexModifier,ac.sizeModifier,ac.naturalArmor,ac.deflectionBonus,ac.luckBonus,ac.insightBonus,ac.moraleBonus,ac.miscModifier"
                   compute={calcArmorClass}
+                  values={values}
                   {...props}
                   align="center"
                 />
@@ -326,7 +349,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={9}>
-                <Value name="ac.armorBonus" input={input} {...props} align="center" />
+                <Value name="ac.armorBonus" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={3} justifyContent="center">
                 <Label align="center">+</Label>
@@ -334,7 +357,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={9}>
-                <Value name="ac.shieldBonus" input={input} {...props} align="center" />
+                <Value name="ac.shieldBonus" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={3} justifyContent="center">
                 <Label align="center">+</Label>
@@ -342,7 +365,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={9}>
-                <Value name="ac.dexModifier" input={input} {...props} align="center" />
+                <Value name="ac.dexModifier" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={3} justifyContent="center">
                 <Label align="center">+</Label>
@@ -350,7 +373,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={9}>
-                <Value name="ac.sizeModifier" input={input} {...props} align="center" />
+                <Value name="ac.sizeModifier" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={3} justifyContent="center">
                 <Label align="center">+</Label>
@@ -358,7 +381,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={9}>
-                <Value name="ac.naturalArmor" input={input} {...props} align="center" />
+                <Value name="ac.naturalArmor" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={3} justifyContent="center">
                 <Label align="center">+</Label>
@@ -366,7 +389,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={9}>
-                <Value name="ac.deflectionBonus" input={input} {...props} align="center" />
+                <Value name="ac.deflectionBonus" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={3} justifyContent="center">
                 <Label align="center">+</Label>
@@ -374,7 +397,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={9}>
-                <Value name="ac.luckBonus" input={input} {...props} align="center" />
+                <Value name="ac.luckBonus" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={3} justifyContent="center">
                 <Label align="center">+</Label>
@@ -382,7 +405,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={9}>
-                <Value name="ac.insightBonus" input={input} {...props} align="center" />
+                <Value name="ac.insightBonus" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={3} justifyContent="center">
                 <Label align="center">+</Label>
@@ -390,7 +413,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={9}>
-                <Value name="ac.moraleBonus" input={input} {...props} align="center" />
+                <Value name="ac.moraleBonus" input={input} values={values} {...props} align="center" />
               </Grid>
               <Grid container item xs={3} justifyContent="center">
                 <Label align="center">+</Label>
@@ -398,7 +421,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             </Grid>
             <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
               <Grid container item xs={12}>
-                <Value name="ac.miscModifier" input={input} {...props} align="center" />
+                <Value name="ac.miscModifier" input={input} values={values} {...props} align="center" />
               </Grid>
             </Grid>
             <Grid container item xs={1} justifyContent="center" alignItems="center" />
@@ -486,7 +509,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
               </Label2>
             </Grid>
             <Grid container item xs={3} justifyContent="center" alignItems="center">
-              <Value name="ac.touchAc" input={input} {...props} align="center" />
+              <Value name="ac.touchAc" input={input} values={values} {...props} align="center" />
             </Grid>
             <Grid container item xs={3} justifyContent="center" alignItems="center">
               <Label2 align="center" className={classes.bgblack}>
@@ -496,7 +519,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
               </Label2>
             </Grid>
             <Grid container item xs={3} justifyContent="center" alignItems="center">
-              <Value name="ac.flatFootedAc" input={input} {...props} align="center" />
+              <Value name="ac.flatFootedAc" input={input} values={values} {...props} align="center" />
             </Grid>
           </Grid>
           <Grid item xs={12} />
@@ -554,7 +577,9 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
               <Grid container item key={row.id} spacing={1}>
                 <Grid container item xs={3}>
                   <Grid container item xs={12} justifyContent="center" alignItems="center">
-                    <Label2 align="center" className={classes.bgblack}>{row.name}</Label2>
+                    <Label2 align="center" className={classes.bgblack}>
+                      {row.name}
+                    </Label2>
                   </Grid>
                 </Grid>
                 <Grid container item xs={9}>
@@ -565,6 +590,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                         input={input}
                         subscribe={`savingThrows.${index}.baseSave,abilities.${getAbilityPosition(getSTCorrespondingAbility(row.name))}.score,savingThrows.${index}.magicModifier,savingThrows.${index}.miscModifier,savingThrows.${index}.temporaryModifier`}
                         compute={calcSavingThrow}
+                        values={values}
                         {...props}
                         align="center"
                       />
@@ -575,7 +601,13 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                   </Grid>
                   <Grid container item xs={2} justifyContent="center" alignItems="center">
                     <Grid item xs={8}>
-                      <Value name={`savingThrows.${index}.baseSave`} input={input} {...props} align="center" />
+                      <Value
+                        name={`savingThrows.${index}.baseSave`}
+                        input={input}
+                        values={values}
+                        {...props}
+                        align="center"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Label align="center">+</Label>
@@ -588,6 +620,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                         input={input}
                         subscribe={`abilities.${getAbilityPosition(getSTCorrespondingAbility(row.name))}.score`}
                         compute={calcModifier}
+                        values={values}
                         {...props}
                         align="center"
                       />
@@ -598,7 +631,13 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                   </Grid>
                   <Grid container item xs={2} justifyContent="center" alignItems="center">
                     <Grid item xs={9}>
-                      <Value name={`savingThrows.${index}.magicModifier`} input={input} {...props} align="center" />
+                      <Value
+                        name={`savingThrows.${index}.magicModifier`}
+                        input={input}
+                        values={values}
+                        {...props}
+                        align="center"
+                      />
                     </Grid>
                     <Grid item xs={3}>
                       <Label align="center">+</Label>
@@ -606,7 +645,13 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                   </Grid>
                   <Grid container item xs={2} justifyContent="center" alignItems="center">
                     <Grid item xs={9}>
-                      <Value name={`savingThrows.${index}.miscModifier`} input={input} {...props} align="center" />
+                      <Value
+                        name={`savingThrows.${index}.miscModifier`}
+                        input={input}
+                        values={values}
+                        {...props}
+                        align="center"
+                      />
                     </Grid>
                     <Grid item xs={3}>
                       <Label align="center">+</Label>
@@ -614,7 +659,13 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                   </Grid>
                   <Grid container item xs={2} justifyContent="center" alignItems="center">
                     <Grid item xs={12}>
-                      <Value name={`savingThrows.${index}.temporaryModifier`} input={input} {...props} align="center" />
+                      <Value
+                        name={`savingThrows.${index}.temporaryModifier`}
+                        input={input}
+                        values={values}
+                        {...props}
+                        align="center"
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -623,21 +674,32 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
           </Grid>
           <Grid container item xs={2} spacing={1}>
             <Label>条件付きの修正値</Label>
-            <MultiLineValue name="savingThrowConditionalModifier" input={input} {...props} align="center" style={{ height: '80%' }} />
+            <MultiLineValue
+              name="savingThrowConditionalModifier"
+              input={input}
+              values={values}
+              {...props}
+              align="center"
+              style={{ height: "80%" }}
+            />
           </Grid>
           <Grid item xs={12} />
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={3} justifyContent="center" alignItems="center">
-              <Label2 align="center" className={classes.bgblack}>基本攻撃ボーナス</Label2>
+              <Label2 align="center" className={classes.bgblack}>
+                基本攻撃ボーナス
+              </Label2>
             </Grid>
             <Grid container item xs={4} justifyContent="center" alignItems="center">
-              <Value name="bab" input={input} {...props} align="center" />
+              <Value name="bab" input={input} values={values} {...props} align="center" />
             </Grid>
             <Grid container item xs={2} justifyContent="center" alignItems="center">
-              <Label2 align="center" className={classes.bgblack}>呪文抵抗</Label2>
+              <Label2 align="center" className={classes.bgblack}>
+                呪文抵抗
+              </Label2>
             </Grid>
             <Grid container item xs={3} justifyContent="center" alignItems="center">
-              <Value name="spellResistance" input={input} {...props} align="center" />
+              <Value name="spellResistance" input={input} values={values} {...props} align="center" />
             </Grid>
           </Grid>
           <Grid container item xs={12} spacing={1}>
@@ -680,7 +742,9 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             <Grid container item spacing={1}>
               <Grid container item xs={3}>
                 <Grid container item xs={12} justifyContent="center" alignItems="center">
-                  <Label2 align="center" className={classes.bgblack}>組みつき修正値</Label2>
+                  <Label2 align="center" className={classes.bgblack}>
+                    組みつき修正値
+                  </Label2>
                 </Grid>
               </Grid>
               <Grid container item xs={9}>
@@ -689,8 +753,9 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                     <ComputeValue
                       name="grappleModifier.total"
                       input={input}
-                      subscribe={`grappleModifier.bab,abilities.${getAbilityPosition('【筋】')}.score,grappleModifier.sizeModifier,grappleModifier.miscModifier`}
+                      subscribe={`grappleModifier.bab,abilities.${getAbilityPosition("【筋】")}.score,grappleModifier.sizeModifier,grappleModifier.miscModifier`}
                       compute={calcGrappleModifier}
+                      values={values}
                       {...props}
                       align="center"
                     />
@@ -701,7 +766,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                 </Grid>
                 <Grid container item xs={2} justifyContent="center" alignItems="center">
                   <Grid item xs={8}>
-                    <Value name="grappleModifier.bab" input={input} {...props} align="center" />
+                    <Value name="grappleModifier.bab" input={input} values={values} {...props} align="center" />
                   </Grid>
                   <Grid item xs={4}>
                     <Label align="center">+</Label>
@@ -712,8 +777,9 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                     <ComputeValue
                       name="grappleModifier.strengthModifier"
                       input={input}
-                      subscribe={`abilities.${getAbilityPosition('【筋】')}.score`}
+                      subscribe={`abilities.${getAbilityPosition("【筋】")}.score`}
                       compute={calcModifier}
+                      values={values}
                       {...props}
                       align="center"
                     />
@@ -724,7 +790,13 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                 </Grid>
                 <Grid container item xs={2} justifyContent="center" alignItems="center">
                   <Grid item xs={9}>
-                    <Value name="grappleModifier.sizeModifier" input={input} {...props} align="center" />
+                    <Value
+                      name="grappleModifier.sizeModifier"
+                      input={input}
+                      values={values}
+                      {...props}
+                      align="center"
+                    />
                   </Grid>
                   <Grid item xs={3}>
                     <Label align="center">+</Label>
@@ -732,7 +804,13 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                 </Grid>
                 <Grid container item xs={2} justifyContent="center" alignItems="center">
                   <Grid item xs={12}>
-                    <Value name="grappleModifier.miscModifier" input={input} {...props} align="center" />
+                    <Value
+                      name="grappleModifier.miscModifier"
+                      input={input}
+                      values={values}
+                      {...props}
+                      align="center"
+                    />
                   </Grid>
                 </Grid>
               </Grid>
@@ -750,49 +828,69 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                   </Label2>
                 </Grid>
                 <Grid container item xs={3} justifyContent="center" alignItems="center">
-                  <Label align="center" className={classes.bgblack}>攻撃ボーナス</Label>
+                  <Label align="center" className={classes.bgblack}>
+                    攻撃ボーナス
+                  </Label>
                 </Grid>
                 <Grid container item xs={2} justifyContent="center" alignItems="center">
-                  <Label align="center" className={classes.bgblack}>クリティカル</Label>
+                  <Label align="center" className={classes.bgblack}>
+                    クリティカル
+                  </Label>
                 </Grid>
                 <Grid container item xs={1} justifyContent="center" alignItems="center">
-                  <Label align="center" className={classes.bgblack}>重量</Label>
+                  <Label align="center" className={classes.bgblack}>
+                    重量
+                  </Label>
                 </Grid>
                 <Grid container item xs={6} justifyContent="center" alignItems="center">
-                  <Value name={`attacks.${index}.attack`} input={input} {...props} align="center" />
+                  <Value name={`attacks.${index}.attack`} input={input} values={values} {...props} align="center" />
                 </Grid>
                 <Grid container item xs={3} justifyContent="center" alignItems="center">
-                  <Value name={`attacks.${index}.attackBonus`} input={input} {...props} align="center" />
+                  <Value
+                    name={`attacks.${index}.attackBonus`}
+                    input={input}
+                    values={values}
+                    {...props}
+                    align="center"
+                  />
                 </Grid>
                 <Grid container item xs={2} justifyContent="center" alignItems="center">
-                  <Value name={`attacks.${index}.critical`} input={input} {...props} align="center" />
+                  <Value name={`attacks.${index}.critical`} input={input} values={values} {...props} align="center" />
                 </Grid>
                 <Grid container item xs={1} justifyContent="center" alignItems="center">
-                  <Value name={`attacks.${index}.weight`} input={input} {...props} align="center" />
+                  <Value name={`attacks.${index}.weight`} input={input} values={values} {...props} align="center" />
                 </Grid>
                 <Grid container item xs={2} justifyContent="center" alignItems="center">
-                  <Label align="center" className={classes.bgblack}>タイプ</Label>
+                  <Label align="center" className={classes.bgblack}>
+                    タイプ
+                  </Label>
                 </Grid>
                 <Grid container item xs={1} justifyContent="center" alignItems="center">
-                  <Label align="center" className={classes.bgblack}>射程</Label>
+                  <Label align="center" className={classes.bgblack}>
+                    射程
+                  </Label>
                 </Grid>
                 <Grid container item xs={3} justifyContent="center" alignItems="center">
-                  <Label align="center" className={classes.bgblack}>その他・矢弾等</Label>
+                  <Label align="center" className={classes.bgblack}>
+                    その他・矢弾等
+                  </Label>
                 </Grid>
                 <Grid container item xs={6} justifyContent="center" alignItems="center">
-                  <Label align="center" className={classes.bgblack}>ダメージ</Label>
+                  <Label align="center" className={classes.bgblack}>
+                    ダメージ
+                  </Label>
                 </Grid>
                 <Grid container item xs={2} justifyContent="center" alignItems="center">
-                  <Value name={`attacks.${index}.type`} input={input} {...props} align="center" />
+                  <Value name={`attacks.${index}.type`} input={input} values={values} {...props} align="center" />
                 </Grid>
                 <Grid container item xs={1} justifyContent="center" alignItems="center">
-                  <Value name={`attacks.${index}.range`} input={input} {...props} align="center" />
+                  <Value name={`attacks.${index}.range`} input={input} values={values} {...props} align="center" />
                 </Grid>
                 <Grid container item xs={3} justifyContent="center" alignItems="center">
-                  <Value name={`attacks.${index}.notes`} input={input} {...props} align="center" />
+                  <Value name={`attacks.${index}.notes`} input={input} values={values} {...props} align="center" />
                 </Grid>
                 <Grid container item xs={6} justifyContent="center" alignItems="center">
-                  <Value name={`attacks.${index}.damage`} input={input} {...props} align="center" />
+                  <Value name={`attacks.${index}.damage`} input={input} values={values} {...props} align="center" />
                 </Grid>
               </Grid>
             ))}
@@ -801,15 +899,19 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
         <Grid container item xs={6} spacing={1}>
           <Grid container item xs={12} spacing={1}>
             <Grid container item xs={4} justifyContent="center" alignItems="center">
-              <Label2 align="center" className={classes.bgblack}>移動速度</Label2>
+              <Label2 align="center" className={classes.bgblack}>
+                移動速度
+              </Label2>
             </Grid>
             <Grid container item xs={8} justifyContent="center" alignItems="center">
-              <Value name="speed" input={input} {...props} align="center" />
+              <Value name="speed" input={input} values={values} {...props} align="center" />
             </Grid>
           </Grid>
           <Grid container item xs={12}>
             <Grid container item xs={12} justifyContent="center" alignItems="center">
-              <Label2 align="center" className={classes.bgblack}>技能</Label2>
+              <Label2 align="center" className={classes.bgblack}>
+                技能
+              </Label2>
             </Grid>
             <Grid container item xs={1} justifyContent="center" alignItems="center">
               <Label align="center">
@@ -864,13 +966,36 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
             {values.skills.map((skill, index) => (
               <Grid container item key={skill.id} spacing={1}>
                 <Grid container item xs={1} justifyContent="center" alignItems="center">
-                  <BooleanValue name={`skills.${index}.classSkill`} input={input} {...props} align="center">{skill.classSkill}</BooleanValue>
+                  <BooleanValue
+                    name={`skills.${index}.classSkill`}
+                    input={input}
+                    values={values}
+                    align="center"
+                    {...props}
+                  >
+                    {skill.classSkill}
+                  </BooleanValue>
                 </Grid>
                 <Grid container item xs={4} justifyContent="center" alignItems="center">
-                  <SkillNameValue name={`skills.${index}.name`} subName={`skills.${index}.subName`} skill={skill} input={input} {...props} align="left" />
+                  <SkillNameValue
+                    name={`skills.${index}.name`}
+                    subName={`skills.${index}.subName`}
+                    skill={skill}
+                    input={input}
+                    values={values}
+                    {...props}
+                    align="left"
+                  />
                 </Grid>
                 <Grid container item xs={1} justifyContent="center" alignItems="center">
-                  <SkillAbilityValue name={`skills.${index}.ability`} skill={skill} input={input} {...props} align="center" />
+                  <SkillAbilityValue
+                    name={`skills.${index}.ability`}
+                    skill={skill}
+                    input={input}
+                    values={values}
+                    {...props}
+                    align="center"
+                  />
                 </Grid>
                 <Grid container item xs={1} justifyContent="center" alignItems="center">
                   <Grid item xs={9}>
@@ -879,6 +1004,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                       input={input}
                       subscribe={`abilities.${getAbilityPosition(skill.ability)}.score,skills.${index}.ranks,skills.${index}.penalty,skills.${index}.miscModifier`}
                       compute={calcSkillModifier}
+                      values={values}
                       {...props}
                       align="center"
                     />
@@ -894,6 +1020,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                       input={input}
                       subscribe={`abilities.${getAbilityPosition(skill.ability)}.score`}
                       compute={calcModifier}
+                      values={values}
                       {...props}
                       align="center"
                     />
@@ -904,7 +1031,7 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                 </Grid>
                 <Grid container item xs={1} justifyContent="center" alignItems="center">
                   <Grid item xs={9}>
-                    <Value name={`skills.${index}.ranks`} input={input} {...props} align="center" />
+                    <Value name={`skills.${index}.ranks`} input={input} values={values} {...props} align="center" />
                   </Grid>
                   <Grid item xs={3}>
                     <Label align="center">+</Label>
@@ -912,14 +1039,20 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
                 </Grid>
                 <Grid container item xs={1} justifyContent="center" alignItems="center">
                   <Grid item xs={9}>
-                    <Value name={`skills.${index}.penalty`} input={input} {...props} align="center" />
+                    <Value name={`skills.${index}.penalty`} input={input} values={values} {...props} align="center" />
                   </Grid>
                   <Grid item xs={3}>
                     <Label align="center">+</Label>
                   </Grid>
                 </Grid>
                 <Grid container item xs={2} justifyContent="center" alignItems="center">
-                  <Value name={`skills.${index}.miscModifier`} input={input} {...props} align="center" />
+                  <Value
+                    name={`skills.${index}.miscModifier`}
+                    input={input}
+                    values={values}
+                    {...props}
+                    align="center"
+                  />
                 </Grid>
               </Grid>
             ))}
@@ -932,10 +1065,16 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
           </Label>
         </Grid>
       </Grid>
-      <Grid container spacing={1}><Grid item><Box padding="12px" /></Grid></Grid>
+      <Grid container spacing={1}>
+        <Grid item>
+          <Box padding="12px" />
+        </Grid>
+      </Grid>
       <Grid container item xs={12} spacing={1}>
         <Grid container item xs={3} justifyContent="center">
-          <Label2 align="center" className={classes.bgblack}>鎧・防御アイテム</Label2>
+          <Label2 align="center" className={classes.bgblack}>
+            鎧・防御アイテム
+          </Label2>
         </Grid>
         <Grid container item xs={1} justifyContent="center">
           <Label align="center" className={classes.bgblack}>
@@ -945,7 +1084,9 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
           </Label>
         </Grid>
         <Grid container item xs={2} justifyContent="center">
-          <Label align="center" className={classes.bgblack}>タイプ</Label>
+          <Label align="center" className={classes.bgblack}>
+            タイプ
+          </Label>
         </Grid>
         <Grid container item xs={1} justifyContent="center">
           <Label align="center" className={classes.bgblack}>
@@ -955,7 +1096,9 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
           </Label>
         </Grid>
         <Grid container item xs={1} justifyContent="center">
-          <Label align="center" className={classes.bgblack}>判定ペナルティ</Label>
+          <Label align="center" className={classes.bgblack}>
+            判定ペナルティ
+          </Label>
         </Grid>
         <Grid container item xs={1} justifyContent="center">
           <Label align="center" className={classes.bgblack}>
@@ -965,67 +1108,109 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
           </Label>
         </Grid>
         <Grid container item xs={1} justifyContent="center">
-          <Label align="center" className={classes.bgblack}>重量</Label>
+          <Label align="center" className={classes.bgblack}>
+            重量
+          </Label>
         </Grid>
         <Grid container item xs={2} justifyContent="center">
-          <Label align="center" className={classes.bgblack}>特性・その他</Label>
+          <Label align="center" className={classes.bgblack}>
+            特性・その他
+          </Label>
         </Grid>
         {values.protectiveItems.map((row, index) => (
           <Grid container item key={row.id} spacing={1}>
             <Grid container item xs={3} justifyContent="center">
-              <Value name={`protectiveItems.${index}.name`} input={input} {...props} align="center" />
+              <Value name={`protectiveItems.${index}.name`} input={input} values={values} {...props} align="center" />
             </Grid>
             <Grid container item xs={1} justifyContent="center">
-              <Value name={`protectiveItems.${index}.acBonus`} input={input} {...props} align="center" />
+              <Value
+                name={`protectiveItems.${index}.acBonus`}
+                input={input}
+                values={values}
+                {...props}
+                align="center"
+              />
             </Grid>
             <Grid container item xs={2} justifyContent="center">
-              <Value name={`protectiveItems.${index}.type`} input={input} {...props} align="center" />
+              <Value name={`protectiveItems.${index}.type`} input={input} values={values} {...props} align="center" />
             </Grid>
             <Grid container item xs={1} justifyContent="center">
-              <Value name={`protectiveItems.${index}.dexMax`} input={input} {...props} align="center" />
+              <Value name={`protectiveItems.${index}.dexMax`} input={input} values={values} {...props} align="center" />
             </Grid>
             <Grid container item xs={1} justifyContent="center">
-              <Value name={`protectiveItems.${index}.checkPenalty`} input={input} {...props} align="center" />
+              <Value
+                name={`protectiveItems.${index}.checkPenalty`}
+                input={input}
+                values={values}
+                {...props}
+                align="center"
+              />
             </Grid>
             <Grid container item xs={1} justifyContent="center">
-              <Value name={`protectiveItems.${index}.spellFailure`} input={input} {...props} align="center" />
+              <Value
+                name={`protectiveItems.${index}.spellFailure`}
+                input={input}
+                values={values}
+                {...props}
+                align="center"
+              />
             </Grid>
             <Grid container item xs={1} justifyContent="center">
-              <Value name={`protectiveItems.${index}.weight`} input={input} {...props} align="center" />
+              <Value name={`protectiveItems.${index}.weight`} input={input} values={values} {...props} align="center" />
             </Grid>
             <Grid container item xs={2} justifyContent="center">
-              <Value name={`protectiveItems.${index}.specialProperties`} input={input} {...props} align="center" />
+              <Value
+                name={`protectiveItems.${index}.specialProperties`}
+                input={input}
+                values={values}
+                {...props}
+                align="center"
+              />
             </Grid>
           </Grid>
         ))}
         <Grid container item xs={3} justifyContent="center">
-          <Label2 align="center" className={classes.bgblack}>合計</Label2>
+          <Label2 align="center" className={classes.bgblack}>
+            合計
+          </Label2>
         </Grid>
         <Grid container item xs={1} justifyContent="center">
-          <Value name="protectiveItemsTotal.acBonus" input={input} {...props} align="center" />
+          <Value name="protectiveItemsTotal.acBonus" input={input} values={values} {...props} align="center" />
         </Grid>
         <Grid container item xs={2} justifyContent="center" />
         <Grid container item xs={1} justifyContent="center">
-          <Value name="protectiveItemsTotal.dexMac" input={input} {...props} align="center" />
+          <Value name="protectiveItemsTotal.dexMac" input={input} values={values} {...props} align="center" />
         </Grid>
         <Grid container item xs={1} justifyContent="center">
-          <Value name="protectiveItemsTotal.checkPenalty" input={input} {...props} align="center" />
+          <Value name="protectiveItemsTotal.checkPenalty" input={input} values={values} {...props} align="center" />
         </Grid>
         <Grid container item xs={1} justifyContent="center">
-          <Value name="protectiveItemsTotal.spellFailure" input={input} {...props} align="center" />
+          <Value name="protectiveItemsTotal.spellFailure" input={input} values={values} {...props} align="center" />
         </Grid>
         <Grid container item xs={1} justifyContent="center">
-          <Value name="protectiveItemsTotal.weight" input={input} {...props} align="center" />
+          <Value name="protectiveItemsTotal.weight" input={input} values={values} {...props} align="center" />
         </Grid>
         <Grid container item xs={2} justifyContent="center">
-          <Value name="protectiveItemsTotal.specialProperties" input={input} {...props} align="center" />
+          <Value
+            name="protectiveItemsTotal.specialProperties"
+            input={input}
+            values={values}
+            {...props}
+            align="center"
+          />
         </Grid>
       </Grid>
-      <Grid container spacing={1}><Grid item><Box padding="12px" /></Grid></Grid>
+      <Grid container spacing={1}>
+        <Grid item>
+          <Box padding="12px" />
+        </Grid>
+      </Grid>
       <Grid container item xs={12} spacing={1} alignItems="flex-start">
         <Grid container item xs={4} spacing={1}>
           <Grid container item xs={12} justifyContent="center">
-            <Label2 align="center" className={classes.bgblack}>装備品</Label2>
+            <Label2 align="center" className={classes.bgblack}>
+              装備品
+            </Label2>
           </Grid>
           <Grid container item xs={input ? 6 : 9} justifyContent="center">
             <Label align="center">アイテム</Label>
@@ -1033,61 +1218,102 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
           <Grid container item xs={3} justifyContent="center">
             <Label align="center">重量</Label>
           </Grid>
-          {input
-            && (
-              <Grid container item xs={3} justifyContent="center">
-                <Label align="center">操作</Label>
-              </Grid>
-            )}
-          {posessions.length > 0 ? posessions.map((posession, index) => (
-            <Grid container item key={posession.id} spacing={1}>
-              <Grid container item xs={input ? 6 : 9} justifyContent="center">
-                <Value name={`posessions.${index}.item`} input={input} {...props} />
-              </Grid>
-              <Grid container item xs={3} justifyContent="center">
-                <Value name={`posessions.${index}.weight`} input={input} {...props} />
-              </Grid>
-              {input
-                && (
+          {input && (
+            <Grid container item xs={3} justifyContent="center">
+              <Label align="center">操作</Label>
+            </Grid>
+          )}
+          {values.posessions.length > 0 ? (
+            values.posessions.map((posession, index) => (
+              <Grid container item key={posession.id} spacing={1}>
+                <Grid container item xs={input ? 6 : 9} justifyContent="center">
+                  <Value name={`posessions.${index}.item`} input={input} values={values} {...props} />
+                </Grid>
+                <Grid container item xs={3} justifyContent="center">
+                  <Value name={`posessions.${index}.weight`} input={input} values={values} {...props} />
+                </Grid>
+                {input && (
                   <Grid container item xs={3} justifyContent="center">
                     <Grid container item xs={3} justifyContent="center">
-                      <button type="button" className="secondary" onClick={() => insert(index + 1, new Posession('', ''))}><AddIcon style={{ fontSize: 9 }} /></button>
+                      <button
+                        type="button"
+                        className="secondary"
+                        onClick={() => (insert ? insert(index + 1, new Posession("", "")) : null)}
+                      >
+                        <AddIcon style={{ fontSize: 9 }} />
+                      </button>
                     </Grid>
                     <Grid container item xs={3} justifyContent="center">
-                      <button type="button" className="secondary" onClick={() => remove(index)}><RemoveIcon style={{ fontSize: 9 }} /></button>
+                      <button type="button" className="secondary" onClick={() => (remove ? remove(index) : null)}>
+                        <RemoveIcon style={{ fontSize: 9 }} />
+                      </button>
                     </Grid>
                     <Grid container item xs={3} justifyContent="center">
-                      {index === 0 ? '' : <button type="button" className="secondary" onClick={() => move(index, index - 1)}><ArrowUpwardIcon style={{ fontSize: 9 }} /></button> }
+                      {index === 0 ? (
+                        ""
+                      ) : (
+                        <button
+                          type="button"
+                          className="secondary"
+                          onClick={() => (move ? move(index, index - 1) : null)}
+                        >
+                          <ArrowUpwardIcon style={{ fontSize: 9 }} />
+                        </button>
+                      )}
                     </Grid>
                     <Grid container item xs={3} justifyContent="center">
-                      {index === values.posessions.length - 1 ? '' : <button type="button" className="secondary" onClick={() => move(index, index + 1)}><ArrowDownwardIcon style={{ fontSize: 9 }} /></button> }
+                      {index === values.posessions.length - 1 ? (
+                        ""
+                      ) : (
+                        <button
+                          type="button"
+                          className="secondary"
+                          onClick={() => (move ? move(index, index + 1) : null)}
+                        >
+                          <ArrowDownwardIcon style={{ fontSize: 9 }} />
+                        </button>
+                      )}
                     </Grid>
                   </Grid>
                 )}
+              </Grid>
+            ))
+          ) : (
+            <Grid container item xs={12} justifyContent="flex-end">
+              <button
+                type="button"
+                className="secondary"
+                onClick={() => (append ? append(new Posession("", "")) : null)}
+              >
+                <AddIcon style={{ fontSize: 9 }} />
+              </button>
             </Grid>
-          )) : <Grid container item xs={12} justifyContent="flex-end"><button type="button" className="secondary" onClick={() => append(new Posession('', ''))}><AddIcon style={{ fontSize: 9 }} /></button></Grid>
-        }
+          )}
           <Grid container item xs={9} justifyContent="center">
-            <Label2 align="center" className={classes.bgblack}>運搬重量の合計</Label2>
+            <Label2 align="center" className={classes.bgblack}>
+              運搬重量の合計
+            </Label2>
           </Grid>
           <Grid container item xs={3} justifyContent="center">
-            <Value name="totalWeightCarried" input={input} {...props} />
+            <Value name="totalWeightCarried" input={input} values={values} {...props} />
           </Grid>
           <Grid item xs={12} />
           <Grid container item xs={12} justifyContent="center">
-            <Label2 align="center" className={classes.bgblack}>所持金</Label2>
+            <Label2 align="center" className={classes.bgblack}>
+              所持金
+            </Label2>
           </Grid>
           <Grid container item xs={3} justifyContent="center">
-            <Value name="money.cp" input={input} {...props} />
+            <Value name="money.cp" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={3} justifyContent="center">
-            <Value name="money.sp" input={input} {...props} />
+            <Value name="money.sp" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={3} justifyContent="center">
-            <Value name="money.gp" input={input} {...props} />
+            <Value name="money.gp" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={3} justifyContent="center">
-            <Value name="money.pp" input={input} {...props} />
+            <Value name="money.pp" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={3} justifyContent="center">
             <Label>銅貨(cp)</Label>
@@ -1103,25 +1329,27 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
           </Grid>
           <Grid item xs={12} />
           <Grid container item xs={12} justifyContent="center">
-            <Label2 align="center" className={classes.bgblack}>荷重</Label2>
+            <Label2 align="center" className={classes.bgblack}>
+              荷重
+            </Label2>
           </Grid>
           <Grid container item xs={2} justifyContent="center">
-            <Value name="load.lightLoad" input={input} {...props} />
+            <Value name="load.lightLoad" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={2} justifyContent="center">
-            <Value name="load.mediumLoad" input={input} {...props} />
+            <Value name="load.mediumLoad" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={2} justifyContent="center">
-            <Value name="load.heavyLoad" input={input} {...props} />
+            <Value name="load.heavyLoad" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={2} justifyContent="center">
-            <Value name="load.liftOverHead" input={input} {...props} />
+            <Value name="load.liftOverHead" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={2} justifyContent="center">
-            <Value name="load.liftOffGround" input={input} {...props} />
+            <Value name="load.liftOffGround" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={2} justifyContent="center">
-            <Value name="load.pushOrDrag" input={input} {...props} />
+            <Value name="load.pushOrDrag" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={2} justifyContent="center">
             <Label align="center">軽荷重</Label>
@@ -1160,45 +1388,57 @@ const CharacterSheet: React.VFC<CharacterSheetProps> = ({ input, values, ...prop
         </Grid>
         <Grid container item xs={4} spacing={1}>
           <Grid container item xs={12} justifyContent="center">
-            <Label2 align="center" className={classes.bgblack}>特技</Label2>
+            <Label2 align="center" className={classes.bgblack}>
+              特技
+            </Label2>
           </Grid>
           <Grid container item xs={12} justifyContent="center">
             <MultiLineValue name="feat" input={input} {...props} />
           </Grid>
           <Grid container item xs={12} justifyContent="center">
-            <Label2 align="center" className={classes.bgblack}>特殊能力</Label2>
+            <Label2 align="center" className={classes.bgblack}>
+              特殊能力
+            </Label2>
           </Grid>
           <Grid container item xs={12} justifyContent="center">
-            <MultiLineValue name="specialAbility" input={input} {...props} />
+            <MultiLineValue name="specialAbility" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={12} justifyContent="center">
-            <Label2 align="center" className={classes.bgblack}>言語</Label2>
+            <Label2 align="center" className={classes.bgblack}>
+              言語
+            </Label2>
           </Grid>
           <Grid container item xs={12} justifyContent="center">
-            <MultiLineValue name="language" input={input} {...props} />
+            <MultiLineValue name="language" input={input} values={values} {...props} />
           </Grid>
           <Grid container item xs={12} justifyContent="center">
-            <Label2 align="center" className={classes.bgblack}>経験点</Label2>
+            <Label2 align="center" className={classes.bgblack}>
+              経験点
+            </Label2>
           </Grid>
           <Grid container item xs={12} justifyContent="center">
-            <Value name="experiencePoint" input={input} {...props} />
+            <Value name="experiencePoint" input={input} values={values} {...props} />
           </Grid>
         </Grid>
         <Grid container item xs={4} spacing={1}>
           <Grid container item xs={12} justifyContent="center">
-            <Label2 align="center" className={classes.bgblack}>呪文</Label2>
+            <Label2 align="center" className={classes.bgblack}>
+              呪文
+            </Label2>
           </Grid>
           <Grid container item xs={12} justifyContent="center">
-            <MultiLineValue name="spell" input={input} rows={50} {...props} />
+            <MultiLineValue name="spell" input={input} values={values} rows={50} {...props} />
           </Grid>
         </Grid>
       </Grid>
       <Grid container item xs={12} spacing={1} alignItems="flex-start">
         <Grid container item xs={12} justifyContent="center">
-          <Label2 align="center" className={classes.bgblack}>設定など</Label2>
+          <Label2 align="center" className={classes.bgblack}>
+            設定など
+          </Label2>
         </Grid>
         <Grid container item xs={12} justifyContent="center">
-          <MultiLineValue name="setting" input={input} {...props} />
+          <MultiLineValue name="setting" input={input} values={values} {...props} />
         </Grid>
       </Grid>
     </div>

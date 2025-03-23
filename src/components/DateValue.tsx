@@ -1,15 +1,15 @@
-import { Box } from '@mui/material'
-import React from 'react'
-import { useFormContext } from 'react-hook-form'
+import { Box } from "@mui/material"
+import type { Character } from "@/src/models"
+import { get } from "es-toolkit/compat"
 
 type DateValueProps = {
   input: boolean
   name: string
+  values: Character
 }
 
-const DateValue: React.VFC<DateValueProps> = React.memo(({ input, ...props }) => {
-  const { getValues } = useFormContext()
-  const value = getValues(props.name)
+const DateValue = ({ input, ...props }: DateValueProps) => {
+  const value = get(props.values, props.name, "")
   const displayValue = new Date(value).toLocaleString()
 
   return (
@@ -17,7 +17,6 @@ const DateValue: React.VFC<DateValueProps> = React.memo(({ input, ...props }) =>
       {displayValue}
     </Box>
   )
-})
-DateValue.displayName = 'DateValue'
+}
 
 export default DateValue

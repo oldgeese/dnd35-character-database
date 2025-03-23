@@ -1,6 +1,9 @@
-import { Box, TextField } from '@mui/material'
-import React, { useEffect } from 'react'
-import { Controller, useFormContext, useWatch } from 'react-hook-form'
+"use client"
+
+import type { Character } from "@/src/models"
+import { Box, TextField } from "@mui/material"
+import { get } from "es-toolkit/compat"
+import { Controller, useFormContext, type UseFormReturn } from "react-hook-form"
 
 type ComputeValueProps = {
   align?: string
@@ -8,38 +11,35 @@ type ComputeValueProps = {
   name: string
   subscribe: string
   compute: any
+  values: Character
 }
 
-const ComputeValue: React.VFC<ComputeValueProps> = ({ input, ...props }) => {
-  const { control, getValues, setValue } = useFormContext()
-  const value = getValues(props.name)
-  const watchFields = useWatch({
-    control,
-    name: props.subscribe.split(','),
-    disabled: !input,
-  })
-  useEffect(() => {
-    if (input && watchFields.every(v => v !== undefined)) {
-      setValue(props.name, props.compute(watchFields))
-    }
-  },[setValue, input, value, ...watchFields])
+const ComputeValue = ({ input, ...props }: ComputeValueProps) => {
+  const { control } = input ? useFormContext() : ({} as UseFormReturn)
+  const value = input ? props.compute(props.subscribe.split(",")) : get(props.values, props.name, "")
 
-  return (
-    input
-      ? <Controller
-          control={control}
-          name={props.name}
-          render={({field}) => (
-          <TextField size="small" fullWidth margin="none" variant="outlined" disabled {...field}/>
-        )}
-        />
-      : (
-        <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
-          {value}
-        </Box>
-      )
+  // const watchFields = useWatch({
+  //   control,
+  //   name: props.subscribe.split(","),
+  //   disabled: !input,
+  // })
+  // useEffect(() => {
+  //   if (input && watchFields.every((v) => v !== undefined)) {
+  //     setValue(props.name, props.compute(watchFields))
+  //   }
+  // }, [setValue, input, props.name, props.compute, watchFields, watchFields.every])
+
+  return input ? (
+    <Controller
+      control={control}
+      name={props.name}
+      render={({ field }) => <TextField size="small" fullWidth margin="none" variant="outlined" disabled {...field} />}
+    />
+  ) : (
+    <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1}>
+      {value}
+    </Box>
   )
 }
-ComputeValue.displayName = 'ComputeValue'
 
 export default ComputeValue

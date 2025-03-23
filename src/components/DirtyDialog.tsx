@@ -1,12 +1,7 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material'
-import React, { useState } from 'react'
+"use client"
+
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
+import React, { useState } from "react"
 
 type DirtyDialogProps = {
   message: string
@@ -37,9 +32,7 @@ const DirtyDialog = (props: DirtyDialogProps) => {
     >
       <DialogTitle id="alert-dialog-title">未保存の変更があります</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {message}
-        </DialogContentText>
+        <DialogContentText id="alert-dialog-description">{message}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel} color="primary" autoFocus>

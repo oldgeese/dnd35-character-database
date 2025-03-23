@@ -8,11 +8,7 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [{
-      "source": "**",
-      "destination": "/index.html"
-    }]
+    ]
   },
   "emulators": {
     "database": {
@@ -26,7 +22,13 @@
     },
     "firestore": {
       "port": 8081
-    }
+    },
+    "apphosting": {
+      "port": 5002,
+      "rootDirectory": "./",
+      "startCommand": "pnpm run dev"
+    },
+    "singleProjectMode": true
   },
   "firestore": {
     "rules": "firestore.rules",

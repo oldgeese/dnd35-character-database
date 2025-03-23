@@ -1,0 +1,11 @@
+env:
+  - variable: API_KEY
+    secret: prod_API_KEY
+  - variable: MESSAGING_SENDER_ID
+    secret: prod_MESSAGING_SENDER_ID
+  - variable: APP_ID
+    secret: prod_APP_ID
+  - variable: MEASUREMENT_ID
+    secret: prod_MEASUREMENT_ID
+  - variable: DEV_API_KEY
+    secret: dev_API_KEY

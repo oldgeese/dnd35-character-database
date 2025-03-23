@@ -1,0 +1,32 @@
+# Settings for Backend (on Cloud Run).
+# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
+runConfig:
+  minInstances: 0
+  # maxInstances: 100
+  # concurrency: 80
+  # cpu: 1
+  # memoryMiB: 512
+
+  # Environment variables and secrets.
+  # env:
+  # Configure environment variables.
+  # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
+  # - variable: MESSAGE
+  #   value: Hello world!
+  #   availability:
+  #     - BUILD
+  #     - RUNTIME
+
+  # Grant access to secrets in Cloud Secret Manager.
+  # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
+  # - variable: MY_SECRET
+  #   secret: mySecretRef
+env:
+  - variable: AUTH_DOMAIN
+    value: dnd35-character-database.firebaseapp.com
+  - variable: DATABASE_URL
+    value: https://dnd35-character-database.firebaseio.com
+  - variable: PROJECT_ID
+    value: dnd35-character-database
+  - variable: STORAGE_BUCKET
+    value: dnd35-character-database.firebasestorage.app

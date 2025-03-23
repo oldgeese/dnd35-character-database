@@ -1,26 +1,22 @@
-"use client";
+import { createTheme } from "@mui/material"
 
-import { createTheme } from "@mui/material/styles";
-
-declare module "@mui/material/styles" {
+declare module "@mui/material" {
   interface TypographyVariants {
-    caption2: React.CSSProperties;
+    caption2: React.CSSProperties
   }
 
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
-    caption2?: React.CSSProperties;
+    caption2?: React.CSSProperties
   }
-}
 
-// Update the Typography's variant prop options
-declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
-    caption2: true;
+    caption2: true
   }
 }
 
 export const theme = createTheme({
+  cssVariables: true,
   typography: {
     caption: {
       fontSize: "0.5rem",
@@ -50,4 +46,4 @@ export const theme = createTheme({
       },
     },
   },
-});
+})

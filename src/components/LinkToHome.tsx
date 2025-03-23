@@ -1,9 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from "next/link"
+import React from "react"
 
 const LinkToHome = () => (
   <>
-    <Link to="/">キャラクター一覧へ</Link>
+    <Link href="/">キャラクター一覧へ</Link>
   </>
 )
 
