@@ -69,83 +69,83 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
         <Grid container size={3}>
           <ImageValue name="image" input={input} values={values} {...props} />
         </Grid>
-        <Grid container size={9}>
-          <Grid container spacing={0} size={12}>
-            <Grid container size={12}>
+        <Grid container spacing={0} size={9}>
+          <Grid container size={12}>
+            <Grid container spacing={0} size={12}>
               <Label>タグ</Label>
               <Value name="tags" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container spacing={1} size={12}>
-            <Grid container size={3}>
+            <Grid container spacing={0} size={3}>
               <Label>キャラクター名</Label>
               <Value name="pcName" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={3}>
+            <Grid container spacing={0} size={3}>
               <Label>属性</Label>
               <Value name="alignment" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={3}>
+            <Grid container spacing={0} size={3}>
               <Label>プレイヤー名</Label>
               <Value name="plName" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={3}>
+            <Grid container spacing={0} size={3}>
               <Label>最終更新</Label>
               <DateValue name="updateTime" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container spacing={1} size={12}>
-            <Grid container size={9}>
+            <Grid container spacing={0} size={9}>
               <Label>クラス/キャラクターレベル</Label>
               <Value name="classLevel" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={3}>
+            <Grid container spacing={0} size={3}>
               <Label>信仰する神</Label>
               <Value name="deity" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container spacing={1} size={12}>
-            <Grid container size={2}>
+            <Grid container spacing={0} size={2}>
               <Label>種族</Label>
               <Value name="race" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={2}>
+            <Grid container spacing={0} size={2}>
               <Label>サイズ</Label>
               <Value name="size" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={2}>
+            <Grid container spacing={0} size={2}>
               <Label>性別</Label>
               <Value name="gender" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={2}>
+            <Grid container spacing={0} size={2}>
               <Label>年齢</Label>
               <Value name="age" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={2}>
+            <Grid container spacing={0} size={2}>
               <Label>身長</Label>
               <Value name="height" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={2}>
+            <Grid container spacing={0} size={2}>
               <Label>体重</Label>
               <Value name="weight" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container spacing={1} size={12}>
-            <Grid container size={4}>
+            <Grid container spacing={0} size={4}>
               <Label>髪の色</Label>
               <Value name="hairColor" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={4}>
+            <Grid container spacing={0} size={4}>
               <Label>瞳の色</Label>
               <Value name="eyeColor" input={input} values={values} {...props} />
             </Grid>
-            <Grid container size={4}>
+            <Grid container spacing={0} size={4}>
               <Label>肌の色</Label>
               <Value name="skinColor" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container spacing={1} size={12}>
-            <Grid container size={12}>
+            <Grid container spacing={0} size={12}>
               <Label>メモ欄</Label>
               <Value name="memo" input={input} values={values} {...props} />
             </Grid>
@@ -154,8 +154,8 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
       </Grid>
       <Grid container spacing={1} alignItems="flex-start" size={12}>
         <Grid container spacing={1} size={6}>
-          <Grid container spacing={1} size={6}>
-            <Grid container size={12}>
+          <Grid container spacing={0} size={6}>
+            <Grid container spacing={0} size={12}>
               <Grid container justifyContent="center" alignItems="flex-end" size={3}>
                 <Label align="center">能力名</Label>
               </Grid>
@@ -184,7 +184,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 </Label>
               </Grid>
               {values.abilities.map((row, index: number) => (
-                <Grid container key={row.id} spacing={1}>
+                <Grid container key={row.id} spacing={1} size={12}>
                   <Grid container justifyContent="center" alignItems="center" size={3}>
                     <Label2 align="center" className={classes.bgblack}>
                       {row.name}

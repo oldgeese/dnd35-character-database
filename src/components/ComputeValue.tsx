@@ -1,7 +1,8 @@
 "use client"
 
 import type { Character } from "@/src/models"
-import { Box, TextField } from "@mui/material"
+import TextField from "@mui/material/TextField"
+import Typography from "@mui/material/Typography"
 import { get } from "es-toolkit/compat"
 import { Controller, useFormContext, type UseFormReturn } from "react-hook-form"
 
@@ -36,9 +37,13 @@ const ComputeValue = ({ input, ...props }: ComputeValueProps) => {
       render={({ field }) => <TextField size="small" fullWidth margin="none" variant="outlined" disabled {...field} />}
     />
   ) : (
-    <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1}>
+    <Typography
+      sx={{ width: "100%", padding: "2px", minHeight: "20px", border: "1px solid black" }}
+      variant="label2"
+      component="div"
+    >
       {value}
-    </Box>
+    </Typography>
   )
 }
 

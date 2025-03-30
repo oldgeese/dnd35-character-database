@@ -1,3 +1,5 @@
+"use client"
+
 import type { Character } from "@/src/models"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
