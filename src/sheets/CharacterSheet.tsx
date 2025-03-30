@@ -5,7 +5,8 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward"
 import RemoveIcon from "@mui/icons-material/Remove"
 import StopIcon from "@mui/icons-material/Stop"
-import { Box, Grid } from "@mui/material"
+import Box from "@mui/material/Box"
+import Grid from "@mui/material/Grid"
 import makeStyles from "@mui/styles/makeStyles"
 import { useFieldArray } from "react-hook-form"
 
@@ -58,124 +59,124 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
 
   const { append, remove, move, insert } = input
     ? useFieldArray({
-      name: "posessions",
-    })
+        name: "posessions",
+      })
     : {}
 
   return (
     <div className={input ? classes.bgslightgray : ""}>
-      <Grid container item xs={12} spacing={1}>
-        <Grid container item xs={3}>
+      <Grid container spacing={1} size={12}>
+        <Grid container size={3}>
           <ImageValue name="image" input={input} values={values} {...props} />
         </Grid>
-        <Grid container item xs={9}>
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={12}>
+        <Grid container size={9}>
+          <Grid container spacing={0} size={12}>
+            <Grid container size={12}>
               <Label>タグ</Label>
               <Value name="tags" input={input} values={values} {...props} />
             </Grid>
           </Grid>
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={3}>
+          <Grid container spacing={1} size={12}>
+            <Grid container size={3}>
               <Label>キャラクター名</Label>
               <Value name="pcName" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={3}>
+            <Grid container size={3}>
               <Label>属性</Label>
               <Value name="alignment" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={3}>
+            <Grid container size={3}>
               <Label>プレイヤー名</Label>
               <Value name="plName" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={3}>
+            <Grid container size={3}>
               <Label>最終更新</Label>
               <DateValue name="updateTime" input={input} values={values} {...props} />
             </Grid>
           </Grid>
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={9}>
+          <Grid container spacing={1} size={12}>
+            <Grid container size={9}>
               <Label>クラス/キャラクターレベル</Label>
               <Value name="classLevel" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={3}>
+            <Grid container size={3}>
               <Label>信仰する神</Label>
               <Value name="deity" input={input} values={values} {...props} />
             </Grid>
           </Grid>
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={2}>
+          <Grid container spacing={1} size={12}>
+            <Grid container size={2}>
               <Label>種族</Label>
               <Value name="race" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={2}>
+            <Grid container size={2}>
               <Label>サイズ</Label>
               <Value name="size" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={2}>
+            <Grid container size={2}>
               <Label>性別</Label>
               <Value name="gender" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={2}>
+            <Grid container size={2}>
               <Label>年齢</Label>
               <Value name="age" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={2}>
+            <Grid container size={2}>
               <Label>身長</Label>
               <Value name="height" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={2}>
+            <Grid container size={2}>
               <Label>体重</Label>
               <Value name="weight" input={input} values={values} {...props} />
             </Grid>
           </Grid>
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={4}>
+          <Grid container spacing={1} size={12}>
+            <Grid container size={4}>
               <Label>髪の色</Label>
               <Value name="hairColor" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={4}>
+            <Grid container size={4}>
               <Label>瞳の色</Label>
               <Value name="eyeColor" input={input} values={values} {...props} />
             </Grid>
-            <Grid container item xs={4}>
+            <Grid container size={4}>
               <Label>肌の色</Label>
               <Value name="skinColor" input={input} values={values} {...props} />
             </Grid>
           </Grid>
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={12}>
+          <Grid container spacing={1} size={12}>
+            <Grid container size={12}>
               <Label>メモ欄</Label>
               <Value name="memo" input={input} values={values} {...props} />
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item xs={12} spacing={1} alignItems="flex-start">
-        <Grid container item xs={6} spacing={1}>
-          <Grid container item xs={6} spacing={1}>
-            <Grid container item xs={12}>
-              <Grid container item xs={3} justifyContent="center" alignItems="flex-end">
+      <Grid container spacing={1} alignItems="flex-start" size={12}>
+        <Grid container spacing={1} size={6}>
+          <Grid container spacing={1} size={6}>
+            <Grid container size={12}>
+              <Grid container justifyContent="center" alignItems="flex-end" size={3}>
                 <Label align="center">能力名</Label>
               </Grid>
-              <Grid container item xs={3} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={3}>
                 <Label align="center">能力値</Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   能力
                   <br />
                   修正値
                 </Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   一時的
                   <br />
                   能力値
                 </Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   一時的
                   <br />
@@ -183,16 +184,16 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 </Label>
               </Grid>
               {values.abilities.map((row, index: number) => (
-                <Grid container item key={row.id} spacing={1}>
-                  <Grid container item xs={3} justifyContent="center" alignItems="center">
+                <Grid container key={row.id} spacing={1}>
+                  <Grid container justifyContent="center" alignItems="center" size={3}>
                     <Label2 align="center" className={classes.bgblack}>
                       {row.name}
                     </Label2>
                   </Grid>
-                  <Grid container item xs={3} justifyContent="center" alignItems="center">
+                  <Grid container justifyContent="center" alignItems="center" size={3}>
                     <Value name={`abilities.${index}.score`} input={input} values={values} {...props} align="center" />
                   </Grid>
-                  <Grid container item xs={2} justifyContent="center" alignItems="center">
+                  <Grid container justifyContent="center" alignItems="center" size={2}>
                     <ComputeValue
                       name={`abilities.${index}.modifier`}
                       input={input}
@@ -203,7 +204,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       align="center"
                     />
                   </Grid>
-                  <Grid container item xs={2} justifyContent="center" alignItems="center">
+                  <Grid container justifyContent="center" alignItems="center" size={2}>
                     <Value
                       name={`abilities.${index}.temporaryScore`}
                       input={input}
@@ -212,7 +213,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       align="center"
                     />
                   </Grid>
-                  <Grid container item xs={2} justifyContent="center" alignItems="center">
+                  <Grid container justifyContent="center" alignItems="center" size={2}>
                     <Value
                       name={`abilities.${index}.temporaryModifier`}
                       input={input}
@@ -225,46 +226,46 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               ))}
             </Grid>
           </Grid>
-          <Grid container item xs={6} spacing={1}>
-            <Grid item xs={12} />
-            <Grid container item xs={12} spacing={1}>
-              <Grid container item xs={4} justifyContent="center" alignItems="flex-end" />
-              <Grid container item xs={4} justifyContent="center" alignItems="flex-end">
+          <Grid container spacing={1} size={6}>
+            <Grid size={12} />
+            <Grid container spacing={1} size={12}>
+              <Grid container justifyContent="center" alignItems="flex-end" size={4} />
+              <Grid container justifyContent="center" alignItems="flex-end" size={4}>
                 <Label>最大値</Label>
               </Grid>
-              <Grid container item xs={4} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={4}>
                 <Label>ダメージ減少</Label>
               </Grid>
-              <Grid container item xs={4} justifyContent="center" alignItems="center">
+              <Grid container justifyContent="center" alignItems="center" size={4}>
                 <Label2 align="center" className={classes.bgblack}>
                   HP
                 </Label2>
               </Grid>
-              <Grid container item xs={4} justifyContent="center" alignItems="center">
+              <Grid container justifyContent="center" alignItems="center" size={4}>
                 <Value name="hitPoint.total" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={4} justifyContent="center" alignItems="center">
+              <Grid container justifyContent="center" alignItems="center" size={4}>
                 <Value name="hitPoint.damageReduction" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={12} spacing={1}>
+              <Grid container spacing={1} size={12}>
                 <Label>負傷/現在のHP</Label>
                 <Value name="hitPoint.current" input={input} values={values} {...props} />
               </Grid>
-              <Grid container item xs={12} spacing={1}>
+              <Grid container spacing={1} size={12}>
                 <Label>非致傷ダメージ</Label>
                 <Value name="hitPoint.nonlethalDamage" input={input} values={values} {...props} />
               </Grid>
             </Grid>
-            <Grid container item xs={4} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={4}>
               <Label2 align="center" className={classes.bgblack}>
                 イニシアチブ
                 <br />
                 修正値
               </Label2>
             </Grid>
-            <Grid container item xs={8}>
-              <Grid container item xs={4} justifyContent="center">
-                <Grid container item xs={9}>
+            <Grid container size={8}>
+              <Grid container justifyContent="center" size={4}>
+                <Grid container size={9}>
                   <ComputeValue
                     name="initiative.total"
                     input={input}
@@ -275,12 +276,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                     align="center"
                   />
                 </Grid>
-                <Grid container item xs={3} justifyContent="center">
+                <Grid container justifyContent="center" size={3}>
                   <Label align="center">=</Label>
                 </Grid>
               </Grid>
-              <Grid container item xs={4} justifyContent="center">
-                <Grid container item xs={9}>
+              <Grid container justifyContent="center" size={4}>
+                <Grid container size={9}>
                   <ComputeValue
                     name="initiative.dexModifier"
                     input={input}
@@ -291,24 +292,24 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                     align="center"
                   />
                 </Grid>
-                <Grid container item xs={3} justifyContent="center">
+                <Grid container justifyContent="center" size={3}>
                   <Label align="center">+</Label>
                 </Grid>
               </Grid>
-              <Grid container item xs={4} justifyContent="center">
+              <Grid container justifyContent="center" size={4}>
                 <Value name="initiative.miscModifier" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={4} justifyContent="center" alignItems="flex-start">
+              <Grid container justifyContent="center" alignItems="flex-start" size={4}>
                 <Label align="center">合計</Label>
               </Grid>
-              <Grid container item xs={4} justifyContent="center" alignItems="flex-start">
+              <Grid container justifyContent="center" alignItems="flex-start" size={4}>
                 <Label align="center">
                   【敏】
                   <br />
                   修正値
                 </Label>
               </Grid>
-              <Grid container item xs={4} justifyContent="center" alignItems="flex-start">
+              <Grid container justifyContent="center" alignItems="flex-start" size={4}>
                 <Label align="center">
                   その他の
                   <br />
@@ -317,14 +318,14 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={1} justifyContent="center" alignItems="center">
+          <Grid container spacing={1} size={12}>
+            <Grid container justifyContent="center" alignItems="center" size={1}>
               <Label2 align="center" className={classes.bgblack}>
                 AC
               </Label2>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={9}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={9}>
                 <ComputeValue
                   name="ac.total"
                   input={input}
@@ -335,164 +336,164 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                   align="center"
                 />
               </Grid>
-              <Grid container item xs={3} justifyContent="center">
+              <Grid container justifyContent="center" size={3}>
                 <Label align="center">=</Label>
               </Grid>
             </Grid>
-            <Grid container item xs={1} justifyContent="center" alignItems="center">
-              <Grid container item xs={6}>
+            <Grid container justifyContent="center" alignItems="center" size={1}>
+              <Grid container size={6}>
                 <Label align="center">10</Label>
               </Grid>
-              <Grid container item xs={6} justifyContent="center">
+              <Grid container justifyContent="center" size={6}>
                 <Label align="center">+</Label>
               </Grid>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={9}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={9}>
                 <Value name="ac.armorBonus" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={3} justifyContent="center">
+              <Grid container justifyContent="center" size={3}>
                 <Label align="center">+</Label>
               </Grid>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={9}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={9}>
                 <Value name="ac.shieldBonus" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={3} justifyContent="center">
+              <Grid container justifyContent="center" size={3}>
                 <Label align="center">+</Label>
               </Grid>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={9}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={9}>
                 <Value name="ac.dexModifier" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={3} justifyContent="center">
+              <Grid container justifyContent="center" size={3}>
                 <Label align="center">+</Label>
               </Grid>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={9}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={9}>
                 <Value name="ac.sizeModifier" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={3} justifyContent="center">
+              <Grid container justifyContent="center" size={3}>
                 <Label align="center">+</Label>
               </Grid>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={9}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={9}>
                 <Value name="ac.naturalArmor" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={3} justifyContent="center">
+              <Grid container justifyContent="center" size={3}>
                 <Label align="center">+</Label>
               </Grid>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={9}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={9}>
                 <Value name="ac.deflectionBonus" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={3} justifyContent="center">
+              <Grid container justifyContent="center" size={3}>
                 <Label align="center">+</Label>
               </Grid>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={9}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={9}>
                 <Value name="ac.luckBonus" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={3} justifyContent="center">
+              <Grid container justifyContent="center" size={3}>
                 <Label align="center">+</Label>
               </Grid>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={9}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={9}>
                 <Value name="ac.insightBonus" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={3} justifyContent="center">
+              <Grid container justifyContent="center" size={3}>
                 <Label align="center">+</Label>
               </Grid>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={9}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={9}>
                 <Value name="ac.moraleBonus" input={input} values={values} {...props} align="center" />
               </Grid>
-              <Grid container item xs={3} justifyContent="center">
+              <Grid container justifyContent="center" size={3}>
                 <Label align="center">+</Label>
               </Grid>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container item xs={12}>
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
+              <Grid container size={12}>
                 <Value name="ac.miscModifier" input={input} values={values} {...props} align="center" />
               </Grid>
             </Grid>
-            <Grid container item xs={1} justifyContent="center" alignItems="center" />
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container justifyContent="center" alignItems="center" size={1} />
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">合計</Label>
             </Grid>
-            <Grid container item xs={1} justifyContent="center" alignItems="center" />
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container justifyContent="center" alignItems="center" size={1} />
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">
                 鎧
                 <br />
                 ボーナス
               </Label>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">
                 盾
                 <br />
                 ボーナス
               </Label>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">
                 【敏】
                 <br />
                 修正値
               </Label>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">
                 サイズ
                 <br />
                 修正値
               </Label>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">
                 外皮
                 <br />
                 ボーナス
               </Label>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">
                 反発
                 <br />
                 ボーナス
               </Label>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">
                 幸運
                 <br />
                 ボーナス
               </Label>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">
                 洞察
                 <br />
                 ボーナス
               </Label>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">
                 士気
                 <br />
                 ボーナス
               </Label>
             </Grid>
-            <Grid container item className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
+            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
               <Label align="center">
                 その他の
                 <br />
@@ -500,32 +501,32 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Label>
             </Grid>
           </Grid>
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={3} justifyContent="center" alignItems="center">
+          <Grid container spacing={1} size={12}>
+            <Grid container justifyContent="center" alignItems="center" size={3}>
               <Label2 align="center" className={classes.bgblack}>
                 接触
                 <br />
                 アーマークラス
               </Label2>
             </Grid>
-            <Grid container item xs={3} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={3}>
               <Value name="ac.touchAc" input={input} values={values} {...props} align="center" />
             </Grid>
-            <Grid container item xs={3} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={3}>
               <Label2 align="center" className={classes.bgblack}>
                 立ちすくみ
                 <br />
                 アーマークラス
               </Label2>
             </Grid>
-            <Grid container item xs={3} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={3}>
               <Value name="ac.flatFootedAc" input={input} values={values} {...props} align="center" />
             </Grid>
           </Grid>
-          <Grid item xs={12} />
-          <Grid container item xs={10} spacing={1}>
-            <Grid container item xs={3}>
-              <Grid container item xs={12} justifyContent="center" alignItems="flex-end">
+          <Grid size={12} />
+          <Grid container spacing={1} size={10}>
+            <Grid container size={3}>
+              <Grid container justifyContent="center" alignItems="flex-end" size={12}>
                 <Label align="center">
                   セーヴィング
                   <br />
@@ -533,39 +534,39 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 </Label>
               </Grid>
             </Grid>
-            <Grid container item xs={9}>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+            <Grid container size={9}>
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">合計</Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   基本
                   <br />
                   セーヴ
                 </Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   能力
                   <br />
                   修正値
                 </Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   魔法による
                   <br />
                   修正値
                 </Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   その他
                   <br />
                   修正値
                 </Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   一時的
                   <br />
@@ -574,17 +575,17 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Grid>
             </Grid>
             {values.savingThrows.map((row, index) => (
-              <Grid container item key={row.id} spacing={1}>
-                <Grid container item xs={3}>
-                  <Grid container item xs={12} justifyContent="center" alignItems="center">
+              <Grid container key={row.id} spacing={1}>
+                <Grid container size={3}>
+                  <Grid container justifyContent="center" alignItems="center" size={12}>
                     <Label2 align="center" className={classes.bgblack}>
                       {row.name}
                     </Label2>
                   </Grid>
                 </Grid>
-                <Grid container item xs={9}>
-                  <Grid container item xs={2} justifyContent="center" alignItems="center">
-                    <Grid item xs={8}>
+                <Grid container size={9}>
+                  <Grid container justifyContent="center" alignItems="center" size={2}>
+                    <Grid size={8}>
                       <ComputeValue
                         name={`savingThrows.${index}.total`}
                         input={input}
@@ -595,12 +596,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                         align="center"
                       />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid size={4}>
                       <Label align="center">=</Label>
                     </Grid>
                   </Grid>
-                  <Grid container item xs={2} justifyContent="center" alignItems="center">
-                    <Grid item xs={8}>
+                  <Grid container justifyContent="center" alignItems="center" size={2}>
+                    <Grid size={8}>
                       <Value
                         name={`savingThrows.${index}.baseSave`}
                         input={input}
@@ -609,12 +610,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                         align="center"
                       />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid size={4}>
                       <Label align="center">+</Label>
                     </Grid>
                   </Grid>
-                  <Grid container item xs={2} justifyContent="center" alignItems="center">
-                    <Grid item xs={8}>
+                  <Grid container justifyContent="center" alignItems="center" size={2}>
+                    <Grid size={8}>
                       <ComputeValue
                         name={`savingThrows.${index}.abilityModifier`}
                         input={input}
@@ -625,12 +626,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                         align="center"
                       />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid size={4}>
                       <Label align="center">+</Label>
                     </Grid>
                   </Grid>
-                  <Grid container item xs={2} justifyContent="center" alignItems="center">
-                    <Grid item xs={9}>
+                  <Grid container justifyContent="center" alignItems="center" size={2}>
+                    <Grid size={9}>
                       <Value
                         name={`savingThrows.${index}.magicModifier`}
                         input={input}
@@ -639,12 +640,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                         align="center"
                       />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid size={3}>
                       <Label align="center">+</Label>
                     </Grid>
                   </Grid>
-                  <Grid container item xs={2} justifyContent="center" alignItems="center">
-                    <Grid item xs={9}>
+                  <Grid container justifyContent="center" alignItems="center" size={2}>
+                    <Grid size={9}>
                       <Value
                         name={`savingThrows.${index}.miscModifier`}
                         input={input}
@@ -653,12 +654,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                         align="center"
                       />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid size={3}>
                       <Label align="center">+</Label>
                     </Grid>
                   </Grid>
-                  <Grid container item xs={2} justifyContent="center" alignItems="center">
-                    <Grid item xs={12}>
+                  <Grid container justifyContent="center" alignItems="center" size={2}>
+                    <Grid size={12}>
                       <Value
                         name={`savingThrows.${index}.temporaryModifier`}
                         input={input}
@@ -672,7 +673,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Grid>
             ))}
           </Grid>
-          <Grid container item xs={2} spacing={1}>
+          <Grid container spacing={1} size={2}>
             <Label>条件付きの修正値</Label>
             <MultiLineValue
               name="savingThrowConditionalModifier"
@@ -683,55 +684,55 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               style={{ height: "80%" }}
             />
           </Grid>
-          <Grid item xs={12} />
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={3} justifyContent="center" alignItems="center">
+          <Grid size={12} />
+          <Grid container spacing={1} size={12}>
+            <Grid container justifyContent="center" alignItems="center" size={3}>
               <Label2 align="center" className={classes.bgblack}>
                 基本攻撃ボーナス
               </Label2>
             </Grid>
-            <Grid container item xs={4} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={4}>
               <Value name="bab" input={input} values={values} {...props} align="center" />
             </Grid>
-            <Grid container item xs={2} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={2}>
               <Label2 align="center" className={classes.bgblack}>
                 呪文抵抗
               </Label2>
             </Grid>
-            <Grid container item xs={3} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={3}>
               <Value name="spellResistance" input={input} values={values} {...props} align="center" />
             </Grid>
           </Grid>
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={3}>
-              <Grid container item xs={12} justifyContent="center" alignItems="center" />
+          <Grid container spacing={1} size={12}>
+            <Grid container size={3}>
+              <Grid container justifyContent="center" alignItems="center" size={12} />
             </Grid>
-            <Grid container item xs={9}>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+            <Grid container size={9}>
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">合計</Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   基本攻撃
                   <br />
                   ボーナス
                 </Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   【筋】
                   <br />
                   修正値
                 </Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   サイズ
                   <br />
                   修正値
                 </Label>
               </Grid>
-              <Grid container item xs={2} justifyContent="center" alignItems="flex-end">
+              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
                 <Label align="center">
                   その他
                   <br />
@@ -739,17 +740,17 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 </Label>
               </Grid>
             </Grid>
-            <Grid container item spacing={1}>
-              <Grid container item xs={3}>
-                <Grid container item xs={12} justifyContent="center" alignItems="center">
+            <Grid container spacing={1}>
+              <Grid container size={3}>
+                <Grid container justifyContent="center" alignItems="center" size={12}>
                   <Label2 align="center" className={classes.bgblack}>
                     組みつき修正値
                   </Label2>
                 </Grid>
               </Grid>
-              <Grid container item xs={9}>
-                <Grid container item xs={2} justifyContent="center" alignItems="center">
-                  <Grid item xs={8}>
+              <Grid container size={9}>
+                <Grid container justifyContent="center" alignItems="center" size={2}>
+                  <Grid size={8}>
                     <ComputeValue
                       name="grappleModifier.total"
                       input={input}
@@ -760,20 +761,20 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       align="center"
                     />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid size={4}>
                     <Label align="center">=</Label>
                   </Grid>
                 </Grid>
-                <Grid container item xs={2} justifyContent="center" alignItems="center">
-                  <Grid item xs={8}>
+                <Grid container justifyContent="center" alignItems="center" size={2}>
+                  <Grid size={8}>
                     <Value name="grappleModifier.bab" input={input} values={values} {...props} align="center" />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid size={4}>
                     <Label align="center">+</Label>
                   </Grid>
                 </Grid>
-                <Grid container item xs={2} justifyContent="center" alignItems="center">
-                  <Grid item xs={8}>
+                <Grid container justifyContent="center" alignItems="center" size={2}>
+                  <Grid size={8}>
                     <ComputeValue
                       name="grappleModifier.strengthModifier"
                       input={input}
@@ -784,12 +785,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       align="center"
                     />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid size={4}>
                     <Label align="center">+</Label>
                   </Grid>
                 </Grid>
-                <Grid container item xs={2} justifyContent="center" alignItems="center">
-                  <Grid item xs={9}>
+                <Grid container justifyContent="center" alignItems="center" size={2}>
+                  <Grid size={9}>
                     <Value
                       name="grappleModifier.sizeModifier"
                       input={input}
@@ -798,12 +799,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       align="center"
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid size={3}>
                     <Label align="center">+</Label>
                   </Grid>
                 </Grid>
-                <Grid container item xs={2} justifyContent="center" alignItems="center">
-                  <Grid item xs={12}>
+                <Grid container justifyContent="center" alignItems="center" size={2}>
+                  <Grid size={12}>
                     <Value
                       name="grappleModifier.miscModifier"
                       input={input}
@@ -816,36 +817,36 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={12}>
+          <Grid container size={12}>
             {values.attacks.map((row, index) => (
-              <Grid container item key={row.id} spacing={1}>
-                <Grid item xs={12} />
-                <Grid item xs={12} />
-                <Grid container item xs={6} justifyContent="center" alignItems="center">
+              <Grid container key={row.id} spacing={1}>
+                <Grid size={12} />
+                <Grid size={12} />
+                <Grid container justifyContent="center" alignItems="center" size={6}>
                   <Label2 align="center" className={classes.bgblack}>
                     攻撃
                     {index + 1}
                   </Label2>
                 </Grid>
-                <Grid container item xs={3} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={3}>
                   <Label align="center" className={classes.bgblack}>
                     攻撃ボーナス
                   </Label>
                 </Grid>
-                <Grid container item xs={2} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={2}>
                   <Label align="center" className={classes.bgblack}>
                     クリティカル
                   </Label>
                 </Grid>
-                <Grid container item xs={1} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={1}>
                   <Label align="center" className={classes.bgblack}>
                     重量
                   </Label>
                 </Grid>
-                <Grid container item xs={6} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={6}>
                   <Value name={`attacks.${index}.attack`} input={input} values={values} {...props} align="center" />
                 </Grid>
-                <Grid container item xs={3} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={3}>
                   <Value
                     name={`attacks.${index}.attackBonus`}
                     input={input}
@@ -854,100 +855,100 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                     align="center"
                   />
                 </Grid>
-                <Grid container item xs={2} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={2}>
                   <Value name={`attacks.${index}.critical`} input={input} values={values} {...props} align="center" />
                 </Grid>
-                <Grid container item xs={1} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={1}>
                   <Value name={`attacks.${index}.weight`} input={input} values={values} {...props} align="center" />
                 </Grid>
-                <Grid container item xs={2} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={2}>
                   <Label align="center" className={classes.bgblack}>
                     タイプ
                   </Label>
                 </Grid>
-                <Grid container item xs={1} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={1}>
                   <Label align="center" className={classes.bgblack}>
                     射程
                   </Label>
                 </Grid>
-                <Grid container item xs={3} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={3}>
                   <Label align="center" className={classes.bgblack}>
                     その他・矢弾等
                   </Label>
                 </Grid>
-                <Grid container item xs={6} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={6}>
                   <Label align="center" className={classes.bgblack}>
                     ダメージ
                   </Label>
                 </Grid>
-                <Grid container item xs={2} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={2}>
                   <Value name={`attacks.${index}.type`} input={input} values={values} {...props} align="center" />
                 </Grid>
-                <Grid container item xs={1} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={1}>
                   <Value name={`attacks.${index}.range`} input={input} values={values} {...props} align="center" />
                 </Grid>
-                <Grid container item xs={3} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={3}>
                   <Value name={`attacks.${index}.notes`} input={input} values={values} {...props} align="center" />
                 </Grid>
-                <Grid container item xs={6} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={6}>
                   <Value name={`attacks.${index}.damage`} input={input} values={values} {...props} align="center" />
                 </Grid>
               </Grid>
             ))}
           </Grid>
         </Grid>
-        <Grid container item xs={6} spacing={1}>
-          <Grid container item xs={12} spacing={1}>
-            <Grid container item xs={4} justifyContent="center" alignItems="center">
+        <Grid container spacing={1} size={6}>
+          <Grid container spacing={1} size={12}>
+            <Grid container justifyContent="center" alignItems="center" size={4}>
               <Label2 align="center" className={classes.bgblack}>
                 移動速度
               </Label2>
             </Grid>
-            <Grid container item xs={8} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={8}>
               <Value name="speed" input={input} values={values} {...props} align="center" />
             </Grid>
           </Grid>
-          <Grid container item xs={12}>
-            <Grid container item xs={12} justifyContent="center" alignItems="center">
+          <Grid container size={12}>
+            <Grid container justifyContent="center" alignItems="center" size={12}>
               <Label2 align="center" className={classes.bgblack}>
                 技能
               </Label2>
             </Grid>
-            <Grid container item xs={1} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={1}>
               <Label align="center">
                 クラス
                 <br />
                 技能
               </Label>
             </Grid>
-            <Grid container item xs={4} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={4}>
               <Label align="center">技能名</Label>
             </Grid>
-            <Grid container item xs={1} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={1}>
               <Label align="center">
                 対応
                 <br />
                 能力値
               </Label>
             </Grid>
-            <Grid container item xs={1} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={1}>
               <Label align="center">
                 技能
                 <br />
                 修正値
               </Label>
             </Grid>
-            <Grid container item xs={1} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={1}>
               <Label align="center">
                 能力
                 <br />
                 修正値
               </Label>
             </Grid>
-            <Grid container item xs={1} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={1}>
               <Label align="center">ランク</Label>
             </Grid>
-            <Grid container item xs={1} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={1}>
               <Label align="center">
                 防具
                 <br />
@@ -956,7 +957,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 ペナルティ
               </Label>
             </Grid>
-            <Grid container item xs={2} justifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center" size={2}>
               <Label align="center">
                 その他
                 <br />
@@ -964,8 +965,8 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Label>
             </Grid>
             {values.skills.map((skill, index) => (
-              <Grid container item key={skill.id} spacing={1}>
-                <Grid container item xs={1} justifyContent="center" alignItems="center">
+              <Grid container key={skill.id} spacing={1}>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
                   <BooleanValue
                     name={`skills.${index}.classSkill`}
                     input={input}
@@ -976,7 +977,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                     {skill.classSkill}
                   </BooleanValue>
                 </Grid>
-                <Grid container item xs={4} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={4}>
                   <SkillNameValue
                     name={`skills.${index}.name`}
                     subName={`skills.${index}.subName`}
@@ -987,7 +988,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                     align="left"
                   />
                 </Grid>
-                <Grid container item xs={1} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={1}>
                   <SkillAbilityValue
                     name={`skills.${index}.ability`}
                     skill={skill}
@@ -997,8 +998,8 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                     align="center"
                   />
                 </Grid>
-                <Grid container item xs={1} justifyContent="center" alignItems="center">
-                  <Grid item xs={9}>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid size={9}>
                     <ComputeValue
                       name={`skills.${index}.skillModifier`}
                       input={input}
@@ -1009,12 +1010,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       align="center"
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid size={3}>
                     <Label align="center">=</Label>
                   </Grid>
                 </Grid>
-                <Grid container item xs={1} justifyContent="center" alignItems="center">
-                  <Grid item xs={9}>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid size={9}>
                     <ComputeValue
                       name={`skills.${index}.abilityModifier`}
                       input={input}
@@ -1025,27 +1026,27 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       align="center"
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid size={3}>
                     <Label align="center">+</Label>
                   </Grid>
                 </Grid>
-                <Grid container item xs={1} justifyContent="center" alignItems="center">
-                  <Grid item xs={9}>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid size={9}>
                     <Value name={`skills.${index}.ranks`} input={input} values={values} {...props} align="center" />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid size={3}>
                     <Label align="center">+</Label>
                   </Grid>
                 </Grid>
-                <Grid container item xs={1} justifyContent="center" alignItems="center">
-                  <Grid item xs={9}>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid size={9}>
                     <Value name={`skills.${index}.penalty`} input={input} values={values} {...props} align="center" />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid size={3}>
                     <Label align="center">+</Label>
                   </Grid>
                 </Grid>
-                <Grid container item xs={2} justifyContent="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center" size={2}>
                   <Value
                     name={`skills.${index}.miscModifier`}
                     input={input}
@@ -1066,63 +1067,63 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
         </Grid>
       </Grid>
       <Grid container spacing={1}>
-        <Grid item>
+        <Grid>
           <Box padding="12px" />
         </Grid>
       </Grid>
-      <Grid container item xs={12} spacing={1}>
-        <Grid container item xs={3} justifyContent="center">
+      <Grid container spacing={1} size={12}>
+        <Grid container justifyContent="center" size={3}>
           <Label2 align="center" className={classes.bgblack}>
             鎧・防御アイテム
           </Label2>
         </Grid>
-        <Grid container item xs={1} justifyContent="center">
+        <Grid container justifyContent="center" size={1}>
           <Label align="center" className={classes.bgblack}>
             AC
             <br />
             ボーナス
           </Label>
         </Grid>
-        <Grid container item xs={2} justifyContent="center">
+        <Grid container justifyContent="center" size={2}>
           <Label align="center" className={classes.bgblack}>
             タイプ
           </Label>
         </Grid>
-        <Grid container item xs={1} justifyContent="center">
+        <Grid container justifyContent="center" size={1}>
           <Label align="center" className={classes.bgblack}>
             ACへの【敏】
             <br />
             ボーナス上限
           </Label>
         </Grid>
-        <Grid container item xs={1} justifyContent="center">
+        <Grid container justifyContent="center" size={1}>
           <Label align="center" className={classes.bgblack}>
             判定ペナルティ
           </Label>
         </Grid>
-        <Grid container item xs={1} justifyContent="center">
+        <Grid container justifyContent="center" size={1}>
           <Label align="center" className={classes.bgblack}>
             秘術呪文
             <br />
             失敗確率
           </Label>
         </Grid>
-        <Grid container item xs={1} justifyContent="center">
+        <Grid container justifyContent="center" size={1}>
           <Label align="center" className={classes.bgblack}>
             重量
           </Label>
         </Grid>
-        <Grid container item xs={2} justifyContent="center">
+        <Grid container justifyContent="center" size={2}>
           <Label align="center" className={classes.bgblack}>
             特性・その他
           </Label>
         </Grid>
         {values.protectiveItems.map((row, index) => (
-          <Grid container item key={row.id} spacing={1}>
-            <Grid container item xs={3} justifyContent="center">
+          <Grid container key={row.id} spacing={1}>
+            <Grid container justifyContent="center" size={3}>
               <Value name={`protectiveItems.${index}.name`} input={input} values={values} {...props} align="center" />
             </Grid>
-            <Grid container item xs={1} justifyContent="center">
+            <Grid container justifyContent="center" size={1}>
               <Value
                 name={`protectiveItems.${index}.acBonus`}
                 input={input}
@@ -1131,13 +1132,13 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 align="center"
               />
             </Grid>
-            <Grid container item xs={2} justifyContent="center">
+            <Grid container justifyContent="center" size={2}>
               <Value name={`protectiveItems.${index}.type`} input={input} values={values} {...props} align="center" />
             </Grid>
-            <Grid container item xs={1} justifyContent="center">
+            <Grid container justifyContent="center" size={1}>
               <Value name={`protectiveItems.${index}.dexMax`} input={input} values={values} {...props} align="center" />
             </Grid>
-            <Grid container item xs={1} justifyContent="center">
+            <Grid container justifyContent="center" size={1}>
               <Value
                 name={`protectiveItems.${index}.checkPenalty`}
                 input={input}
@@ -1146,7 +1147,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 align="center"
               />
             </Grid>
-            <Grid container item xs={1} justifyContent="center">
+            <Grid container justifyContent="center" size={1}>
               <Value
                 name={`protectiveItems.${index}.spellFailure`}
                 input={input}
@@ -1155,10 +1156,10 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 align="center"
               />
             </Grid>
-            <Grid container item xs={1} justifyContent="center">
+            <Grid container justifyContent="center" size={1}>
               <Value name={`protectiveItems.${index}.weight`} input={input} values={values} {...props} align="center" />
             </Grid>
-            <Grid container item xs={2} justifyContent="center">
+            <Grid container justifyContent="center" size={2}>
               <Value
                 name={`protectiveItems.${index}.specialProperties`}
                 input={input}
@@ -1169,28 +1170,28 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
             </Grid>
           </Grid>
         ))}
-        <Grid container item xs={3} justifyContent="center">
+        <Grid container justifyContent="center" size={3}>
           <Label2 align="center" className={classes.bgblack}>
             合計
           </Label2>
         </Grid>
-        <Grid container item xs={1} justifyContent="center">
+        <Grid container justifyContent="center" size={1}>
           <Value name="protectiveItemsTotal.acBonus" input={input} values={values} {...props} align="center" />
         </Grid>
-        <Grid container item xs={2} justifyContent="center" />
-        <Grid container item xs={1} justifyContent="center">
+        <Grid container justifyContent="center" size={2} />
+        <Grid container justifyContent="center" size={1}>
           <Value name="protectiveItemsTotal.dexMac" input={input} values={values} {...props} align="center" />
         </Grid>
-        <Grid container item xs={1} justifyContent="center">
+        <Grid container justifyContent="center" size={1}>
           <Value name="protectiveItemsTotal.checkPenalty" input={input} values={values} {...props} align="center" />
         </Grid>
-        <Grid container item xs={1} justifyContent="center">
+        <Grid container justifyContent="center" size={1}>
           <Value name="protectiveItemsTotal.spellFailure" input={input} values={values} {...props} align="center" />
         </Grid>
-        <Grid container item xs={1} justifyContent="center">
+        <Grid container justifyContent="center" size={1}>
           <Value name="protectiveItemsTotal.weight" input={input} values={values} {...props} align="center" />
         </Grid>
-        <Grid container item xs={2} justifyContent="center">
+        <Grid container justifyContent="center" size={2}>
           <Value
             name="protectiveItemsTotal.specialProperties"
             input={input}
@@ -1201,40 +1202,40 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
         </Grid>
       </Grid>
       <Grid container spacing={1}>
-        <Grid item>
+        <Grid>
           <Box padding="12px" />
         </Grid>
       </Grid>
-      <Grid container item xs={12} spacing={1} alignItems="flex-start">
-        <Grid container item xs={4} spacing={1}>
-          <Grid container item xs={12} justifyContent="center">
+      <Grid container spacing={1} alignItems="flex-start" size={12}>
+        <Grid container spacing={1} size={4}>
+          <Grid container justifyContent="center" size={12}>
             <Label2 align="center" className={classes.bgblack}>
               装備品
             </Label2>
           </Grid>
-          <Grid container item xs={input ? 6 : 9} justifyContent="center">
+          <Grid container justifyContent="center" size={input ? 6 : 9}>
             <Label align="center">アイテム</Label>
           </Grid>
-          <Grid container item xs={3} justifyContent="center">
+          <Grid container justifyContent="center" size={3}>
             <Label align="center">重量</Label>
           </Grid>
           {input && (
-            <Grid container item xs={3} justifyContent="center">
+            <Grid container justifyContent="center" size={3}>
               <Label align="center">操作</Label>
             </Grid>
           )}
           {values.posessions.length > 0 ? (
             values.posessions.map((posession, index) => (
-              <Grid container item key={posession.id} spacing={1}>
-                <Grid container item xs={input ? 6 : 9} justifyContent="center">
+              <Grid container key={posession.id} spacing={1}>
+                <Grid container justifyContent="center" size={input ? 6 : 9}>
                   <Value name={`posessions.${index}.item`} input={input} values={values} {...props} />
                 </Grid>
-                <Grid container item xs={3} justifyContent="center">
+                <Grid container justifyContent="center" size={3}>
                   <Value name={`posessions.${index}.weight`} input={input} values={values} {...props} />
                 </Grid>
                 {input && (
-                  <Grid container item xs={3} justifyContent="center">
-                    <Grid container item xs={3} justifyContent="center">
+                  <Grid container justifyContent="center" size={3}>
+                    <Grid container justifyContent="center" size={3}>
                       <button
                         type="button"
                         className="secondary"
@@ -1243,12 +1244,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                         <AddIcon style={{ fontSize: 9 }} />
                       </button>
                     </Grid>
-                    <Grid container item xs={3} justifyContent="center">
+                    <Grid container justifyContent="center" size={3}>
                       <button type="button" className="secondary" onClick={() => (remove ? remove(index) : null)}>
                         <RemoveIcon style={{ fontSize: 9 }} />
                       </button>
                     </Grid>
-                    <Grid container item xs={3} justifyContent="center">
+                    <Grid container justifyContent="center" size={3}>
                       {index === 0 ? (
                         ""
                       ) : (
@@ -1261,7 +1262,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                         </button>
                       )}
                     </Grid>
-                    <Grid container item xs={3} justifyContent="center">
+                    <Grid container justifyContent="center" size={3}>
                       {index === values.posessions.length - 1 ? (
                         ""
                       ) : (
@@ -1279,7 +1280,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Grid>
             ))
           ) : (
-            <Grid container item xs={12} justifyContent="flex-end">
+            <Grid container justifyContent="flex-end" size={12}>
               <button
                 type="button"
                 className="secondary"
@@ -1289,78 +1290,78 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </button>
             </Grid>
           )}
-          <Grid container item xs={9} justifyContent="center">
+          <Grid container justifyContent="center" size={9}>
             <Label2 align="center" className={classes.bgblack}>
               運搬重量の合計
             </Label2>
           </Grid>
-          <Grid container item xs={3} justifyContent="center">
+          <Grid container justifyContent="center" size={3}>
             <Value name="totalWeightCarried" input={input} values={values} {...props} />
           </Grid>
-          <Grid item xs={12} />
-          <Grid container item xs={12} justifyContent="center">
+          <Grid size={12} />
+          <Grid container justifyContent="center" size={12}>
             <Label2 align="center" className={classes.bgblack}>
               所持金
             </Label2>
           </Grid>
-          <Grid container item xs={3} justifyContent="center">
+          <Grid container justifyContent="center" size={3}>
             <Value name="money.cp" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={3} justifyContent="center">
+          <Grid container justifyContent="center" size={3}>
             <Value name="money.sp" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={3} justifyContent="center">
+          <Grid container justifyContent="center" size={3}>
             <Value name="money.gp" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={3} justifyContent="center">
+          <Grid container justifyContent="center" size={3}>
             <Value name="money.pp" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={3} justifyContent="center">
+          <Grid container justifyContent="center" size={3}>
             <Label>銅貨(cp)</Label>
           </Grid>
-          <Grid container item xs={3} justifyContent="center">
+          <Grid container justifyContent="center" size={3}>
             <Label>銀貨(sp)</Label>
           </Grid>
-          <Grid container item xs={3} justifyContent="center">
+          <Grid container justifyContent="center" size={3}>
             <Label>金貨(gp)</Label>
           </Grid>
-          <Grid container item xs={3} justifyContent="center">
+          <Grid container justifyContent="center" size={3}>
             <Label>白金貨(pp)</Label>
           </Grid>
-          <Grid item xs={12} />
-          <Grid container item xs={12} justifyContent="center">
+          <Grid size={12} />
+          <Grid container justifyContent="center" size={12}>
             <Label2 align="center" className={classes.bgblack}>
               荷重
             </Label2>
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Value name="load.lightLoad" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Value name="load.mediumLoad" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Value name="load.heavyLoad" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Value name="load.liftOverHead" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Value name="load.liftOffGround" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Value name="load.pushOrDrag" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Label align="center">軽荷重</Label>
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Label align="center">中荷重</Label>
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Label align="center">重荷重</Label>
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Label align="center">
               頭上に
               <br />
@@ -1369,7 +1370,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               =最大荷重
             </Label>
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Label align="center">
               地面から
               <br />
@@ -1378,7 +1379,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               =最大荷重x2
             </Label>
           </Grid>
-          <Grid container item xs={2} justifyContent="center">
+          <Grid container justifyContent="center" size={2}>
             <Label align="center">
               押し引き
               <br />
@@ -1386,58 +1387,58 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
             </Label>
           </Grid>
         </Grid>
-        <Grid container item xs={4} spacing={1}>
-          <Grid container item xs={12} justifyContent="center">
+        <Grid container spacing={1} size={4}>
+          <Grid container justifyContent="center" size={12}>
             <Label2 align="center" className={classes.bgblack}>
               特技
             </Label2>
           </Grid>
-          <Grid container item xs={12} justifyContent="center">
+          <Grid container justifyContent="center" size={12}>
             <MultiLineValue name="feat" input={input} {...props} />
           </Grid>
-          <Grid container item xs={12} justifyContent="center">
+          <Grid container justifyContent="center" size={12}>
             <Label2 align="center" className={classes.bgblack}>
               特殊能力
             </Label2>
           </Grid>
-          <Grid container item xs={12} justifyContent="center">
+          <Grid container justifyContent="center" size={12}>
             <MultiLineValue name="specialAbility" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={12} justifyContent="center">
+          <Grid container justifyContent="center" size={12}>
             <Label2 align="center" className={classes.bgblack}>
               言語
             </Label2>
           </Grid>
-          <Grid container item xs={12} justifyContent="center">
+          <Grid container justifyContent="center" size={12}>
             <MultiLineValue name="language" input={input} values={values} {...props} />
           </Grid>
-          <Grid container item xs={12} justifyContent="center">
+          <Grid container justifyContent="center" size={12}>
             <Label2 align="center" className={classes.bgblack}>
               経験点
             </Label2>
           </Grid>
-          <Grid container item xs={12} justifyContent="center">
+          <Grid container justifyContent="center" size={12}>
             <Value name="experiencePoint" input={input} values={values} {...props} />
           </Grid>
         </Grid>
-        <Grid container item xs={4} spacing={1}>
-          <Grid container item xs={12} justifyContent="center">
+        <Grid container spacing={1} size={4}>
+          <Grid container justifyContent="center" size={12}>
             <Label2 align="center" className={classes.bgblack}>
               呪文
             </Label2>
           </Grid>
-          <Grid container item xs={12} justifyContent="center">
+          <Grid container justifyContent="center" size={12}>
             <MultiLineValue name="spell" input={input} values={values} rows={50} {...props} />
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item xs={12} spacing={1} alignItems="flex-start">
-        <Grid container item xs={12} justifyContent="center">
+      <Grid container spacing={1} alignItems="flex-start" size={12}>
+        <Grid container justifyContent="center" size={12}>
           <Label2 align="center" className={classes.bgblack}>
             設定など
           </Label2>
         </Grid>
-        <Grid container item xs={12} justifyContent="center">
+        <Grid container justifyContent="center" size={12}>
           <MultiLineValue name="setting" input={input} values={values} {...props} />
         </Grid>
       </Grid>

@@ -22,20 +22,20 @@ const SkillNameValue = ({ input, name, subName, skill, ...props }: SkillNameValu
   if (input && skill.hasSubName) {
     return (
       <>
-        <Grid item xs={3}>
+        <Grid size={3}>
           <Box minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
             {value}
             {skill.usableUntrained ? <Stop style={{ fontSize: 12 }} /> : ""}
           </Box>
         </Grid>
-        <Grid item xs={9}>
+        <Grid size={9}>
           <Controller
             name={subName}
             render={({ field }) => <TextField size="small" fullWidth margin="none" variant="outlined" {...field} />}
           />
         </Grid>
       </>
-    )
+    );
   }
   if (input && skill.fullEditable) {
     return (

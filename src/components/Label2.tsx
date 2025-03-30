@@ -1,4 +1,4 @@
-import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
 
 type Label2Props = {
   align?: string
@@ -6,10 +6,14 @@ type Label2Props = {
   children: React.ReactNode
 }
 
-const Label2 = (props: Label2Props) => (
-  <Box width="100%" padding="2px" fontSize="caption2.fontSize" {...props}>
-    {props.children}
-  </Box>
-)
+const Label2 = (props: Label2Props) => {
+  return (
+    <div sx={{ width: "100%", padding: "2px" }} {...props}>
+      <Typography variant="label2" component="div">
+        {props.children}
+      </Typography>
+    </div>
+  )
+}
 
 export default Label2

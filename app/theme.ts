@@ -1,27 +1,50 @@
-import { createTheme } from "@mui/material"
+import { type Theme, createTheme } from "@mui/material/styles"
 
-declare module "@mui/material" {
+declare module "@mui/material/styles" {
   interface TypographyVariants {
-    caption2: React.CSSProperties
+    label: React.CSSProperties
+    label2: React.CSSProperties
   }
 
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
-    caption2?: React.CSSProperties
-  }
-
-  interface TypographyPropsVariantOverrides {
-    caption2: true
+    label?: React.CSSProperties
+    label2?: React.CSSProperties
   }
 }
+
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    label: true
+    label2: true
+  }
+}
+
+declare global {
+  namespace React {
+    interface HTMLAttributes<T> {
+      sx?:
+        | React.CSSProperties
+        | ((theme: Theme) => React.CSSProperties)
+        | ReadonlyArray<React.CSSProperties | ((theme: Theme) => React.CSSProperties)>
+    }
+  }
+}
+
+// declare module "@mui/material-pigment-css" {
+//   interface ThemeArgs {
+//     theme: Theme
+//   }
+// }
 
 export const theme = createTheme({
   cssVariables: true,
   typography: {
-    caption: {
+    fontFamily: "Noto Sans JP",
+    label: {
       fontSize: "0.5rem",
     },
-    caption2: {
+    label2: {
       fontSize: "0.75rem",
     },
   },

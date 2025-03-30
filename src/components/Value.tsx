@@ -1,10 +1,8 @@
-"use client"
-
-import { Box, TextField } from "@mui/material"
-import React from "react"
-import { Controller } from "react-hook-form"
 import type { Character } from "@/src/models"
+import TextField from "@mui/material/TextField"
+import Typography from "@mui/material/Typography"
 import { get } from "es-toolkit/compat"
+import { Controller } from "react-hook-form"
 
 type ValueProps = {
   align?: string
@@ -22,9 +20,13 @@ const Value = ({ input, ...props }: ValueProps) => {
       render={({ field }) => <TextField size="small" fullWidth margin="none" variant="outlined" {...field} />}
     />
   ) : (
-    <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
+    <Typography
+      sx={{ width: "100%", padding: "2px", minHeight: "20px", border: "1px solid black" }}
+      variant="label2"
+      component="div"
+    >
       {value}
-    </Box>
+    </Typography>
   )
 }
 
