@@ -1,7 +1,7 @@
 import Typography from "@mui/material/Typography"
 
 type LabelProps = {
-  align?: string
+  align?: "center" | "inherit" | "justify" | "left" | "right"
   className?: string
   component?: string
   children: React.ReactNode
@@ -10,9 +10,17 @@ type LabelProps = {
 const Label = (props: LabelProps) => {
   const component = props.component === "span" ? "span" : "div"
   return (
-    <Typography sx={{ width: "100%", padding: "2px" }} variant="label" component={component}>
-      {props.children}
-    </Typography>
+    <div
+      sx={[
+        { padding: "2px" },
+        props.component === "span" ? { display: "inline" } : { display: "inline-block", width: "100%" },
+      ]}
+      className={props.className}
+    >
+      <Typography variant="label" component={component} align={props.align}>
+        {props.children}
+      </Typography>
+    </div>
   )
 }
 

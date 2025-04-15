@@ -7,7 +7,9 @@
     "jsr:@denops/core@7": "7.0.1",
     "jsr:@denops/core@7.0": "7.0.1",
     "jsr:@denops/std@7.4": "7.4.0",
+    "jsr:@denops/std@7.5": "7.5.0",
     "jsr:@shougo/ddc-vim@9.1": "9.1.0",
+    "jsr:@shougo/ddu-vim@10.3.0": "10.3.0",
     "jsr:@shougo/ddu-vim@9.5.0": "9.5.0",
     "jsr:@std/assert@^1.0.10": "1.0.11",
     "jsr:@std/assert@~1.0.2": "1.0.11",
@@ -38,18 +40,33 @@
         "jsr:@std/ulid"
       ]
     },
+    "@denops/std@7.5.0": {
+      "integrity": "22d41172f1f5c91265a5555c1aecd63263176c6c65b4fb7c2b1a585ecb79a554",
+      "dependencies": [
+        "jsr:@core/unknownutil@^4.3.0",
+        "jsr:@denops/core@7",
+        "jsr:@std/semver",
+        "jsr:@std/ulid"
+      ]
+    },
     "@shougo/ddc-vim@9.1.0": {
       "integrity": "3a221b0442a3c2ae164e8ace9e9fc3f2a4f6ea5094c75e21741bfd8a690d7d0e",
       "dependencies": [
         "jsr:@core/unknownutil@4.3",
-        "jsr:@denops/std",
+        "jsr:@denops/std@7.4",
         "jsr:@std/assert@~1.0.2"
       ]
     },
     "@shougo/ddu-vim@9.5.0": {
       "integrity": "69f9802c4244cdb8122733e0fff7f721ebe314269855e13766b18b31c18f91a4",
       "dependencies": [
-        "jsr:@denops/std"
+        "jsr:@denops/std@7.4"
+      ]
+    },
+    "@shougo/ddu-vim@10.3.0": {
+      "integrity": "5be1239504b154373d02f3734b2c24d3266107fee781a55fde46fcc84a9a6057",
+      "dependencies": [
+        "jsr:@denops/std@7.5"
       ]
     },
     "@std/assert@1.0.11": {
@@ -495,28 +512,34 @@
     "packageJson": {
       "dependencies": [
         "npm:@emotion/cache@^11.14.0",
-        "npm:@emotion/react@^11.7.1",
-        "npm:@emotion/styled@^11.6.0",
-        "npm:@eslint/eslintrc@3",
-        "npm:@hookform/resolvers@^4.1.3",
-        "npm:@mui/icons-material@^5.10.6",
-        "npm:@mui/material-nextjs@^6.4.3",
-        "npm:@mui/material@^5.10.8",
-        "npm:@mui/styles@^5.10.8",
-        "npm:@types/node@^22.13.9",
-        "npm:@types/react-dom@19",
-        "npm:@types/react@19",
+        "npm:@emotion/react@^11.14.0",
+        "npm:@emotion/styled@^11.14.0",
+        "npm:@eslint/eslintrc@^3.3.1",
+        "npm:@hookform/resolvers@^5.0.1",
+        "npm:@mui/icons-material@^7.0.2",
+        "npm:@mui/material-nextjs@^7.0.2",
+        "npm:@mui/material-pigment-css@^7.0.2",
+        "npm:@mui/material@^7.0.2",
+        "npm:@mui/styles@^6.4.8",
+        "npm:@pigment-css/nextjs-plugin@^0.0.30",
+        "npm:@pigment-css/react@^0.0.30",
+        "npm:@pigment-css/theme@^0.0.30",
+        "npm:@types/node@^22.14.1",
+        "npm:@types/react-dom@^19.1.2",
+        "npm:@types/react@^19.1.1",
         "npm:@types/uuid@10",
-        "npm:eslint-config-next@^15.2.1",
-        "npm:eslint@^9.22.0",
-        "npm:firebase-tools@^13.33.0",
-        "npm:firebase@^11.4.0",
+        "npm:es-toolkit@^1.34.1",
+        "npm:eslint-config-next@^15.3.0",
+        "npm:eslint@^9.24.0",
+        "npm:firebase-tools@^14.1.0",
+        "npm:firebase@^11.6.0",
         "npm:jssha@^3.2.0",
-        "npm:next@^15.2.1",
-        "npm:react-dom@19",
-        "npm:react-hook-form@^7.54.2",
-        "npm:react@19",
-        "npm:typescript@^5.8.2",
+        "npm:next-navigation-guard@~0.1.2",
+        "npm:next@^15.3.0",
+        "npm:react-dom@^19.1.0",
+        "npm:react-hook-form@^7.55.0",
+        "npm:react@^19.1.0",
+        "npm:typescript@^5.8.3",
         "npm:uuid@^11.1.0",
         "npm:yup@^1.6.1"
       ]

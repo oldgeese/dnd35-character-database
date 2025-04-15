@@ -7,6 +7,7 @@ import RemoveIcon from "@mui/icons-material/Remove"
 import StopIcon from "@mui/icons-material/Stop"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
+import Stack from "@mui/material/Stack"
 import makeStyles from "@mui/styles/makeStyles"
 import { useFieldArray } from "react-hook-form"
 
@@ -154,46 +155,46 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
       </Grid>
       <Grid container spacing={1} alignItems="flex-start" size={12}>
         <Grid container spacing={1} size={6}>
-          <Grid container spacing={0} size={6}>
+          <Grid container spacing={0} size={6} alignItems="stretch">
             <Grid container spacing={0} size={12}>
-              <Grid container justifyContent="center" alignItems="flex-end" size={3}>
-                <Label align="center">能力名</Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={3}>
-                <Label align="center">能力値</Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
-                  能力
-                  <br />
-                  修正値
-                </Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
-                  一時的
-                  <br />
-                  能力値
-                </Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
-                  一時的
-                  <br />
-                  修正値
-                </Label>
+              <Grid container spacing={1} size={12}>
+                <Grid container alignItems="flex-end" size={3}>
+                  <Label>能力名</Label>
+                </Grid>
+                <Grid container alignItems="flex-end" size={3}>
+                  <Label>能力値</Label>
+                </Grid>
+                <Grid container alignItems="flex-end" size={2}>
+                  <Label>
+                    能力
+                    <br />
+                    修正値
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-end" size={2}>
+                  <Label>
+                    一時的
+                    <br />
+                    能力値
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-end" size={2}>
+                  <Label>
+                    一時的
+                    <br />
+                    修正値
+                  </Label>
+                </Grid>
               </Grid>
               {values.abilities.map((row, index: number) => (
                 <Grid container key={row.id} spacing={1} size={12}>
-                  <Grid container justifyContent="center" alignItems="center" size={3}>
-                    <Label2 align="center" className={classes.bgblack}>
-                      {row.name}
-                    </Label2>
+                  <Grid container alignItems="center" size={3}>
+                    <Label2 className={classes.bgblack}>{row.name}</Label2>
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" size={3}>
-                    <Value name={`abilities.${index}.score`} input={input} values={values} {...props} align="center" />
+                  <Grid container alignItems="center" size={3}>
+                    <Value name={`abilities.${index}.score`} input={input} values={values} {...props} />
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" size={2}>
+                  <Grid container alignItems="center" size={2}>
                     <ComputeValue
                       name={`abilities.${index}.modifier`}
                       input={input}
@@ -201,26 +202,13 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       compute={calcModifier}
                       values={values}
                       {...props}
-                      align="center"
                     />
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" size={2}>
-                    <Value
-                      name={`abilities.${index}.temporaryScore`}
-                      input={input}
-                      values={values}
-                      {...props}
-                      align="center"
-                    />
+                  <Grid container alignItems="center" size={2}>
+                    <Value name={`abilities.${index}.temporaryScore`} input={input} values={values} {...props} />
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" size={2}>
-                    <Value
-                      name={`abilities.${index}.temporaryModifier`}
-                      input={input}
-                      values={values}
-                      {...props}
-                      align="center"
-                    />
+                  <Grid container alignItems="center" size={2}>
+                    <Value name={`abilities.${index}.temporaryModifier`} input={input} values={values} {...props} />
                   </Grid>
                 </Grid>
               ))}
@@ -229,276 +217,288 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
           <Grid container spacing={1} size={6}>
             <Grid size={12} />
             <Grid container spacing={1} size={12}>
-              <Grid container justifyContent="center" alignItems="flex-end" size={4} />
-              <Grid container justifyContent="center" alignItems="flex-end" size={4}>
+              <Grid container alignItems="flex-end" size={4} />
+              <Grid container alignItems="flex-end" size={4}>
                 <Label>最大値</Label>
               </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={4}>
+              <Grid container alignItems="flex-end" size={4}>
                 <Label>ダメージ減少</Label>
               </Grid>
-              <Grid container justifyContent="center" alignItems="center" size={4}>
+            </Grid>
+            <Grid container spacing={1} size={12}>
+              <Grid container alignItems="center" size={4}>
                 <Label2 align="center" className={classes.bgblack}>
                   HP
                 </Label2>
               </Grid>
-              <Grid container justifyContent="center" alignItems="center" size={4}>
-                <Value name="hitPoint.total" input={input} values={values} {...props} align="center" />
+              <Grid container alignItems="center" size={4}>
+                <Value name="hitPoint.total" input={input} values={values} {...props} />
               </Grid>
-              <Grid container justifyContent="center" alignItems="center" size={4}>
-                <Value name="hitPoint.damageReduction" input={input} values={values} {...props} align="center" />
+              <Grid container alignItems="center" size={4}>
+                <Value name="hitPoint.damageReduction" input={input} values={values} {...props} />
               </Grid>
-              <Grid container spacing={1} size={12}>
+            </Grid>
+            <Grid container size={12}>
+              <Grid container spacing={0} size={12}>
                 <Label>負傷/現在のHP</Label>
                 <Value name="hitPoint.current" input={input} values={values} {...props} />
               </Grid>
-              <Grid container spacing={1} size={12}>
+            </Grid>
+            <Grid container size={12}>
+              <Grid container spacing={0} size={12}>
                 <Label>非致傷ダメージ</Label>
                 <Value name="hitPoint.nonlethalDamage" input={input} values={values} {...props} />
               </Grid>
             </Grid>
-            <Grid container justifyContent="center" alignItems="center" size={4}>
+            <Grid container alignItems="center" justifyContent="center" size={3}>
               <Label2 align="center" className={classes.bgblack}>
                 イニシアチブ
                 <br />
                 修正値
               </Label2>
             </Grid>
-            <Grid container size={8}>
-              <Grid container justifyContent="center" size={4}>
-                <Grid container size={9}>
-                  <ComputeValue
-                    name="initiative.total"
-                    input={input}
-                    subscribe="abilities.1.score,initiative.miscModifier"
-                    compute={calcInitiative}
-                    values={values}
-                    {...props}
-                    align="center"
-                  />
+            <Grid container alignItems="center" spacing={0} size={9}>
+              <Grid container alignItems="center" size={12}>
+                <Grid container size={4}>
+                  <Grid container size={9}>
+                    <ComputeValue
+                      name="initiative.total"
+                      input={input}
+                      subscribe="abilities.1.score,initiative.miscModifier"
+                      compute={calcInitiative}
+                      values={values}
+                      {...props}
+                    />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">=</Label>
+                  </Grid>
                 </Grid>
-                <Grid container justifyContent="center" size={3}>
-                  <Label align="center">=</Label>
+                <Grid container size={4}>
+                  <Grid container size={9}>
+                    <ComputeValue
+                      name="initiative.dexModifier"
+                      input={input}
+                      subscribe={`abilities.${getAbilityPosition("【敏】")}.score`}
+                      compute={calcModifier}
+                      values={values}
+                      {...props}
+                    />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container size={4}>
+                  <Value name="initiative.miscModifier" input={input} values={values} {...props} />
                 </Grid>
               </Grid>
-              <Grid container justifyContent="center" size={4}>
-                <Grid container size={9}>
-                  <ComputeValue
-                    name="initiative.dexModifier"
-                    input={input}
-                    subscribe={`abilities.${getAbilityPosition("【敏】")}.score`}
-                    compute={calcModifier}
-                    values={values}
-                    {...props}
-                    align="center"
-                  />
+              <Grid container size={12}>
+                <Grid container alignItems="flex-start" size={4}>
+                  <Label>合計</Label>
                 </Grid>
-                <Grid container justifyContent="center" size={3}>
-                  <Label align="center">+</Label>
+                <Grid container alignItems="flex-start" size={4}>
+                  <Label>
+                    【敏】
+                    <br />
+                    修正値
+                  </Label>
                 </Grid>
-              </Grid>
-              <Grid container justifyContent="center" size={4}>
-                <Value name="initiative.miscModifier" input={input} values={values} {...props} align="center" />
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-start" size={4}>
-                <Label align="center">合計</Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-start" size={4}>
-                <Label align="center">
-                  【敏】
-                  <br />
-                  修正値
-                </Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-start" size={4}>
-                <Label align="center">
-                  その他の
-                  <br />
-                  修正値
-                </Label>
+                <Grid container alignItems="flex-start" size={4}>
+                  <Label>
+                    その他の
+                    <br />
+                    修正値
+                  </Label>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
           <Grid container spacing={1} size={12}>
-            <Grid container justifyContent="center" alignItems="center" size={1}>
+            <Grid container alignItems="center" spacing={0} size={1}>
               <Label2 align="center" className={classes.bgblack}>
                 AC
               </Label2>
             </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={9}>
-                <ComputeValue
-                  name="ac.total"
-                  input={input}
-                  subscribe="ac.armorBonus,ac.shieldBonus,ac.dexModifier,ac.sizeModifier,ac.naturalArmor,ac.deflectionBonus,ac.luckBonus,ac.insightBonus,ac.moraleBonus,ac.miscModifier"
-                  compute={calcArmorClass}
-                  values={values}
-                  {...props}
-                  align="center"
-                />
+            <Grid container alignItems="center" spacing={0} size={11}>
+              <Grid container spacing={0} size={12}>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={9}>
+                    <ComputeValue
+                      name="ac.total"
+                      input={input}
+                      subscribe="ac.armorBonus,ac.shieldBonus,ac.dexModifier,ac.sizeModifier,ac.naturalArmor,ac.deflectionBonus,ac.luckBonus,ac.insightBonus,ac.moraleBonus,ac.miscModifier"
+                      compute={calcArmorClass}
+                      values={values}
+                      {...props}
+                    />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">=</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container justifyContent="center" size={6}>
+                    <Label align="center">10</Label>
+                  </Grid>
+                  <Grid container justifyContent="center" size={6}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={9}>
+                    <Value name="ac.armorBonus" input={input} values={values} {...props} />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={9}>
+                    <Value name="ac.shieldBonus" input={input} values={values} {...props} />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={9}>
+                    <Value name="ac.dexModifier" input={input} values={values} {...props} />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={9}>
+                    <Value name="ac.sizeModifier" input={input} values={values} {...props} />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={9}>
+                    <Value name="ac.naturalArmor" input={input} values={values} {...props} />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={9}>
+                    <Value name="ac.deflectionBonus" input={input} values={values} {...props} />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={9}>
+                    <Value name="ac.luckBonus" input={input} values={values} {...props} />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={9}>
+                    <Value name="ac.insightBonus" input={input} values={values} {...props} />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={9}>
+                    <Value name="ac.moraleBonus" input={input} values={values} {...props} />
+                  </Grid>
+                  <Grid container justifyContent="center" size={3}>
+                    <Label align="center">+</Label>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" size={1}>
+                  <Grid container size={12}>
+                    <Value name="ac.miscModifier" input={input} values={values} {...props} />
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid container justifyContent="center" size={3}>
-                <Label align="center">=</Label>
+              <Grid container spacing={0} size={12}>
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label align="center">合計</Label>
+                </Grid>
+                <Grid container alignItems="center" size={1} />
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label>
+                    鎧
+                    <br />
+                    ボーナス
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label>
+                    盾
+                    <br />
+                    ボーナス
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label>
+                    【敏】
+                    <br />
+                    修正値
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label>
+                    サイズ
+                    <br />
+                    修正値
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label>
+                    外皮
+                    <br />
+                    ボーナス
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label>
+                    反発
+                    <br />
+                    ボーナス
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label>
+                    幸運
+                    <br />
+                    ボーナス
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label>
+                    洞察
+                    <br />
+                    ボーナス
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label>
+                    士気
+                    <br />
+                    ボーナス
+                  </Label>
+                </Grid>
+                <Grid container alignItems="flex-start" size={1}>
+                  <Label>
+                    その他の
+                    <br />
+                    修正値
+                  </Label>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid container justifyContent="center" alignItems="center" size={1}>
-              <Grid container size={6}>
-                <Label align="center">10</Label>
-              </Grid>
-              <Grid container justifyContent="center" size={6}>
-                <Label align="center">+</Label>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={9}>
-                <Value name="ac.armorBonus" input={input} values={values} {...props} align="center" />
-              </Grid>
-              <Grid container justifyContent="center" size={3}>
-                <Label align="center">+</Label>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={9}>
-                <Value name="ac.shieldBonus" input={input} values={values} {...props} align="center" />
-              </Grid>
-              <Grid container justifyContent="center" size={3}>
-                <Label align="center">+</Label>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={9}>
-                <Value name="ac.dexModifier" input={input} values={values} {...props} align="center" />
-              </Grid>
-              <Grid container justifyContent="center" size={3}>
-                <Label align="center">+</Label>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={9}>
-                <Value name="ac.sizeModifier" input={input} values={values} {...props} align="center" />
-              </Grid>
-              <Grid container justifyContent="center" size={3}>
-                <Label align="center">+</Label>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={9}>
-                <Value name="ac.naturalArmor" input={input} values={values} {...props} align="center" />
-              </Grid>
-              <Grid container justifyContent="center" size={3}>
-                <Label align="center">+</Label>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={9}>
-                <Value name="ac.deflectionBonus" input={input} values={values} {...props} align="center" />
-              </Grid>
-              <Grid container justifyContent="center" size={3}>
-                <Label align="center">+</Label>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={9}>
-                <Value name="ac.luckBonus" input={input} values={values} {...props} align="center" />
-              </Grid>
-              <Grid container justifyContent="center" size={3}>
-                <Label align="center">+</Label>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={9}>
-                <Value name="ac.insightBonus" input={input} values={values} {...props} align="center" />
-              </Grid>
-              <Grid container justifyContent="center" size={3}>
-                <Label align="center">+</Label>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={9}>
-                <Value name="ac.moraleBonus" input={input} values={values} {...props} align="center" />
-              </Grid>
-              <Grid container justifyContent="center" size={3}>
-                <Label align="center">+</Label>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="center">
-              <Grid container size={12}>
-                <Value name="ac.miscModifier" input={input} values={values} {...props} align="center" />
-              </Grid>
-            </Grid>
-            <Grid container justifyContent="center" alignItems="center" size={1} />
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">合計</Label>
-            </Grid>
-            <Grid container justifyContent="center" alignItems="center" size={1} />
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">
-                鎧
-                <br />
-                ボーナス
-              </Label>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">
-                盾
-                <br />
-                ボーナス
-              </Label>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">
-                【敏】
-                <br />
-                修正値
-              </Label>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">
-                サイズ
-                <br />
-                修正値
-              </Label>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">
-                外皮
-                <br />
-                ボーナス
-              </Label>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">
-                反発
-                <br />
-                ボーナス
-              </Label>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">
-                幸運
-                <br />
-                ボーナス
-              </Label>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">
-                洞察
-                <br />
-                ボーナス
-              </Label>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">
-                士気
-                <br />
-                ボーナス
-              </Label>
-            </Grid>
-            <Grid container className={classes.acGridWidth} justifyContent="center" alignItems="flex-start">
-              <Label align="center">
-                その他の
-                <br />
-                修正値
-              </Label>
             </Grid>
           </Grid>
           <Grid container spacing={1} size={12}>
@@ -510,7 +510,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Label2>
             </Grid>
             <Grid container justifyContent="center" alignItems="center" size={3}>
-              <Value name="ac.touchAc" input={input} values={values} {...props} align="center" />
+              <Value name="ac.touchAc" input={input} values={values} {...props} />
             </Grid>
             <Grid container justifyContent="center" alignItems="center" size={3}>
               <Label2 align="center" className={classes.bgblack}>
@@ -520,171 +520,147 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Label2>
             </Grid>
             <Grid container justifyContent="center" alignItems="center" size={3}>
-              <Value name="ac.flatFootedAc" input={input} values={values} {...props} align="center" />
+              <Value name="ac.flatFootedAc" input={input} values={values} {...props} />
             </Grid>
           </Grid>
-          <Grid size={12} />
-          <Grid container spacing={1} size={10}>
-            <Grid container size={3}>
-              <Grid container justifyContent="center" alignItems="flex-end" size={12}>
-                <Label align="center">
-                  セーヴィング
-                  <br />
-                  ・スロー
-                </Label>
-              </Grid>
-            </Grid>
-            <Grid container size={9}>
-              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">合計</Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
-                  基本
-                  <br />
-                  セーヴ
-                </Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
-                  能力
-                  <br />
-                  修正値
-                </Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
-                  魔法による
-                  <br />
-                  修正値
-                </Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
-                  その他
-                  <br />
-                  修正値
-                </Label>
-              </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
-                  一時的
-                  <br />
-                  修正値
-                </Label>
-              </Grid>
-            </Grid>
-            {values.savingThrows.map((row, index) => (
-              <Grid container key={row.id} spacing={1}>
+          <Grid container spacing={1} size={12}>
+            <Grid container spacing={1} size={10}>
+              <Grid container size={12}>
                 <Grid container size={3}>
-                  <Grid container justifyContent="center" alignItems="center" size={12}>
-                    <Label2 align="center" className={classes.bgblack}>
-                      {row.name}
-                    </Label2>
+                  <Grid container alignItems="flex-end" size={12}>
+                    <Label>
+                      セーヴィング
+                      <br />
+                      ・スロー
+                    </Label>
                   </Grid>
                 </Grid>
-                <Grid container size={9}>
-                  <Grid container justifyContent="center" alignItems="center" size={2}>
-                    <Grid size={8}>
-                      <ComputeValue
-                        name={`savingThrows.${index}.total`}
-                        input={input}
-                        subscribe={`savingThrows.${index}.baseSave,abilities.${getAbilityPosition(getSTCorrespondingAbility(row.name))}.score,savingThrows.${index}.magicModifier,savingThrows.${index}.miscModifier,savingThrows.${index}.temporaryModifier`}
-                        compute={calcSavingThrow}
-                        values={values}
-                        {...props}
-                        align="center"
-                      />
-                    </Grid>
-                    <Grid size={4}>
-                      <Label align="center">=</Label>
-                    </Grid>
+                <Grid container spacing={1} size={9}>
+                  <Grid container alignItems="flex-end" size={2}>
+                    <Label>合計</Label>
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" size={2}>
-                    <Grid size={8}>
-                      <Value
-                        name={`savingThrows.${index}.baseSave`}
-                        input={input}
-                        values={values}
-                        {...props}
-                        align="center"
-                      />
-                    </Grid>
-                    <Grid size={4}>
-                      <Label align="center">+</Label>
-                    </Grid>
+                  <Grid container alignItems="flex-end" size={2}>
+                    <Label>
+                      基本
+                      <br />
+                      セーヴ
+                    </Label>
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" size={2}>
-                    <Grid size={8}>
-                      <ComputeValue
-                        name={`savingThrows.${index}.abilityModifier`}
-                        input={input}
-                        subscribe={`abilities.${getAbilityPosition(getSTCorrespondingAbility(row.name))}.score`}
-                        compute={calcModifier}
-                        values={values}
-                        {...props}
-                        align="center"
-                      />
-                    </Grid>
-                    <Grid size={4}>
-                      <Label align="center">+</Label>
-                    </Grid>
+                  <Grid container alignItems="flex-end" size={2}>
+                    <Label>
+                      能力
+                      <br />
+                      修正値
+                    </Label>
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" size={2}>
-                    <Grid size={9}>
-                      <Value
-                        name={`savingThrows.${index}.magicModifier`}
-                        input={input}
-                        values={values}
-                        {...props}
-                        align="center"
-                      />
-                    </Grid>
-                    <Grid size={3}>
-                      <Label align="center">+</Label>
-                    </Grid>
+                  <Grid container alignItems="flex-end" size={2}>
+                    <Label>
+                      魔法による
+                      <br />
+                      修正値
+                    </Label>
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" size={2}>
-                    <Grid size={9}>
-                      <Value
-                        name={`savingThrows.${index}.miscModifier`}
-                        input={input}
-                        values={values}
-                        {...props}
-                        align="center"
-                      />
-                    </Grid>
-                    <Grid size={3}>
-                      <Label align="center">+</Label>
-                    </Grid>
+                  <Grid container alignItems="flex-end" size={2}>
+                    <Label>
+                      その他
+                      <br />
+                      修正値
+                    </Label>
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" size={2}>
-                    <Grid size={12}>
-                      <Value
-                        name={`savingThrows.${index}.temporaryModifier`}
-                        input={input}
-                        values={values}
-                        {...props}
-                        align="center"
-                      />
-                    </Grid>
+                  <Grid container alignItems="flex-end" size={2}>
+                    <Label>
+                      一時的
+                      <br />
+                      修正値
+                    </Label>
                   </Grid>
                 </Grid>
               </Grid>
-            ))}
+              {values.savingThrows.map((row, index) => (
+                <Grid container key={row.id} spacing={1} size={12}>
+                  <Grid container size={3}>
+                    <Grid container justifyContent="center" alignItems="center" size={12}>
+                      <Label2 align="center" className={classes.bgblack}>
+                        {row.name}
+                      </Label2>
+                    </Grid>
+                  </Grid>
+                  <Grid container size={9}>
+                    <Grid container justifyContent="center" alignItems="center" size={2}>
+                      <Grid container size={8}>
+                        <ComputeValue
+                          name={`savingThrows.${index}.total`}
+                          input={input}
+                          subscribe={`savingThrows.${index}.baseSave,abilities.${getAbilityPosition(getSTCorrespondingAbility(row.name))}.score,savingThrows.${index}.magicModifier,savingThrows.${index}.miscModifier,savingThrows.${index}.temporaryModifier`}
+                          compute={calcSavingThrow}
+                          values={values}
+                          {...props}
+                        />
+                      </Grid>
+                      <Grid container size={4}>
+                        <Label align="center">=</Label>
+                      </Grid>
+                    </Grid>
+                    <Grid container justifyContent="center" alignItems="center" size={2}>
+                      <Grid container size={8}>
+                        <Value name={`savingThrows.${index}.baseSave`} input={input} values={values} {...props} />
+                      </Grid>
+                      <Grid container size={4}>
+                        <Label align="center">+</Label>
+                      </Grid>
+                    </Grid>
+                    <Grid container justifyContent="center" alignItems="center" size={2}>
+                      <Grid container size={8}>
+                        <ComputeValue
+                          name={`savingThrows.${index}.abilityModifier`}
+                          input={input}
+                          subscribe={`abilities.${getAbilityPosition(getSTCorrespondingAbility(row.name))}.score`}
+                          compute={calcModifier}
+                          values={values}
+                          {...props}
+                        />
+                      </Grid>
+                      <Grid container size={4}>
+                        <Label align="center">+</Label>
+                      </Grid>
+                    </Grid>
+                    <Grid container justifyContent="center" alignItems="center" size={2}>
+                      <Grid container size={9}>
+                        <Value name={`savingThrows.${index}.magicModifier`} input={input} values={values} {...props} />
+                      </Grid>
+                      <Grid container size={3}>
+                        <Label align="center">+</Label>
+                      </Grid>
+                    </Grid>
+                    <Grid container justifyContent="center" alignItems="center" size={2}>
+                      <Grid container size={9}>
+                        <Value name={`savingThrows.${index}.miscModifier`} input={input} values={values} {...props} />
+                      </Grid>
+                      <Grid container size={3}>
+                        <Label align="center">+</Label>
+                      </Grid>
+                    </Grid>
+                    <Grid container justifyContent="center" alignItems="center" size={2}>
+                      <Grid container size={12}>
+                        <Value
+                          name={`savingThrows.${index}.temporaryModifier`}
+                          input={input}
+                          values={values}
+                          {...props}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              ))}
+            </Grid>
+            <Grid spacing={1} size={2}>
+              <Stack spacing={1} sx={{ height: "100%" }}>
+                <Label>条件付きの修正値</Label>
+                <MultiLineValue name="savingThrowConditionalModifier" input={input} values={values} {...props} />
+              </Stack>
+            </Grid>
           </Grid>
-          <Grid container spacing={1} size={2}>
-            <Label>条件付きの修正値</Label>
-            <MultiLineValue
-              name="savingThrowConditionalModifier"
-              input={input}
-              values={values}
-              {...props}
-              align="center"
-              style={{ height: "80%" }}
-            />
-          </Grid>
-          <Grid size={12} />
           <Grid container spacing={1} size={12}>
             <Grid container justifyContent="center" alignItems="center" size={3}>
               <Label2 align="center" className={classes.bgblack}>
@@ -705,7 +681,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
           </Grid>
           <Grid container spacing={1} size={12}>
             <Grid container size={3}>
-              <Grid container justifyContent="center" alignItems="center" size={12} />
+              <Grid container size={12} />
             </Grid>
             <Grid container size={9}>
               <Grid container justifyContent="center" alignItems="flex-end" size={2}>
@@ -732,7 +708,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                   修正値
                 </Label>
               </Grid>
-              <Grid container justifyContent="center" alignItems="flex-end" size={2}>
+              <Grid container justifyContent="center" alignItems="flex-end" size={4}>
                 <Label align="center">
                   その他
                   <br />
@@ -740,7 +716,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 </Label>
               </Grid>
             </Grid>
-            <Grid container spacing={1}>
+            <Grid container spacing={1} size={12}>
               <Grid container size={3}>
                 <Grid container justifyContent="center" alignItems="center" size={12}>
                   <Label2 align="center" className={classes.bgblack}>
@@ -750,7 +726,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Grid>
               <Grid container size={9}>
                 <Grid container justifyContent="center" alignItems="center" size={2}>
-                  <Grid size={8}>
+                  <Grid container size={8}>
                     <ComputeValue
                       name="grappleModifier.total"
                       input={input}
@@ -761,20 +737,20 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       align="center"
                     />
                   </Grid>
-                  <Grid size={4}>
+                  <Grid container size={4}>
                     <Label align="center">=</Label>
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={2}>
-                  <Grid size={8}>
+                  <Grid container size={8}>
                     <Value name="grappleModifier.bab" input={input} values={values} {...props} align="center" />
                   </Grid>
-                  <Grid size={4}>
+                  <Grid container size={4}>
                     <Label align="center">+</Label>
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={2}>
-                  <Grid size={8}>
+                  <Grid container size={8}>
                     <ComputeValue
                       name="grappleModifier.strengthModifier"
                       input={input}
@@ -785,12 +761,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       align="center"
                     />
                   </Grid>
-                  <Grid size={4}>
+                  <Grid container size={4}>
                     <Label align="center">+</Label>
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={2}>
-                  <Grid size={9}>
+                  <Grid container size={9}>
                     <Value
                       name="grappleModifier.sizeModifier"
                       input={input}
@@ -799,12 +775,12 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       align="center"
                     />
                   </Grid>
-                  <Grid size={3}>
+                  <Grid container size={3}>
                     <Label align="center">+</Label>
                   </Grid>
                 </Grid>
-                <Grid container justifyContent="center" alignItems="center" size={2}>
-                  <Grid size={12}>
+                <Grid container justifyContent="center" alignItems="center" size={4}>
+                  <Grid container size={12}>
                     <Value
                       name="grappleModifier.miscModifier"
                       input={input}
@@ -817,11 +793,9 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container size={12}>
+          <Grid container spacing={1} size={12}>
             {values.attacks.map((row, index) => (
-              <Grid container key={row.id} spacing={1}>
-                <Grid size={12} />
-                <Grid size={12} />
+              <Grid container key={row.id} spacing={1} size={12}>
                 <Grid container justifyContent="center" alignItems="center" size={6}>
                   <Label2 align="center" className={classes.bgblack}>
                     攻撃
@@ -1394,7 +1368,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
             </Label2>
           </Grid>
           <Grid container justifyContent="center" size={12}>
-            <MultiLineValue name="feat" input={input} {...props} />
+            <MultiLineValue name="feat" input={input} values={values} {...props} />
           </Grid>
           <Grid container justifyContent="center" size={12}>
             <Label2 align="center" className={classes.bgblack}>

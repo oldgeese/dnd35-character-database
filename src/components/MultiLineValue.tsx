@@ -1,13 +1,14 @@
 "use client"
 
-import { Box, TextField } from "@mui/material"
+import type { Character } from "@/src/models"
+import TextField from "@mui/material/TextField"
+import Typography from "@mui/material/Typography"
+import { get } from "es-toolkit/compat"
 import React from "react"
 import { Controller } from "react-hook-form"
-import type { Character } from "@/src/models"
-import { get } from "es-toolkit/compat"
 
 type MultiLineValueProps = {
-  align?: string
+  align?: "center" | "inherit" | "justify" | "left" | "right"
   input: boolean
   name: string
   rows?: number
@@ -26,15 +27,17 @@ const MultiLineValue = ({ input, ...props }: MultiLineValueProps) => {
       )}
     />
   ) : (
-    <Box width="100%" minHeight="200px" fontSize="caption2.fontSize" border={1}>
-      {value.split(/\r\n|\r|\n/).map((item: string) => (
-        <React.Fragment key={item}>
-          {item}
-          <br />
-        </React.Fragment>
-      ))}
-    </Box>
-  );
+    <div sx={{ width: "100%", height: "100%", border: "1px solid black" }}>
+      <Typography variant="label2" align={props.align} component="div" sx={{ height: "100%" }}>
+        {value.split(/\r\n|\r|\n/).map((item: string) => (
+          <React.Fragment key={item}>
+            {item}
+            <br />
+          </React.Fragment>
+        ))}
+      </Typography>
+    </div>
+  )
 }
 
 export default MultiLineValue

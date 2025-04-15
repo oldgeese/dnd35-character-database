@@ -7,7 +7,7 @@ import { get } from "es-toolkit/compat"
 import { Controller, useFormContext, type UseFormReturn } from "react-hook-form"
 
 type ComputeValueProps = {
-  align?: string
+  align?: "center" | "inherit" | "justify" | "left" | "right"
   input: boolean
   name: string
   subscribe: string
@@ -41,6 +41,7 @@ const ComputeValue = ({ input, ...props }: ComputeValueProps) => {
       sx={{ width: "100%", padding: "2px", minHeight: "20px", border: "1px solid black" }}
       variant="label2"
       component="div"
+      align={props.align}
     >
       {value}
     </Typography>

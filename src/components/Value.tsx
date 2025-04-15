@@ -7,7 +7,7 @@ import { get } from "es-toolkit/compat"
 import { Controller } from "react-hook-form"
 
 type ValueProps = {
-  align?: string
+  align?: "center" | "inherit" | "justify" | "left" | "right"
   input: boolean
   name: string
   values: Character
@@ -26,6 +26,7 @@ const Value = ({ input, ...props }: ValueProps) => {
       sx={{ width: "100%", padding: "2px", minHeight: "20px", border: "1px solid black" }}
       variant="label2"
       component="div"
+      align={props.align}
     >
       {value}
     </Typography>
