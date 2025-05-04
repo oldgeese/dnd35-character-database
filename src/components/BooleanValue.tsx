@@ -2,16 +2,16 @@
 
 import type { Character } from "@/src/models"
 import { Check } from "@mui/icons-material"
-import { Box, Checkbox } from "@mui/material"
+import Checkbox from "@mui/material/Checkbox"
+import Typography from "@mui/material/Typography"
 import { get } from "es-toolkit/compat"
 import type React from "react"
 import { Controller } from "react-hook-form"
 
 type BooleanValueProps = {
-  align?: string
+  align?: "center" | "inherit" | "justify" | "left" | "right"
   input: boolean
   name: string
-  children: React.ReactNode
   values: Character
 }
 
@@ -26,9 +26,14 @@ const BooleanValue = ({ input, ...props }: BooleanValueProps) => {
       )}
     />
   ) : (
-    <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
+    <Typography
+      sx={{ width: "100%", minHeight: "20px", border: "1px solid black" }}
+      component="div"
+      variant="label2"
+      {...props}
+    >
       {value ? <Check style={{ fontSize: 12 }} /> : ""}
-    </Box>
+    </Typography>
   )
 }
 

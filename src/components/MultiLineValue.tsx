@@ -27,16 +27,19 @@ const MultiLineValue = ({ input, ...props }: MultiLineValueProps) => {
       )}
     />
   ) : (
-    <div sx={{ width: "100%", height: "100%", border: "1px solid black" }}>
-      <Typography variant="label2" align={props.align} component="div" sx={{ height: "100%" }}>
-        {value.split(/\r\n|\r|\n/).map((item: string) => (
-          <React.Fragment key={item}>
-            {item}
-            <br />
-          </React.Fragment>
-        ))}
-      </Typography>
-    </div>
+    <Typography
+      variant="label2"
+      align={props.align}
+      component="div"
+      sx={{ width: "100%", height: "100%", border: "1px solid black" }}
+    >
+      {value.split(/\r\n|\r|\n/).map((item: string) => (
+        <React.Fragment key={item}>
+          {item}
+          <br />
+        </React.Fragment>
+      ))}
+    </Typography>
   )
 }
 

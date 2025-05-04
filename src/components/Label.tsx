@@ -3,24 +3,25 @@ import Typography from "@mui/material/Typography"
 type LabelProps = {
   align?: "center" | "inherit" | "justify" | "left" | "right"
   className?: string
-  component?: string
+  component?: "span" | "div"
   children: React.ReactNode
 }
 
 const Label = (props: LabelProps) => {
   const component = props.component === "span" ? "span" : "div"
   return (
-    <div
+    <Typography
       sx={[
-        { padding: "2px" },
+        { padding: "2px", alignContent: "center" },
         props.component === "span" ? { display: "inline" } : { display: "inline-block", width: "100%" },
       ]}
+      variant="label"
+      component={component}
+      align={props.align}
       className={props.className}
     >
-      <Typography variant="label" component={component} align={props.align}>
-        {props.children}
-      </Typography>
-    </div>
+      {props.children}
+    </Typography>
   )
 }
 

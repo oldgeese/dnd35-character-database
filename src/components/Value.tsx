@@ -23,7 +23,7 @@ const Value = ({ input, ...props }: ValueProps) => {
     />
   ) : (
     <Typography
-      sx={{ width: "100%", padding: "2px", minHeight: "20px", border: "1px solid black" }}
+      sx={{ width: "100%", paddingLeft: "2px", minHeight: "20px", border: "1px solid black" }}
       variant="label2"
       component="div"
       align={props.align}

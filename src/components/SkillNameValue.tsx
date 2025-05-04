@@ -1,14 +1,16 @@
 "use client"
 
 import { Stop } from "@mui/icons-material"
-import { Box, Grid, TextField } from "@mui/material"
+import Grid from "@mui/material/Grid"
+import TextField from "@mui/material/TextField"
+import Typography from "@mui/material/Typography"
 import { get } from "es-toolkit/compat"
 import React from "react"
 import { Controller } from "react-hook-form"
 import type { Character, Skill } from "../models"
 
 type SkillNameValueProps = {
-  align: string
+  align?: "center" | "inherit" | "justify" | "left" | "right"
   input: boolean
   name: string
   subName: string
@@ -23,10 +25,12 @@ const SkillNameValue = ({ input, name, subName, skill, ...props }: SkillNameValu
     return (
       <>
         <Grid size={3}>
-          <Box minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
-            {value}
-            {skill.usableUntrained ? <Stop style={{ fontSize: 12 }} /> : ""}
-          </Box>
+          <div sx={{ minHeight: "20px", border: "1px solid black" }} {...props}>
+            <Typography variant="label2" align={props.align}>
+              {value}
+              {skill.usableUntrained ? <Stop style={{ fontSize: 12 }} /> : ""}
+            </Typography>
+          </div>
         </Grid>
         <Grid size={9}>
           <Controller
@@ -35,7 +39,7 @@ const SkillNameValue = ({ input, name, subName, skill, ...props }: SkillNameValu
           />
         </Grid>
       </>
-    );
+    )
   }
   if (input && skill.fullEditable) {
     return (
@@ -47,11 +51,16 @@ const SkillNameValue = ({ input, name, subName, skill, ...props }: SkillNameValu
   }
 
   return (
-    <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
+    <Typography
+      sx={{ width: "100%", paddingLeft: "2px", minHeight: "20px", border: "1px solid black" }}
+      component="div"
+      variant="label2"
+      align={props.align}
+    >
       {value}
       {skill.usableUntrained ? <Stop style={{ fontSize: 12 }} /> : ""}
       {skill.hasSubName ? skill.subName : ""}
-    </Box>
+    </Typography>
   )
 }
 

@@ -8,11 +8,15 @@ type Label2Props = {
 
 const Label2 = (props: Label2Props) => {
   return (
-    <div sx={{ width: "100%", padding: "2px" }} className={props.className}>
-      <Typography variant="label2" component="div" align={props.align}>
-        {props.children}
-      </Typography>
-    </div>
+    <Typography
+      sx={{ width: "100%", padding: "2px", alignContent: "center" }}
+      variant="label2"
+      component="div"
+      align={props.align}
+      className={props.className}
+    >
+      {props.children}
+    </Typography>
   )
 }
 

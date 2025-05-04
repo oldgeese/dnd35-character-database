@@ -1,5 +1,3 @@
-import { Box } from "@mui/material"
-
 import type { Character } from "@/src/models"
 import Label from "./Label"
 import Value from "./Value"
@@ -19,7 +17,7 @@ const ImageValue = ({ input, ...props }: ImageValueProps) => {
       <Value input {...props} />
     </>
   ) : (
-    <Box width="100%" border={1} style={{ maxHeight: "250px" }}>
+    <div sx={{ width: "100%", maxHeight: "250px", border: "1px solid black" }}>
       <img
         alt=""
         src={value}
@@ -31,7 +29,7 @@ const ImageValue = ({ input, ...props }: ImageValueProps) => {
           margin: "auto",
         }}
       />
-    </Box>
+    </div>
   )
 }
 

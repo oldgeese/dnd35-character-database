@@ -1,13 +1,14 @@
 "use client"
 
 import type { Character, Skill } from "@/src/models"
-import { Box, TextField } from "@mui/material"
+import TextField from "@mui/material/TextField"
+import Typography from "@mui/material/Typography"
 import { get } from "es-toolkit/compat"
 import React from "react"
 import { Controller } from "react-hook-form"
 
 type SkillAbilityValueProps = {
-  align: string
+  align?: "center" | "inherit" | "justify" | "left" | "right"
   input: boolean
   name: string
   skill: Skill
@@ -23,10 +24,15 @@ const SkillAbilityValue = ({ input, skill, ...props }: SkillAbilityValueProps) =
       render={({ field }) => <TextField size="small" fullWidth margin="none" variant="outlined" {...field} />}
     />
   ) : (
-    <Box width="100%" minHeight="20px" fontSize="caption.fontSize" border={1} {...props}>
+    <Typography
+      sx={{ width: "100%", paddingLeft: "2px", minHeight: "20px", border: "1px solid black" }}
+      component="div"
+      variant="label"
+      align={props.align}
+    >
       {value}
       {skill.hasArmorPenalty ? "*" : ""}
-    </Box>
+    </Typography>
   )
 }
 

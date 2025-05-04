@@ -1,4 +1,4 @@
-import { Box } from "@mui/material"
+import Typography from "@mui/material/Typography"
 import type { Character } from "@/src/models"
 import { get } from "es-toolkit/compat"
 
@@ -13,9 +13,14 @@ const DateValue = ({ input, ...props }: DateValueProps) => {
   const displayValue = new Date(value).toLocaleString()
 
   return (
-    <Box width="100%" minHeight="20px" fontSize="caption2.fontSize" border={1} {...props}>
+    <Typography
+      sx={{ width: "100%", minHeight: "20px", border: "1px solid black" }}
+      component="div"
+      variant="label2"
+      {...props}
+    >
       {displayValue}
-    </Box>
+    </Typography>
   )
 }
 
