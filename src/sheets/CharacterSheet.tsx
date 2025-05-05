@@ -43,11 +43,6 @@ const useStyles = makeStyles({
   bgslightgray: {
     background: "rgb(248,248,248)",
   },
-  acGridWidth: {
-    flexGrow: 0,
-    maxWidth: "7.3%",
-    flexBasis: "7.3%",
-  },
 })
 
 type CharacterSheetProps = {

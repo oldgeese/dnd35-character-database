@@ -1,7 +1,6 @@
-import "firebase/firestore"
-import CharacterSheet from "../sheets"
+import CharacterSheet from "@/src/sheets"
 
-import { getChar } from "../service"
+import { getChar } from "@/src/service"
 
 const ViewCharForm = async ({ id }: { id: string }) => {
   const character = await getChar(id)

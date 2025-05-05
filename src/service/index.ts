@@ -1,8 +1,8 @@
 "use server"
 
 import { collection, doc, getDoc, getDocs, orderBy, query, setDoc } from "firebase/firestore"
-import type { Character } from "../models"
-import { db } from "../persistent"
+import type { Character } from "@/src/models"
+import { db } from "@/src/persistent"
 
 export const listChars = async (): Promise<Character[]> => {
   const collectionRef = collection(db, "characters")
