@@ -60,8 +60,8 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
 
   const { append, remove, move, insert } = input
     ? useFieldArray({
-        name: "posessions",
-      })
+      name: "posessions",
+    })
     : {}
 
   return (
@@ -668,7 +668,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Label2>
             </Grid>
             <Grid container justifyContent="center" alignItems="center" size={4}>
-              <Value name="bab" input={input} values={values} {...props} align="center" />
+              <Value name="bab" input={input} values={values} {...props} />
             </Grid>
             <Grid container justifyContent="center" alignItems="center" size={2}>
               <Label2 align="center" className={classes.bgblack}>
@@ -676,7 +676,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
               </Label2>
             </Grid>
             <Grid container justifyContent="center" alignItems="center" size={3}>
-              <Value name="spellResistance" input={input} values={values} {...props} align="center" />
+              <Value name="spellResistance" input={input} values={values} {...props} />
             </Grid>
           </Grid>
           <Grid container spacing={1} size={12}>
@@ -685,31 +685,31 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
             </Grid>
             <Grid container size={9}>
               <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">合計</Label>
+                <Label>合計</Label>
               </Grid>
               <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
+                <Label>
                   基本攻撃
                   <br />
                   ボーナス
                 </Label>
               </Grid>
               <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
+                <Label>
                   【筋】
                   <br />
                   修正値
                 </Label>
               </Grid>
               <Grid container justifyContent="center" alignItems="flex-end" size={2}>
-                <Label align="center">
+                <Label>
                   サイズ
                   <br />
                   修正値
                 </Label>
               </Grid>
               <Grid container justifyContent="center" alignItems="flex-end" size={4}>
-                <Label align="center">
+                <Label>
                   その他
                   <br />
                   修正値
@@ -734,7 +734,6 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       compute={calcGrappleModifier}
                       values={values}
                       {...props}
-                      align="center"
                     />
                   </Grid>
                   <Grid container size={4}>
@@ -743,7 +742,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={2}>
                   <Grid container size={8}>
-                    <Value name="grappleModifier.bab" input={input} values={values} {...props} align="center" />
+                    <Value name="grappleModifier.bab" input={input} values={values} {...props} />
                   </Grid>
                   <Grid container size={4}>
                     <Label align="center">+</Label>
@@ -758,7 +757,6 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                       compute={calcModifier}
                       values={values}
                       {...props}
-                      align="center"
                     />
                   </Grid>
                   <Grid container size={4}>
@@ -767,13 +765,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={2}>
                   <Grid container size={9}>
-                    <Value
-                      name="grappleModifier.sizeModifier"
-                      input={input}
-                      values={values}
-                      {...props}
-                      align="center"
-                    />
+                    <Value name="grappleModifier.sizeModifier" input={input} values={values} {...props} />
                   </Grid>
                   <Grid container size={3}>
                     <Label align="center">+</Label>
@@ -781,13 +773,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={4}>
                   <Grid container size={12}>
-                    <Value
-                      name="grappleModifier.miscModifier"
-                      input={input}
-                      values={values}
-                      {...props}
-                      align="center"
-                    />
+                    <Value name="grappleModifier.miscModifier" input={input} values={values} {...props} />
                   </Grid>
                 </Grid>
               </Grid>
@@ -818,7 +804,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                   </Label>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={6}>
-                  <Value name={`attacks.${index}.attack`} input={input} values={values} {...props} align="center" />
+                  <Value name={`attacks.${index}.attack`} input={input} values={values} {...props} />
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={3}>
                   <Value
@@ -830,10 +816,10 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                   />
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={2}>
-                  <Value name={`attacks.${index}.critical`} input={input} values={values} {...props} align="center" />
+                  <Value name={`attacks.${index}.critical`} input={input} values={values} {...props} />
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={1}>
-                  <Value name={`attacks.${index}.weight`} input={input} values={values} {...props} align="center" />
+                  <Value name={`attacks.${index}.weight`} input={input} values={values} {...props} />
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={2}>
                   <Label align="center" className={classes.bgblack}>
@@ -856,16 +842,16 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
                   </Label>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={2}>
-                  <Value name={`attacks.${index}.type`} input={input} values={values} {...props} align="center" />
+                  <Value name={`attacks.${index}.type`} input={input} values={values} {...props} />
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={1}>
-                  <Value name={`attacks.${index}.range`} input={input} values={values} {...props} align="center" />
+                  <Value name={`attacks.${index}.range`} input={input} values={values} {...props} />
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={3}>
-                  <Value name={`attacks.${index}.notes`} input={input} values={values} {...props} align="center" />
+                  <Value name={`attacks.${index}.notes`} input={input} values={values} {...props} />
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" size={6}>
-                  <Value name={`attacks.${index}.damage`} input={input} values={values} {...props} align="center" />
+                  <Value name={`attacks.${index}.damage`} input={input} values={values} {...props} />
                 </Grid>
               </Grid>
             ))}
@@ -1078,52 +1064,28 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
         {values.protectiveItems.map((row, index) => (
           <Grid container key={row.id} spacing={1} size={12}>
             <Grid container justifyContent="center" size={3}>
-              <Value name={`protectiveItems.${index}.name`} input={input} values={values} {...props} align="center" />
+              <Value name={`protectiveItems.${index}.name`} input={input} values={values} {...props} />
             </Grid>
             <Grid container justifyContent="center" size={1}>
-              <Value
-                name={`protectiveItems.${index}.acBonus`}
-                input={input}
-                values={values}
-                {...props}
-                align="center"
-              />
+              <Value name={`protectiveItems.${index}.acBonus`} input={input} values={values} {...props} />
             </Grid>
             <Grid container justifyContent="center" size={2}>
-              <Value name={`protectiveItems.${index}.type`} input={input} values={values} {...props} align="center" />
+              <Value name={`protectiveItems.${index}.type`} input={input} values={values} {...props} />
             </Grid>
             <Grid container justifyContent="center" size={1}>
-              <Value name={`protectiveItems.${index}.dexMax`} input={input} values={values} {...props} align="center" />
+              <Value name={`protectiveItems.${index}.dexMax`} input={input} values={values} {...props} />
             </Grid>
             <Grid container justifyContent="center" size={1}>
-              <Value
-                name={`protectiveItems.${index}.checkPenalty`}
-                input={input}
-                values={values}
-                {...props}
-                align="center"
-              />
+              <Value name={`protectiveItems.${index}.checkPenalty`} input={input} values={values} {...props} />
             </Grid>
             <Grid container justifyContent="center" size={1}>
-              <Value
-                name={`protectiveItems.${index}.spellFailure`}
-                input={input}
-                values={values}
-                {...props}
-                align="center"
-              />
+              <Value name={`protectiveItems.${index}.spellFailure`} input={input} values={values} {...props} />
             </Grid>
             <Grid container justifyContent="center" size={1}>
-              <Value name={`protectiveItems.${index}.weight`} input={input} values={values} {...props} align="center" />
+              <Value name={`protectiveItems.${index}.weight`} input={input} values={values} {...props} />
             </Grid>
             <Grid container justifyContent="center" size={2}>
-              <Value
-                name={`protectiveItems.${index}.specialProperties`}
-                input={input}
-                values={values}
-                {...props}
-                align="center"
-              />
+              <Value name={`protectiveItems.${index}.specialProperties`} input={input} values={values} {...props} />
             </Grid>
           </Grid>
         ))}
@@ -1133,29 +1095,23 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
           </Label2>
         </Grid>
         <Grid container justifyContent="center" size={1}>
-          <Value name="protectiveItemsTotal.acBonus" input={input} values={values} {...props} align="center" />
+          <Value name="protectiveItemsTotal.acBonus" input={input} values={values} {...props} />
         </Grid>
         <Grid container justifyContent="center" size={2} />
         <Grid container justifyContent="center" size={1}>
-          <Value name="protectiveItemsTotal.dexMac" input={input} values={values} {...props} align="center" />
+          <Value name="protectiveItemsTotal.dexMac" input={input} values={values} {...props} />
         </Grid>
         <Grid container justifyContent="center" size={1}>
-          <Value name="protectiveItemsTotal.checkPenalty" input={input} values={values} {...props} align="center" />
+          <Value name="protectiveItemsTotal.checkPenalty" input={input} values={values} {...props} />
         </Grid>
         <Grid container justifyContent="center" size={1}>
-          <Value name="protectiveItemsTotal.spellFailure" input={input} values={values} {...props} align="center" />
+          <Value name="protectiveItemsTotal.spellFailure" input={input} values={values} {...props} />
         </Grid>
         <Grid container justifyContent="center" size={1}>
-          <Value name="protectiveItemsTotal.weight" input={input} values={values} {...props} align="center" />
+          <Value name="protectiveItemsTotal.weight" input={input} values={values} {...props} />
         </Grid>
         <Grid container justifyContent="center" size={2}>
-          <Value
-            name="protectiveItemsTotal.specialProperties"
-            input={input}
-            values={values}
-            {...props}
-            align="center"
-          />
+          <Value name="protectiveItemsTotal.specialProperties" input={input} values={values} {...props} />
         </Grid>
       </Grid>
       <Grid container spacing={1}>
@@ -1171,14 +1127,14 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
             </Label2>
           </Grid>
           <Grid container justifyContent="center" size={input ? 6 : 9}>
-            <Label align="center">アイテム</Label>
+            <Label>アイテム</Label>
           </Grid>
           <Grid container justifyContent="center" size={3}>
-            <Label align="center">重量</Label>
+            <Label>重量</Label>
           </Grid>
           {input && (
             <Grid container justifyContent="center" size={3}>
-              <Label align="center">操作</Label>
+              <Label>操作</Label>
             </Grid>
           )}
           {values.posessions.length > 0 ? (
@@ -1310,16 +1266,16 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
             <Value name="load.pushOrDrag" input={input} values={values} {...props} />
           </Grid>
           <Grid container justifyContent="center" size={2}>
-            <Label align="center">軽荷重</Label>
+            <Label>軽荷重</Label>
           </Grid>
           <Grid container justifyContent="center" size={2}>
-            <Label align="center">中荷重</Label>
+            <Label>中荷重</Label>
           </Grid>
           <Grid container justifyContent="center" size={2}>
-            <Label align="center">重荷重</Label>
+            <Label>重荷重</Label>
           </Grid>
           <Grid container justifyContent="center" size={2}>
-            <Label align="center">
+            <Label>
               頭上に
               <br />
               持ち上げる
@@ -1328,7 +1284,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
             </Label>
           </Grid>
           <Grid container justifyContent="center" size={2}>
-            <Label align="center">
+            <Label>
               地面から
               <br />
               持ち上げる
@@ -1337,7 +1293,7 @@ const CharacterSheet = ({ input, values, ...props }: CharacterSheetProps) => {
             </Label>
           </Grid>
           <Grid container justifyContent="center" size={2}>
-            <Label align="center">
+            <Label>
               押し引き
               <br />
               =最大荷重x3
