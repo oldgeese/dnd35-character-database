@@ -328,3 +328,5 @@ yarn-error.log*
 next-env.d.ts
 
 apphosting.local.yaml
+
+deno.lock
