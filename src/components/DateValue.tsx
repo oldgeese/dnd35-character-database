@@ -14,7 +14,7 @@ const DateValue = ({ input, ...props }: DateValueProps) => {
 
   return (
     <Typography
-      sx={{ width: "100%", minHeight: "20px", border: "1px solid black" }}
+      sx={{ width: "100%", paddingLeft: "2px", minHeight: "20px", border: "1px solid black" }}
       component="div"
       variant="label2"
       {...props}

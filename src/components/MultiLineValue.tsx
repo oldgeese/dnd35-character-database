@@ -31,7 +31,7 @@ const MultiLineValue = ({ input, ...props }: MultiLineValueProps) => {
       variant="label2"
       align={props.align}
       component="div"
-      sx={{ width: "100%", height: "100%", border: "1px solid black" }}
+      sx={{ width: "100%", paddingLeft: "2px", height: "100%", border: "1px solid black" }}
     >
       {value.split(/\r\n|\r|\n/).map((item: string) => (
         <React.Fragment key={item}>
