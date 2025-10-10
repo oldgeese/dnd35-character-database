@@ -6,9 +6,11 @@ This repository migrates a legacy single-page app to the Next.js App Router. Rou
 
 ## Documentation
 
-- [Project README](README.md): Legacy overview of development commands and deployment workflow.
+- [Project README](README.md): Quick reference for development commands and deployment workflow.
+- [Development Preview](.github/instructions/development-preview.instructions.md): Step-by-step guide for running Firebase emulators and Next.js dev server locally.
 - [Next.js Guidelines](.github/instructions/nextjs.instructions.md): Internal best practices for building features with the App Router.
-- [llms prompt - create](.github/prompt/create-llms.prompt.md): Authoring instructions for generating this llms.txt artifact.
+- [llms prompt - create](.github/prompts/create-llms.prompt.md): Authoring instructions for generating this llms.txt artifact.
+- [llms prompt - update](.github/prompts/update-llms.prompt.md): Instructions for maintaining and updating this llms.txt file.
 - [Bug report template](.github/ISSUE_TEMPLATE/bug_report.md): Standard form for capturing defects and reproduction steps.
 - [Feature request template](.github/ISSUE_TEMPLATE/feature_request.md): Structure for proposing enhancements with acceptance criteria.
 
