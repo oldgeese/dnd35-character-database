@@ -1,0 +1,48 @@
+# dnd35-character-database
+
+> Next.js 15 + Firebase app for managing D&D 3.5e character records with reusable MUI components.
+
+This repository migrates a legacy single-page app to the Next.js App Router. Routing lives under `app/`, while reusable logic, domain models, and UI primitives are colocated in `src/`. Firebase emulators and hosting configs support local development and deployment.
+
+## Documentation
+
+- [Project README](README.md): Legacy overview of development commands and deployment workflow.
+- [Next.js Guidelines](.github/instructions/nextjs.instructions.md): Internal best practices for building features with the App Router.
+- [llms prompt - create](.github/prompt/create-llms.prompt.md): Authoring instructions for generating this llms.txt artifact.
+- [Bug report template](.github/ISSUE_TEMPLATE/bug_report.md): Standard form for capturing defects and reproduction steps.
+- [Feature request template](.github/ISSUE_TEMPLATE/feature_request.md): Structure for proposing enhancements with acceptance criteria.
+
+## Application Routes
+
+- [App router](app/): Next.js App Router entry point, layout, theme setup, and route groupings.
+- [Root page](app/page.tsx): Landing view that links into character browsing flows.
+- [Character details](app/char/[id]/page.tsx): Server-rendered page for viewing a specific character sheet.
+- [Edit character](app/edit/[id]/page.tsx): Client-enabled route for updating existing character data.
+- [New character](app/new/page.tsx): Form-driven flow for creating a new character record.
+
+## Domain Logic
+
+- [Domain models](src/models/): TypeScript representations of abilities, skills, saves, equipment, and other 3.5e concepts.
+- [Forms](src/forms/): React Hook Form powered components for create, edit, and view workflows.
+- [Character sheet renderer](src/sheets/CharacterSheet.tsx): Presentation layer for assembled character data.
+- [Persistence helpers](src/persistent/index.ts): Wrapper utilities for reading and writing character documents.
+- [Firebase initialization](src/firebase/index.ts): Configuration bridge to Firebase SDK, auth, and Firestore services.
+
+## UI Components
+
+- [Shared components](src/components/): Reusable display primitives for labels, values, links, and dialogs.
+- [Value presenter](src/components/Value.tsx): Core component for rendering scalar fields with consistent styling.
+- [Character list](src/components/ListChars.tsx): List view for browsing characters in the database.
+- [Dirty dialog](src/components/DirtyDialog.tsx): Navigation guard dialog shown when unsaved form changes exist.
+
+## Configuration
+
+- [package.json](package.json): Project metadata, Next.js scripts, and dependency manifest.
+- [next.config.ts](next.config.ts): Next.js runtime configuration for the app build.
+- [tsconfig.json](tsconfig.json): TypeScript compiler settings used across the project.
+- [firebase.json](firebase.json): Firebase emulator, hosting, and deploy configuration.
+- [firestore.rules](firestore.rules): Security rules protecting Firestore collections.
+- [database.rules.json](database.rules.json): Realtime Database read/write permissions for legacy tooling.
+- [apphosting.yaml](apphosting.yaml): Firebase App Hosting deployment settings (see prod/dev overrides).
+- [biome.json](biome.json): Biome formatter and lint configuration for code quality.
+- [eslint.config.mjs](eslint.config.mjs): ESLint configuration aligned with Next.js best practices.
