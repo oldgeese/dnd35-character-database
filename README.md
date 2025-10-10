@@ -2,17 +2,13 @@
 D&amp;D 3.5e character database
 
 ## Develop
-### Start Emulators
+### Start Emulators and Next.js server
 ```
 pnpm emu
 ```
 
-### Start Webpack devserver
-```
-pnpm start
-```
-
-and access `http://localhost:8080`
+### Preview
+access `http://localhost:5002`
 
 ### Lint
 ```
