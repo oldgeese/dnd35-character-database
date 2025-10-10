@@ -4,22 +4,22 @@ D&amp;D 3.5e character database
 ## Develop
 ### Start Emulators
 ```
-yarn emu
+pnpm emu
 ```
 
 ### Start Webpack devserver
 ```
-yarn start
+pnpm start
 ```
 
 and access `http://localhost:8080`
 
 ### Lint
 ```
-yarn lint
+pnpm lint
 ```
 
 ## Deploy
 ```
-yarn deploy
+pnpm deploy
 ```
