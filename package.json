@@ -55,7 +55,8 @@
       "es5-ext",
       "protobufjs",
       "re2",
-      "sharp"
+      "sharp",
+      "unrs-resolver"
     ]
   }
 }
