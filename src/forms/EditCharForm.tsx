@@ -1,14 +1,17 @@
 "use client"
 
-import { getChar, saveChar } from "@/src/service"
+import { yupResolver } from "@hookform/resolvers/yup"
 import { Button, CircularProgress, TextField } from "@mui/material"
 import jsSHA from "jssha"
+import React, { useEffect, useState } from "react"
 import { Controller, FormProvider, type SubmitHandler, useForm } from "react-hook-form"
-import { Label } from "../components"
-import { Character } from "../models"
-import CharacterSheet from "../sheets"
-import { getTitle } from "../utils"
-import { useState } from "react"
+import * as Yup from "yup"
+import { Label } from "@/src/components"
+import { Character } from "@/src/models"
+import CharacterSheet from "@/src/sheets"
+import { getChar, saveChar } from "@/src/service"
+import { getTitle } from "@/src/utils"
+import { useNavigationGuard } from "next-navigation-guard"
 
 const validatePassword = async (id: string, values: Character) => {
   // eslint-disable-next-line new-cap
@@ -25,26 +28,44 @@ const validatePassword = async (id: string, values: Character) => {
   }
 }
 
-export default async function Page({ id }: { id: string }) {
-  document.querySelector('meta[name="viewport"]')?.setAttribute("content", "width=1024")
-  const [_, setCharacter] = useState(new Character())
-  setCharacter(await getChar(id))
+const EditCharForm = ({ id }: { id: string }) => {
+  const schema = Yup.object().shape({
+    passwordForUpdate: Yup.string().required("パスワードを入力してください。"),
+  })
 
   const methods = useForm({
     defaultValues: new Character(),
+    resolver: yupResolver(schema),
   })
   const {
     control,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isDirty },
     handleSubmit,
     reset,
     getValues,
     setError,
   } = methods
 
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const loadCharacter = async () => {
+      try {
+        const retrievedChar = await getChar(id)
+        const character = Object.assign(new Character(), retrievedChar)
+        reset(character)
+        document.title = getTitle(character)
+        setIsLoading(false)
+      } catch (error) {
+        console.error("Error loading character:", error)
+        setIsLoading(false)
+      }
+    }
+
+    loadCharacter()
+  }, [id, reset])
+
   const character = getValues()
-  reset(character)
-  document.title = getTitle(character)
 
   const onSubmit: SubmitHandler<Character> = async (values) => {
     try {
@@ -53,11 +74,12 @@ export default async function Page({ id }: { id: string }) {
       setError("passwordForUpdate", { type: "manual", message: "パスワードが誤っています。" })
       return
     }
-    const editDocRef = await getChar(id)
+
     const newValues = { ...values }
     newValues.updateTime = new Date()
-    newValues.id = editDocRef.id
+    newValues.id = id
     newValues.passwordForUpdate = ""
+
     try {
       await saveChar(id, newValues)
       console.log("Document successfully written!")
@@ -72,42 +94,42 @@ export default async function Page({ id }: { id: string }) {
     confirm: () => window.confirm("本当にこのページを離れますか? 未保存の変更があります。"),
   })
 
+  if (isLoading) {
+    return <CircularProgress />
+  }
+
   return (
-    <>
-      {character.id ? (
-        <FormProvider {...methods}>
-          <form>
-            <CharacterSheet input={true} values={character} />
-            <Label>パスワード</Label>
-            <Controller
-              control={control}
-              name="passwordForUpdate"
-              render={({ field }) => (
-                <TextField
-                  error={!!errors.passwordForUpdate}
-                  helperText={errors.passwordForUpdate?.message && errors.passwordForUpdate?.message}
-                  type="password"
-                  size="small"
-                  margin="none"
-                  variant="outlined"
-                  {...field}
-                />
-              )}
+    <FormProvider {...methods}>
+      <form>
+        <CharacterSheet input={true} values={character} />
+        <Label>パスワード</Label>
+        <Controller
+          control={control}
+          name="passwordForUpdate"
+          render={({ field }) => (
+            <TextField
+              error={!!errors.passwordForUpdate}
+              helperText={errors.passwordForUpdate?.message && errors.passwordForUpdate?.message}
+              type="password"
+              size="small"
+              margin="none"
+              variant="outlined"
+              {...field}
             />
-            <br />
-            <br />
-            {isSubmitting ? (
-              <CircularProgress />
-            ) : (
-              <Button onClick={handleSubmit(onSubmit)} variant="contained" color="primary" disabled={isSubmitting}>
-                保存
-              </Button>
-            )}
-          </form>
-        </FormProvider>
-      ) : (
-        <div />
-      )}
-    </>
+          )}
+        />
+        <br />
+        <br />
+        {isSubmitting ? (
+          <CircularProgress />
+        ) : (
+          <Button onClick={handleSubmit(onSubmit)} variant="contained" color="primary" disabled={isSubmitting}>
+            保存
+          </Button>
+        )}
+      </form>
+    </FormProvider>
   )
 }
+
+export default EditCharForm
