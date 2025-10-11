@@ -75,10 +75,12 @@ const EditCharForm = ({ id }: { id: string }) => {
       return
     }
 
-    const newValues = { ...values }
-    newValues.updateTime = new Date()
-    newValues.id = id
-    newValues.passwordForUpdate = ""
+    const newValues = {
+      ...values,
+      updateTime: new Date(),
+      id: id,
+      passwordForUpdate: "",
+    }
 
     try {
       await saveChar(id, newValues)
