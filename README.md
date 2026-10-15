@@ -1,25 +1,33 @@
 # dnd35-character-database
 D&amp;D 3.5e character database
 
+## Setup
+Node.js and pnpm versions are managed by [mise](https://mise.jdx.dev/) (see `mise.toml`).
+
+```
+mise install
+pnpm install
+```
+
 ## Develop
 ### Start Emulators
 ```
-yarn emu
+pnpm emu
 ```
 
 ### Start Webpack devserver
 ```
-yarn start
+pnpm start
 ```
 
 and access `http://localhost:8080`
 
 ### Lint
 ```
-yarn lint
+pnpm lint
 ```
 
 ## Deploy
 ```
-yarn deploy
+pnpm run deploy
 ```
