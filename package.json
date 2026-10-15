@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "build": "yarn install && env NODE_ENV=production webpack",
+    "build": "pnpm install && env NODE_ENV=production webpack",
     "start": "env NODE_ENV=development webpack serve",
-    "deploy": "npm run build && firebase deploy",
+    "deploy": "pnpm run build && firebase deploy",
     "lint": "eslint 'src/**'",
     "emu": "firebase emulators:start --import emudata --export-on-exit emudata"
   },
@@ -57,5 +57,5 @@
   "license": "MIT",
   "description": "D&D3.5 character database",
   "author": "Hiroyuki ONODA <hiro.onoda@gmail.com>",
-  "packageManager": "yarn@3.2.2"
+  "packageManager": "pnpm@12.13.0"
 }
