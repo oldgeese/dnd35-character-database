@@ -1,0 +1,43 @@
+name: Deploy to prod
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to deploy (e.g. v1.0.0). Use an older tag to roll back.
+        required: true
+        type: string
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # Pre-releases are not deployed automatically.
+    if: github.event_name == 'workflow_dispatch' || !github.event.release.prerelease
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      # Checkout comes first, so an unknown tag fails before anything is deployed.
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.tag }}
+
+      - uses: jdx/mise-action@v5
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run build:prod
+
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.PROD_WIF_PROVIDER }}
+          service_account: ${{ vars.PROD_DEPLOY_SA }}
+
+      - run: pnpm exec firebase deploy --project prod --only hosting,firestore --non-interactive

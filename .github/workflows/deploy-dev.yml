@@ -1,0 +1,32 @@
+name: Deploy to dev
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: jdx/mise-action@v5
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run build:dev
+
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.DEV_WIF_PROVIDER }}
+          service_account: ${{ vars.DEV_DEPLOY_SA }}
+
+      - run: pnpm exec firebase deploy --project dev --only hosting,firestore --non-interactive
