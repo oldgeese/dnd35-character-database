@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "dnd35-character-database"
+    "default": "dnd35-character-database-dev",
+    "dev": "dnd35-character-database-dev",
+    "prod": "dnd35-character-database"
   }
 }
