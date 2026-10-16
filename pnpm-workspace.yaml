@@ -12,3 +12,5 @@ pmOnFail: ignore
 overrides:
   # Transitive uuid (sockjs, gaxios) only uses v4, but < 11.1.1 is flagged by GHSA-w5hq-g745-h8pq
   "uuid@<11.1.1": ^11.1.1
+  # @firebase/firestore pins ~1.9.0, flagged by GHSA alerts fixed in 1.13.6; grpc is only used by its Node build
+  "@grpc/grpc-js@<1.13.6": ^1.13.6
