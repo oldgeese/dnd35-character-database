@@ -6,8 +6,8 @@ import {
   ListItemSecondaryAction,
   ListItemText,
 } from '@mui/material'
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/firestore'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 

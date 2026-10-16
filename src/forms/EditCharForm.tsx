@@ -1,6 +1,6 @@
 import { Button, CircularProgress, TextField } from '@mui/material'
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/firestore'
 import jsSHA from 'jssha'
 import React, { useEffect, useState } from 'react'
 import { Controller, FormProvider, SubmitHandler, useForm } from 'react-hook-form'
