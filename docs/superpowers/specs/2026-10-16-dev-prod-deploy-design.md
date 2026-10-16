@@ -100,10 +100,11 @@
 ### `.github/workflows/deploy-prod.yml`
 
 - きっかけ：
-  - `release: { types: [published] }`
-  - `workflow_dispatch`（入力 `tag`：デプロイするタグ。切り戻しや再デプロイに使う）
-- `release` のときは、プレリリースならジョブを飛ばす（`if: github.event_name == 'workflow_dispatch' || !github.event.release.prerelease`）。
-- チェックアウトするのは、`release` のときは `github.event.release.tag_name`、`workflow_dispatch` のときは入力した `tag`。
+  - `release: { types: [released] }`：正式リリースの公開と、プレリリースから正式リリースへの変更で動く。プレリリースの公開では動かない。
+  - `workflow_dispatch`：入力はなし。切り戻しや再デプロイは、`gh workflow run deploy-prod.yml --ref vX.Y.Z` のようにタグを指定して実行する。
+    - GitHub の Environment のデプロイ制限は、実行時の参照（`GITHUB_REF`）に対して判定される。そのため、`main` 上で実行して入力でタグを渡す方式では、`v*` タグに限った `production` 環境に弾かれる。また、入力に任意の参照を渡せてしまい、リリースしていないコードを本番に出せる。
+    - タグを指定して実行すると、そのタグの時点のワークフローファイルが使われる。そのため、この方式で出し直せるのは、このワークフローを追加した後に作ったタグに限られる。
+- チェックアウトするのは、`release` のときは `github.event.release.tag_name`、`workflow_dispatch` のときは `github.ref`（実行時に指定したタグ）。
 - ビルド：`build:prod`、デプロイ先：`prod`
 - `environment: production`
 - `concurrency: { group: deploy-prod, cancel-in-progress: false }`

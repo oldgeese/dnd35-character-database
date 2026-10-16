@@ -17,15 +17,17 @@ The app picks its Firebase project at build time: `pnpm run build:dev` or `pnpm 
 gh release create vX.Y.Z --generate-notes
 ```
 
-Pre-releases are not deployed.
+Pre-releases are not deployed. Promoting a pre-release to a full release deploys it.
 
 ## Rolling back
 
-Re-deploy an earlier release tag:
+Re-deploy an earlier release tag by running the workflow on that tag:
 
 ```
-gh workflow run deploy-prod.yml -f tag=vX.Y.Z
+gh workflow run deploy-prod.yml --ref vX.Y.Z
 ```
+
+The run uses the workflow file as it exists at that tag, so only tags created after this workflow was added can be re-deployed this way. Runs started on a branch (such as `main`) are rejected by the `production` environment.
 
 ## Manual deploy (dev only)
 

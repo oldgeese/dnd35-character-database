@@ -1,14 +1,14 @@
 name: Deploy to prod
 
 on:
+  # 'released' fires for a published full release and for a pre-release
+  # promoted to a full release, but never for a pre-release.
   release:
-    types: [published]
+    types: [released]
+  # Re-deploy or roll back: run on a release tag, e.g.
+  #   gh workflow run deploy-prod.yml --ref v1.0.0
+  # The production environment only accepts v* tags, so runs on a branch are rejected.
   workflow_dispatch:
-    inputs:
-      tag:
-        description: Release tag to deploy (e.g. v1.0.0). Use an older tag to roll back.
-        required: true
-        type: string
 
 concurrency:
   group: deploy-prod
@@ -16,18 +16,16 @@ concurrency:
 
 jobs:
   deploy:
-    # Pre-releases are not deployed automatically.
-    if: github.event_name == 'workflow_dispatch' || !github.event.release.prerelease
     runs-on: ubuntu-latest
     environment: production
     permissions:
       contents: read
       id-token: write
     steps:
-      # Checkout comes first, so an unknown tag fails before anything is deployed.
+      # Checkout comes first, so a bad ref fails before anything is deployed.
       - uses: actions/checkout@v7
         with:
-          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.tag }}
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
 
       - uses: jdx/mise-action@v5
 
