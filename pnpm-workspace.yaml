@@ -2,3 +2,9 @@ allowBuilds:
   core-js: false
   protobufjs: false
   re2: true
+# Keep pnpm-lock.yaml as a single YAML document. With a pnpm 12 pin in
+# `packageManager`, pnpm prepends an env document, and GitHub's dependency
+# graph reads only that first document, so Dependabot sees no dependencies.
+# The pnpm version is pinned by mise.toml instead.
+# Remove once https://github.com/dependabot/dependabot-core/issues/15904 is fixed.
+pmOnFail: ignore
