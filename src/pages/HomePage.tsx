@@ -16,7 +16,7 @@ const HomePage = () => {
   return (
     <>
       <Typography component="h3" variant="h4" align="center" color="textPrimary">
-        D&amp;D 3.5版 キャラクターデータベース
+        {getHomeTitle()}
       </Typography>
       <Grid container justifyContent="center">
         <Button variant="contained" color="primary" component={Link} to="/newchar">

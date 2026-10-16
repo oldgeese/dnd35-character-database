@@ -27,5 +27,5 @@ export const calcGrappleModifier = ([bab, str, size, misc]: [string, string, str
 export const calcSkillModifier = ([ability, rank, penalty, misc]: [string, string, string, string]) => calcModifier([ability])
   + Number(rank) + Number(penalty) + Number(misc)
 
-export const getHomeTitle = () => 'D&D 3.5版 キャラクターデータベース'
+export const getHomeTitle = () => 'D&D 3.5版 キャラクターデータベース' + (process.env.FIREBASE_ENV === 'dev' ? '(開発用)' : '')
 export const getTitle = (char: Character) => ( char.pcName === '' ? '名前なし' : char.pcName ) + ' - ' + getHomeTitle()
