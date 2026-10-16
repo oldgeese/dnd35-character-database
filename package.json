@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "build": "pnpm install && env NODE_ENV=production webpack",
+    "build:dev": "env NODE_ENV=production FIREBASE_ENV=dev webpack",
+    "build:prod": "env NODE_ENV=production FIREBASE_ENV=prod webpack",
     "start": "env NODE_ENV=development webpack serve",
-    "deploy": "pnpm run build && firebase deploy",
     "lint": "eslint 'src/**'",
     "emu": "firebase emulators:start --import emudata --export-on-exit emudata"
   },

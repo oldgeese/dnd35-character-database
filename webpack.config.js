@@ -1,9 +1,21 @@
 const path = require('path')
+const webpack = require('webpack')
 const CircularDependencyPlugin = require('circular-dependency-plugin')
 
 const env = process.env.NODE_ENV || 'production'
 
-const plugins = []
+// Firebase project to build for: 'dev' or 'prod'.
+// Defaults to 'dev' only for the dev server; production builds must choose.
+const firebaseEnv = process.env.FIREBASE_ENV || (env === 'development' ? 'dev' : undefined)
+if (firebaseEnv !== 'dev' && firebaseEnv !== 'prod') {
+  throw new Error(`FIREBASE_ENV must be "dev" or "prod" (got: ${process.env.FIREBASE_ENV})`)
+}
+
+const plugins = [
+  new webpack.DefinePlugin({
+    'process.env.FIREBASE_ENV': JSON.stringify(firebaseEnv),
+  }),
+]
 plugins.push(
   new CircularDependencyPlugin({
     // exclude detection of files based on a RegExp

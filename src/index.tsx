@@ -12,6 +12,7 @@ import {
   DirtyDialog,
   ErrorBoundary,
 } from './components'
+import { firebaseConfig, firebaseEnv } from './firebaseConfig'
 import {
   EditCharPage,
   HomePage,
@@ -119,20 +120,12 @@ function App() {
   );
 }
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyA8NGwQmCq5TF16lQy4fSAyti8zpHIwXqI',
-  authDomain: 'dnd35-character-database.firebaseapp.com',
-  databaseURL: 'https://dnd35-character-database.firebaseio.com',
-  projectId: 'dnd35-character-database',
-  storageBucket: 'dnd35-character-database.appspot.com',
-  messagingSenderId: '551444495572',
-  appId: '1:551444495572:web:5ef6070eb157db6da50f41',
-  measurementId: 'G-0M7NMCXK1Y',
-}
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
-firebase.analytics()
+// Analytics is set up only in the prod project
+if (firebaseEnv === 'prod') {
+  firebase.analytics()
+}
 const useEmulator = window.location.hostname === 'localhost'
 if (useEmulator) {
   firebase.firestore().useEmulator('localhost', 8081)

@@ -28,6 +28,4 @@ pnpm lint
 ```
 
 ## Deploy
-```
-pnpm run deploy
-```
+Pushing to `main` deploys to the dev environment, and publishing a GitHub Release deploys to production. See [docs/deployment.md](docs/deployment.md).

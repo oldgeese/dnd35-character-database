@@ -1,0 +1,41 @@
+name: Deploy to prod
+
+on:
+  # 'released' fires for a published full release and for a pre-release
+  # promoted to a full release, but never for a pre-release.
+  release:
+    types: [released]
+  # Re-deploy or roll back: run on a release tag, e.g.
+  #   gh workflow run deploy-prod.yml --ref v1.0.0
+  # The production environment only accepts v* tags, so runs on a branch are rejected.
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      # Checkout comes first, so a bad ref fails before anything is deployed.
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
+
+      - uses: jdx/mise-action@v5
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run build:prod
+
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.PROD_WIF_PROVIDER }}
+          service_account: ${{ vars.PROD_DEPLOY_SA }}
+
+      - run: pnpm exec firebase deploy --project prod --only hosting,firestore --non-interactive
