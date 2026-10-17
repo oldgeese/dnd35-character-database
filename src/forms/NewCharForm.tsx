@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, CircularProgress, TextField } from '@mui/material'
+import { Alert, Button, CircularProgress, TextField } from '@mui/material'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
 import jsSHA from 'jssha'
@@ -55,6 +55,7 @@ const NewCharForm = () => {
       <form>
         <PromptIfDirty />
         <CharacterSheet input values={character} />
+        <Alert severity="warning" sx={{ mt: 2 }}>他のサイトやサービスで使っているパスワードは使わないでください。</Alert>
         <Label>パスワード</Label>
         <Controller
           control={control}
