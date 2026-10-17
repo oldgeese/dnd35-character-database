@@ -29,6 +29,14 @@ export const parseUpdateRequest = (data: unknown): { id: string; character: Char
   return { id, ...base }
 }
 
+export const parseDuplicateRequest = (data: unknown): { id: string; password: string } => {
+  if (!isPlainObject(data)) throw new HttpsError('invalid-argument', 'Invalid request')
+  const { id, password } = data
+  if (typeof id !== 'string' || id === '') throw new HttpsError('invalid-argument', 'id must be a non-empty string')
+  if (typeof password !== 'string') throw new HttpsError('invalid-argument', 'password must be a string')
+  return { id, password }
+}
+
 export const toStoredCharacter = (character: CharacterData, id: string, now: Date): CharacterData => {
   const stored: CharacterData = { ...character }
   for (const field of PASSWORD_FIELDS) delete stored[field]
@@ -36,3 +44,6 @@ export const toStoredCharacter = (character: CharacterData, id: string, now: Dat
   stored.updateTime = now.toISOString()
   return stored
 }
+
+export const toDuplicatedCharacter = (source: CharacterData, id: string, now: Date): CharacterData =>
+  toStoredCharacter({ ...source, pcName: `Copy of ${source.pcName ?? ''}` }, id, now)

@@ -46,3 +46,12 @@ export const updateCharacter = async (id: string, character: Character, password
     throw toSaveError(error)
   }
 }
+
+export const duplicateCharacter = async (id: string, password: string): Promise<string> => {
+  try {
+    const result = await callable('duplicateCharacter')({ id, password })
+    return (result.data as { id: string }).id
+  } catch (error) {
+    throw toSaveError(error)
+  }
+}
