@@ -3,6 +3,7 @@
     "build:dev": "env NODE_ENV=production FIREBASE_ENV=dev webpack",
     "build:prod": "env NODE_ENV=production FIREBASE_ENV=prod webpack",
     "start": "env NODE_ENV=development webpack serve",
+    "test": "pnpm --filter dnd35-functions test:unit && pnpm --filter dnd35-functions build && firebase emulators:exec --only firestore,functions --project demo-dnd35 'pnpm --filter dnd35-functions test:emu'",
     "lint": "eslint 'src/**'",
     "emu": "firebase emulators:start --import emudata --export-on-exit emudata"
   },
@@ -14,7 +15,6 @@
     "@mui/material": "^5.10.8",
     "@mui/styles": "^5.10.8",
     "firebase": "^13.0.0",
-    "jssha": "^3.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.37.0",

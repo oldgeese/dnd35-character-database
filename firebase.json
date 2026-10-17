@@ -9,10 +9,12 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [{
-      "source": "**",
-      "destination": "/index.html"
-    }]
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   },
   "emulators": {
     "database": {
@@ -26,10 +28,20 @@
     },
     "firestore": {
       "port": 8081
+    },
+    "functions": {
+      "port": 5001
     }
   },
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs24",
+    "predeploy": [
+      "pnpm --filter dnd35-functions build"
+    ]
   }
 }

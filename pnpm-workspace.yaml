@@ -1,3 +1,6 @@
+packages:
+  - '.'
+  - functions
 allowBuilds:
   "@firebase/util": false
   core-js: false

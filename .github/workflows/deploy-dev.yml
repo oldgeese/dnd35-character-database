@@ -29,4 +29,4 @@ jobs:
           workload_identity_provider: ${{ vars.DEV_WIF_PROVIDER }}
           service_account: ${{ vars.DEV_DEPLOY_SA }}
 
-      - run: pnpm exec firebase deploy --project dev --only hosting,firestore --non-interactive
+      - run: pnpm exec firebase deploy --project dev --only hosting,firestore,functions --non-interactive

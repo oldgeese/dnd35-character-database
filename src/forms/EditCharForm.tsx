@@ -1,10 +1,10 @@
-import { Button, CircularProgress, TextField } from '@mui/material'
+import { Alert, Button, CircularProgress, TextField } from '@mui/material'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
-import jsSHA from 'jssha'
 import React, { useEffect, useState } from 'react'
 import { Controller, FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
+import { SaveError, updateCharacter } from '../api/characters'
 import {
     Label,
     PromptIfDirty
@@ -13,38 +13,12 @@ import { Character } from '../models'
 import CharacterSheet from '../sheets'
 import { getTitle } from '../utils'
 
-const validatePassword = async (id: string, values: Character) => {
-  const db = firebase.firestore()
-  // eslint-disable-next-line new-cap
-  const shaObj = new jsSHA('SHA-256', 'TEXT')
-  shaObj.update(values.passwordForUpdate)
-  const hashForUpdate = shaObj.getHash('HEX')
-  const editDocRef = db.collection('characters').doc(id)
-
-  try {
-    const snapshot = await editDocRef.get()
-    let passwordOnServer
-    if (snapshot.exists) {
-      passwordOnServer = (snapshot.data() as Character)?.password
-    } else {
-      throw new Error('document does not exist.')
-    }
-
-    if (passwordOnServer !== hashForUpdate) {
-      console.log('wrong password.')
-      throw new Error('wrong password.')
-    }
-  } catch (err) {
-    console.error('Error :', err)
-    throw err
-  }
-}
-
 const EditCharForm: React.VFC<{}> = () => {
   document.querySelector('meta[name="viewport"]')?.setAttribute('content', 'width=1024')
   const { id } = useParams<{id: string}>()
   const [_, setCharacter] = useState(new Character())
   const db = firebase.firestore()
+  const [saveFailed, setSaveFailed] = useState(false)
 
   const methods = useForm({
     defaultValues: new Character(),
@@ -70,23 +44,20 @@ const EditCharForm: React.VFC<{}> = () => {
   const character = getValues()
 
   const onSubmit: SubmitHandler<Character> = async (values) => {
+    setSaveFailed(false)
     try {
-      await validatePassword(id, values)
-    } catch (err) {
-      setError('passwordForUpdate', {type:'manual', message:'パスワードが誤っています。' })
-      return
-    }
-    const editDocRef = db.collection('characters').doc(id)
-    const newValues = { ...values }
-    newValues.updateTime = new Date()
-    newValues.id = editDocRef.id
-    newValues.passwordForUpdate = ''
-    try {
-      await editDocRef.set(JSON.parse(JSON.stringify(newValues)))
-      console.log('Document successfully written!')
+      await updateCharacter(id, values, values.passwordForUpdate)
       document.location.href = '/'
     } catch (error) {
-      console.error('Error writing document: ', error)
+      console.error('Error saving character: ', error)
+      const kind = error instanceof SaveError ? error.kind : 'other'
+      if (kind === 'wrong-password') {
+        setError('passwordForUpdate', { type: 'manual', message: 'パスワードが誤っています。' })
+      } else if (kind === 'not-editable') {
+        setError('passwordForUpdate', { type: 'manual', message: 'このキャラクターは編集できません。' })
+      } else {
+        setSaveFailed(true)
+      }
     }
   }
 
@@ -107,6 +78,7 @@ const EditCharForm: React.VFC<{}> = () => {
               />
             <br />
             <br />
+            {saveFailed && <Alert severity="error" sx={{ mb: 2 }}>保存に失敗しました。時間をおいてもう一度お試しください。</Alert>}
             {isSubmitting
               ? <CircularProgress />
               : <Button onClick={handleSubmit(onSubmit)} variant="contained" color="primary" disabled={isSubmitting}>保存</Button>}

@@ -1,5 +1,6 @@
 import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import 'firebase/compat/analytics'
+import 'firebase/compat/functions'
 import firebase from 'firebase/compat/app'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
@@ -129,6 +130,7 @@ if (firebaseEnv === 'prod') {
 const useEmulator = window.location.hostname === 'localhost'
 if (useEmulator) {
   firebase.firestore().useEmulator('localhost', 8081)
+  firebase.app().functions('asia-northeast1').useEmulator('localhost', 5001)
 }
 
 // prevent back-forward cache in Safari
