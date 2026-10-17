@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { parseCreateRequest, parseUpdateRequest, toStoredCharacter } from './character.ts'
+import {
+  parseCreateRequest, parseDuplicateRequest, parseUpdateRequest, toDuplicatedCharacter, toStoredCharacter,
+} from './character.ts'
 
 test('toStoredCharacter drops password fields and sets id and updateTime', () => {
   const out = toStoredCharacter(
@@ -29,4 +31,16 @@ test('parseUpdateRequest requires a non-empty string id', () => {
   for (const id of ['', undefined, 3]) {
     assert.throws(() => parseUpdateRequest({ id, character: {}, password: '' }), { code: 'invalid-argument' })
   }
+})
+test('parseDuplicateRequest requires a non-empty string id and a string password', () => {
+  assert.deepEqual(parseDuplicateRequest({ id: 'a', password: '' }), { id: 'a', password: '' })
+  for (const data of [null, { id: '', password: '' }, { id: 3, password: '' }, { id: 'a', password: 1 }]) {
+    assert.throws(() => parseDuplicateRequest(data), { code: 'invalid-argument' })
+  }
+})
+test('toDuplicatedCharacter prefixes the name and stores under the new id', () => {
+  const out = toDuplicatedCharacter(
+    { pcName: 'A', plName: 'P', id: 'src', updateTime: 'x', password: 'h' },
+    'doc2', new Date('2026-10-18T00:00:00.000Z'))
+  assert.deepEqual(out, { pcName: 'Copy of A', plName: 'P', id: 'doc2', updateTime: '2026-10-18T00:00:00.000Z' })
 })

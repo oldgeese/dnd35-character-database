@@ -7,7 +7,7 @@
 | `dev` | `dnd35-character-database-dev` | https://dnd35-character-database-dev.web.app | A commit is pushed to `main` ([deploy-dev.yml](../.github/workflows/deploy-dev.yml)) |
 | `prod` | `dnd35-character-database` | https://dnd35-character-database.web.app | A GitHub Release is published ([deploy-prod.yml](../.github/workflows/deploy-prod.yml)) |
 
-Both deploy Hosting, Firestore (rules and indexes) and Cloud Functions (`functions/`, callable `createCharacter` and `updateCharacter` in `asia-northeast1`, runtime `nodejs24`) with `firebase deploy --only hosting,firestore,functions`. Functions are built by the `predeploy` hook in `firebase.json`. Realtime Database is not used by the app and is not deployed.
+Both deploy Hosting, Firestore (rules and indexes) and Cloud Functions (`functions/`, callable `createCharacter`, `updateCharacter` and `duplicateCharacter` in `asia-northeast1`, runtime `nodejs24`) with `firebase deploy --only hosting,firestore,functions`. Functions are built by the `predeploy` hook in `firebase.json`. Realtime Database is not used by the app and is not deployed.
 
 The app picks its Firebase project at build time: `pnpm run build:dev` or `pnpm run build:prod` sets `FIREBASE_ENV`, and `webpack.config.js` embeds it. A production build without a valid `FIREBASE_ENV` fails. The configs live in `src/firebaseConfig.ts`.
 

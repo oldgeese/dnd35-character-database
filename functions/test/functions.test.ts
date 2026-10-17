@@ -12,6 +12,8 @@ const create = (data: unknown) =>
   httpsCallable<unknown, { id: string }>(functions, 'createCharacter')(data)
 const update = (data: unknown) =>
   httpsCallable<unknown, { id: string }>(functions, 'updateCharacter')(data)
+const duplicate = (data: unknown) =>
+  httpsCallable<unknown, { id: string }>(functions, 'duplicateCharacter')(data)
 
 beforeEach(async () => {
   await clearFirestore()
@@ -57,4 +59,35 @@ test('update of a character without a secret is failed-precondition', async () =
 
 test('invalid input is invalid-argument', async () => {
   await assert.rejects(create({ character: 'x', password: 'pw' }), { code: 'functions/invalid-argument' })
+})
+
+test('duplicate copies the character under a new id with the same password', async () => {
+  const { data: src } = await create({ character: { pcName: 'A', plName: 'P' }, password: 'pw' })
+  const { data } = await duplicate({ id: src.id, password: 'pw' })
+  assert.notEqual(data.id, src.id)
+  const stored = (await adminDb().doc(`characters/${data.id}`).get()).data()!
+  assert.equal(stored.pcName, 'Copy of A')
+  assert.equal(stored.plName, 'P')
+  assert.equal(stored.id, data.id)
+  assert.equal((await adminDb().doc(`characters/${src.id}`).get()).data()!.pcName, 'A')
+  await update({ id: data.id, character: { pcName: 'B' }, password: 'pw' })
+  await assert.rejects(update({ id: data.id, character: { pcName: 'C' }, password: 'nope' }),
+    { code: 'functions/permission-denied' })
+})
+
+test('duplicate with a wrong password is permission-denied and creates nothing', async () => {
+  const { data: src } = await create({ character: { pcName: 'A' }, password: 'pw' })
+  await assert.rejects(duplicate({ id: src.id, password: 'nope' }), { code: 'functions/permission-denied' })
+  assert.equal((await adminDb().collection('characters').get()).size, 1)
+  assert.equal((await adminDb().collection('characterSecrets').get()).size, 1)
+})
+
+test('duplicate of a character without a secret is failed-precondition', async () => {
+  await adminDb().doc('characters/legacy').set({ pcName: 'old', id: 'legacy' })
+  await assert.rejects(duplicate({ id: 'legacy', password: '' }), { code: 'functions/failed-precondition' })
+  assert.equal((await adminDb().collection('characters').get()).size, 1)
+})
+
+test('duplicate with invalid input is invalid-argument', async () => {
+  await assert.rejects(duplicate({ id: '', password: '' }), { code: 'functions/invalid-argument' })
 })
