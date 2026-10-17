@@ -33,6 +33,14 @@ The run uses the workflow file as it exists at that tag, so only tags created af
 
 Do this once per Firebase project (dev and prod) before its first Functions deploy. CI deploys are non-interactive, so if the Artifact Registry cleanup policy is missing, firebase-tools fails with "Functions successfully deployed but could not set up cleanup policy". Releases run firestore, functions, then hosting, so Hosting would never be released.
 
+The deploy service account cannot enable APIs, but firebase-tools checks several of them during a Functions deploy (it fails with "Permissions denied enabling …"). Enable them first:
+
+```
+gcloud services enable cloudfunctions.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com run.googleapis.com eventarc.googleapis.com pubsub.googleapis.com storage.googleapis.com firebaseextensions.googleapis.com cloudbilling.googleapis.com --project <project-id>
+```
+
+Then set up the Artifact Registry cleanup policy:
+
 ```
 gcloud artifacts repositories create gcf-artifacts --repository-format=docker --location=asia-northeast1 --project <project-id>
 pnpm exec firebase functions:artifacts:setpolicy --project <alias> --location asia-northeast1 --force
@@ -55,7 +63,7 @@ GitHub Actions uses Workload Identity Federation, so no key files are stored. Ea
 
 - Workload Identity pool `github` with OIDC provider `github-actions`, accepting only tokens from `oldgeese/dnd35-character-database`
 - Service account `github-deployer` with `roles/firebasehosting.admin`, `roles/firebaserules.admin`, `roles/datastore.indexAdmin` and `roles/serviceusage.serviceUsageConsumer`
-- For deploying Functions, additionally: `roles/cloudfunctions.admin`, `roles/run.admin` and `roles/artifactregistry.admin` on the project, and `roles/iam.serviceAccountUser` on the default compute service account (`<project-number>-compute@developer.gserviceaccount.com`). The exact set is confirmed at the first dev deploy.
+- For deploying Functions, additionally: `roles/cloudfunctions.admin`, `roles/run.admin` and `roles/artifactregistry.admin` on the project, and `roles/iam.serviceAccountUser` on both the default compute service account (`<project-number>-compute@developer.gserviceaccount.com`) and the App Engine default service account (`<project-id>@appspot.gserviceaccount.com`). firebase-tools checks `iam.serviceAccounts.actAs` on the App Engine one before deploying.
 
 Who may use each service account:
 
