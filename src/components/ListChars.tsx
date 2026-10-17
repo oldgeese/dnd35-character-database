@@ -2,8 +2,10 @@ import {
   Avatar,
   Button,
   List,
+  ListItem,
   ListItemAvatar,
-  ListItemSecondaryAction,
+  ListItemButton,
+  listItemButtonClasses,
   ListItemText,
 } from '@mui/material'
 import firebase from 'firebase/compat/app'
@@ -11,7 +13,6 @@ import 'firebase/compat/firestore'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import ListItemLink from './ListItemLink'
 import { Character } from '../models'
 
 const ListChars = () => {
@@ -34,21 +35,25 @@ const ListChars = () => {
   return (
     <List>
       {characters.map((character) => (
-        <ListItemLink
-          href={`/char/${character.id}`}
+        <ListItem
           key={character.id}
           alignItems="flex-start"
-        >
-          <ListItemAvatar>
-            <Avatar src={character.image} />
-          </ListItemAvatar>
-          <ListItemText primary={character.pcName} secondary={`PL名:${character.plName}, クラスレベル:${character.classLevel}`} />
-          <ListItemSecondaryAction>
+          disablePadding
+          secondaryAction={(
             <Button variant="contained" component={Link} to={`/editchar/${character.id}`}>
               編集
             </Button>
-          </ListItemSecondaryAction>
-        </ListItemLink>
+          )}
+          // Keep text clear of the edit button (min-width 64px + 16px offset)
+          sx={{ [`& > .${listItemButtonClasses.root}`]: { pr: 12 } }}
+        >
+          <ListItemButton component="a" href={`/char/${character.id}`} alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar src={character.image} />
+            </ListItemAvatar>
+            <ListItemText primary={character.pcName} secondary={`PL名:${character.plName}, クラスレベル:${character.classLevel}`} />
+          </ListItemButton>
+        </ListItem>
       ))}
     </List>
   )
