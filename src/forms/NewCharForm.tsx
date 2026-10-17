@@ -1,11 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Alert, Button, CircularProgress, TextField } from '@mui/material'
-import firebase from 'firebase/compat/app'
-import 'firebase/compat/firestore'
-import jsSHA from 'jssha'
-import React from 'react'
+import React, { useState } from 'react'
 import { Controller, FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
+import { createCharacter } from '../api/characters'
 import {
     Label,
     PromptIfDirty
@@ -19,7 +17,7 @@ const NewCharForm = () => {
   const schema = Yup.object().shape({
     passwordConfirm: Yup.mixed().oneOf([Yup.ref('password')], 'パスワードが一致しません。'),
   })
-  const db = firebase.firestore()
+  const [saveFailed, setSaveFailed] = useState(false)
   document.title = getTitle(new Character())
 
   const methods = useForm({
@@ -30,23 +28,13 @@ const NewCharForm = () => {
   const character = getValues()
 
   const onSubmit: SubmitHandler<Character>=async (values) => {
-    const newDocRef = db.collection('characters').doc()
-    const newValues = { ...values }
-    newValues.updateTime = new Date()
-    newValues.id = newDocRef.id
-
-    // eslint-disable-next-line new-cap
-    const shaObj = new jsSHA('SHA-256', 'TEXT')
-    shaObj.update(values.password)
-    newValues.password = shaObj.getHash('HEX')
-    newValues.passwordConfirm = ''
-
+    setSaveFailed(false)
     try {
-      await newDocRef.set(JSON.parse(JSON.stringify(newValues)))
-      console.log('Document successfully written!')
+      await createCharacter(values, values.password)
       document.location.href = '/'
     } catch (error) {
-      console.error('Error writing document: ', error)
+      console.error('Error saving character: ', error)
+      setSaveFailed(true)
     }
   }
 
@@ -74,6 +62,7 @@ const NewCharForm = () => {
           />
         <br />
         <br />
+        {saveFailed && <Alert severity="error" sx={{ mb: 2 }}>保存に失敗しました。時間をおいてもう一度お試しください。</Alert>}
         {isSubmitting
           ? <CircularProgress />
           : <Button onClick={handleSubmit(onSubmit)} variant="contained" color="primary" disabled={isSubmitting}>保存</Button>}
