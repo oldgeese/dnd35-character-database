@@ -29,8 +29,7 @@ const DuplicateCharDialog = (props: DuplicateCharDialogProps) => {
   const [errorMessage, setErrorMessage] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
+  const handleSubmit = async () => {
     setSubmitting(true)
     setErrorMessage('')
     try {
@@ -48,7 +47,6 @@ const DuplicateCharDialog = (props: DuplicateCharDialogProps) => {
       open
       onClose={submitting ? undefined : onClose}
       aria-labelledby="duplicate-dialog-title"
-      PaperProps={{ component: 'form', onSubmit: handleSubmit }}
     >
       <DialogTitle id="duplicate-dialog-title">キャラクターの複製</DialogTitle>
       <DialogContent>
@@ -72,7 +70,7 @@ const DuplicateCharDialog = (props: DuplicateCharDialogProps) => {
         <Button onClick={onClose} disabled={submitting}>
           キャンセル
         </Button>
-        <Button type="submit" variant="contained" disabled={submitting}>
+        <Button onClick={handleSubmit} variant="contained" disabled={submitting}>
           複製
         </Button>
       </DialogActions>
