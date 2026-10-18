@@ -2,6 +2,7 @@ const { execSync } = require('child_process')
 const path = require('path')
 const webpack = require('webpack')
 const CircularDependencyPlugin = require('circular-dependency-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const env = process.env.NODE_ENV || 'production'
 
@@ -27,6 +28,12 @@ const plugins = [
   new webpack.DefinePlugin({
     'process.env.FIREBASE_ENV': JSON.stringify(firebaseEnv),
     'process.env.APP_VERSION': JSON.stringify(appVersion),
+  }),
+  // Writes public/index.html with the hashed script names.
+  new HtmlWebpackPlugin({
+    template: './src/index.html',
+    scriptLoading: 'defer',
+    publicPath: '/',
   }),
 ]
 plugins.push(
@@ -66,9 +73,12 @@ module.exports = {
   entry: {
     bundle: './src/index.tsx',
   },
+  // Hashed names let firebase.json cache js/ forever and revalidate the rest.
   output: {
     path: path.join(__dirname, 'public'),
-    filename: '[name].js',
+    filename: 'js/[name].[contenthash].js',
+    // Only js/ and index.html are build output; keep the tracked files in public/.
+    clean: { keep: (asset) => !asset.startsWith('js/') && asset !== 'index.html' },
   },
   devtool: 'source-map',
   optimization: {

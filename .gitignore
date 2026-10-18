@@ -59,7 +59,8 @@ flycheck_*.el
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -264,11 +265,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-public/bundle.js
-public/bundle.js.map
-public/*vendor.js
-public/*vendor.js.map
-public/*LICENSE.txt
+# Build output (webpack)
+public/js/
+public/index.html
 
 firebase-debug.log*
 firebase-debug.*.log*
