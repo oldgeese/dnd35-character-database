@@ -20,6 +20,9 @@ const HomePage = () => {
       <Typography component="h3" variant="h4" align="center" color="textPrimary">
         {getHomeTitle()}
       </Typography>
+      <Typography variant="caption2" component="p" align="center" color="textSecondary">
+        {process.env.APP_VERSION}
+      </Typography>
       <Grid container justifyContent="center">
         <IconButton href="https://github.com/oldgeese/dnd35-character-database" target="_blank" rel="noopener noreferrer" aria-label="GitHub" size="small">
           <GitHub fontSize="small" />

@@ -1,3 +1,4 @@
+const { execSync } = require('child_process')
 const path = require('path')
 const webpack = require('webpack')
 const CircularDependencyPlugin = require('circular-dependency-plugin')
@@ -11,9 +12,21 @@ if (firebaseEnv !== 'dev' && firebaseEnv !== 'prod') {
   throw new Error(`FIREBASE_ENV must be "dev" or "prod" (got: ${process.env.FIREBASE_ENV})`)
 }
 
+// Shown under the home page title: the release tag in prod, otherwise the commit.
+// RELEASE_VERSION is set by the prod deploy workflow.
+const commitHash = () => {
+  try {
+    return execSync('git rev-parse --short HEAD').toString().trim()
+  } catch {
+    return 'unknown'
+  }
+}
+const appVersion = (firebaseEnv === 'prod' && process.env.RELEASE_VERSION) || commitHash()
+
 const plugins = [
   new webpack.DefinePlugin({
     'process.env.FIREBASE_ENV': JSON.stringify(firebaseEnv),
+    'process.env.APP_VERSION': JSON.stringify(appVersion),
   }),
 ]
 plugins.push(
