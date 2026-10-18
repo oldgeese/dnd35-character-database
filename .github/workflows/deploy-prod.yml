@@ -32,6 +32,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm run build:prod
+        env:
+          RELEASE_VERSION: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref_name }}
 
       - uses: google-github-actions/auth@v3
         with:
