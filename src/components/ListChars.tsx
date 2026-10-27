@@ -1,6 +1,8 @@
 import {
   Avatar,
+  Box,
   Button,
+  CircularProgress,
   List,
   ListItem,
   ListItemAvatar,
@@ -8,6 +10,7 @@ import {
   listItemButtonClasses,
   ListItemText,
   Stack,
+  Typography,
 } from '@mui/material'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
@@ -18,7 +21,7 @@ import { Character } from '../models'
 import DuplicateCharDialog from './DuplicateCharDialog'
 
 const ListChars = () => {
-  const [characters, setCharacters] = useState<Character[]>([])
+  const [characters, setCharacters] = useState<Character[] | null>(null)
   const [duplicating, setDuplicating] = useState<Character | null>(null)
   const db = firebase.firestore()
 
@@ -34,6 +37,15 @@ const ListChars = () => {
       })
     return unsubscribe
   }, [db])
+
+  if (characters === null) {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, py: 4 }}>
+        <CircularProgress size={24} />
+        <Typography color="text.secondary">読み込み中...</Typography>
+      </Box>
+    )
+  }
 
   return (
     <>
