@@ -46,6 +46,8 @@ const ListChars = () => {
     [characters, query],
   )
 
+  const noMatch = characters !== null && characters.length > 0 && filtered.length === 0
+
   if (characters === null) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, py: 4 }}>
@@ -70,11 +72,10 @@ const ListChars = () => {
           sx={{ '& .MuiOutlinedInput-input': { py: 1, px: 1.5 } }}
         />
       </Box>
-      {filtered.length === 0 && characters.length > 0 && (
-        <Typography role="status" color="text.secondary" align="center" sx={{ py: 4 }}>
-          該当するキャラクターがいません
-        </Typography>
-      )}
+      {/* Keep the live region mounted and change only its text, so screen readers announce it */}
+      <Typography role="status" color="text.secondary" align="center" sx={noMatch ? { py: 4 } : undefined}>
+        {noMatch ? '該当するキャラクターがいません' : ''}
+      </Typography>
       <List>
         {filtered.map((character) => (
           <ListItem

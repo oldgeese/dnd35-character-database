@@ -30,14 +30,22 @@ export const calcSkillModifier = ([ability, rank, penalty, misc]: [string, strin
 export const getHomeTitle = () => 'D&D 3.5版 キャラクターデータベース' + (process.env.FIREBASE_ENV === 'dev' ? '(開発用)' : '')
 export const getTitle = (char: Character) => ( char.pcName === '' ? '名前なし' : char.pcName ) + ' - ' + getHomeTitle()
 
-// Fold full/half-width (NFKC), katakana to hiragana, and letter case so they all match
-const normalizeForSearch = (s: unknown) => String(s ?? '')
+// Only strings and numbers are searchable; other stored values would turn into text like "[object Object]"
+const toSearchableText = (s: unknown) => {
+  if (typeof s === 'string') return s
+  if (typeof s === 'number') return String(s)
+  return ''
+}
+
+// Fold full/half-width (NFKC), katakana to hiragana, and letter case, and drop whitespace, so they all match
+const normalizeForSearch = (s: unknown) => toSearchableText(s)
   .normalize('NFKC')
-  .replace(/[\u30A1-\u30F6]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60))
+  .replace(/[\u30A1-\u30F6\u30FD\u30FE]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60))
   .toLowerCase()
+  .replace(/\s/g, '')
 
 export const matchesCharacterSearch = (char: Character, query: string) => {
-  const q = normalizeForSearch(query).trim()
+  const q = normalizeForSearch(query)
   if (q === '') return true
   return [char.pcName, char.plName, char.classLevel].some((field) => normalizeForSearch(field).includes(q))
 }
