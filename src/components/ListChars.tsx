@@ -10,19 +10,22 @@ import {
   listItemButtonClasses,
   ListItemText,
   Stack,
+  TextField,
   Typography,
 } from '@mui/material'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Character } from '../models'
+import { matchesCharacterSearch } from '../utils'
 import DuplicateCharDialog from './DuplicateCharDialog'
 
 const ListChars = () => {
   const [characters, setCharacters] = useState<Character[] | null>(null)
   const [duplicating, setDuplicating] = useState<Character | null>(null)
+  const [query, setQuery] = useState('')
   const db = firebase.firestore()
 
   useEffect(() => {
@@ -38,6 +41,11 @@ const ListChars = () => {
     return unsubscribe
   }, [db])
 
+  const filtered = useMemo(
+    () => (characters ?? []).filter((character) => matchesCharacterSearch(character, query)),
+    [characters, query],
+  )
+
   if (characters === null) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, py: 4 }}>
@@ -49,8 +57,26 @@ const ListChars = () => {
 
   return (
     <>
+      <Box sx={{ px: 2 }}>
+        <TextField
+          type="search"
+          fullWidth
+          size="small"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="キャラクター名・PL名・クラスレベルで検索"
+          inputProps={{ 'aria-label': 'キャラクター検索' }}
+          // The theme shrinks input padding for the dense character sheet; restore it here
+          sx={{ '& .MuiOutlinedInput-input': { py: 1, px: 1.5 } }}
+        />
+      </Box>
+      {filtered.length === 0 && characters.length > 0 && (
+        <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
+          該当するキャラクターがいません
+        </Typography>
+      )}
       <List>
-        {characters.map((character) => (
+        {filtered.map((character) => (
           <ListItem
             key={character.id}
             alignItems="flex-start"

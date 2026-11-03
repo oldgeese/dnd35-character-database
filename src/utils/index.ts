@@ -29,3 +29,11 @@ export const calcSkillModifier = ([ability, rank, penalty, misc]: [string, strin
 
 export const getHomeTitle = () => 'D&D 3.5版 キャラクターデータベース' + (process.env.FIREBASE_ENV === 'dev' ? '(開発用)' : '')
 export const getTitle = (char: Character) => ( char.pcName === '' ? '名前なし' : char.pcName ) + ' - ' + getHomeTitle()
+
+const normalizeForSearch = (s: string | undefined) => (s ?? '').normalize('NFKC').toLowerCase()
+
+export const matchesCharacterSearch = (char: Character, query: string) => {
+  const q = normalizeForSearch(query).trim()
+  if (q === '') return true
+  return [char.pcName, char.plName, char.classLevel].some((field) => normalizeForSearch(field).includes(q))
+}
