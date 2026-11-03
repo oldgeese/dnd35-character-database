@@ -30,7 +30,11 @@ export const calcSkillModifier = ([ability, rank, penalty, misc]: [string, strin
 export const getHomeTitle = () => 'D&D 3.5版 キャラクターデータベース' + (process.env.FIREBASE_ENV === 'dev' ? '(開発用)' : '')
 export const getTitle = (char: Character) => ( char.pcName === '' ? '名前なし' : char.pcName ) + ' - ' + getHomeTitle()
 
-const normalizeForSearch = (s: string | undefined) => (s ?? '').normalize('NFKC').toLowerCase()
+// Fold full/half-width (NFKC), katakana to hiragana, and letter case so they all match
+const normalizeForSearch = (s: unknown) => String(s ?? '')
+  .normalize('NFKC')
+  .replace(/[\u30A1-\u30F6]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60))
+  .toLowerCase()
 
 export const matchesCharacterSearch = (char: Character, query: string) => {
   const q = normalizeForSearch(query).trim()

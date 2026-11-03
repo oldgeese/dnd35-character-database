@@ -71,7 +71,7 @@ const ListChars = () => {
         />
       </Box>
       {filtered.length === 0 && characters.length > 0 && (
-        <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
+        <Typography role="status" color="text.secondary" align="center" sx={{ py: 4 }}>
           該当するキャラクターがいません
         </Typography>
       )}
