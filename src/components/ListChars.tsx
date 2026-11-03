@@ -46,8 +46,6 @@ const ListChars = () => {
     [characters, query],
   )
 
-  const noMatch = characters !== null && characters.length > 0 && filtered.length === 0
-
   if (characters === null) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, py: 4 }}>
@@ -56,6 +54,8 @@ const ListChars = () => {
       </Box>
     )
   }
+
+  const noMatch = characters.length > 0 && filtered.length === 0
 
   return (
     <>

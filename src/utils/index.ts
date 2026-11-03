@@ -40,7 +40,9 @@ const toSearchableText = (s: unknown) => {
 // Fold full/half-width (NFKC), katakana to hiragana, and letter case, and drop whitespace, so they all match
 const normalizeForSearch = (s: unknown) => toSearchableText(s)
   .normalize('NFKC')
-  .replace(/[\u30A1-\u30F6\u30FD\u30FE]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60))
+  // ヵ/ヶ would shift to the rare small ゕ/ゖ; map them to the full-size か/け people actually type
+  .replace(/[ヵヶ]/g, (c) => (c === 'ヵ' ? 'か' : 'け'))
+  .replace(/[\u30A1-\u30F4\u30FD\u30FE]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60))
   .toLowerCase()
   .replace(/\s/g, '')
 
