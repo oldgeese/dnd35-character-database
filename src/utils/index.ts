@@ -29,3 +29,26 @@ export const calcSkillModifier = ([ability, rank, penalty, misc]: [string, strin
 
 export const getHomeTitle = () => 'D&D 3.5版 キャラクターデータベース' + (process.env.FIREBASE_ENV === 'dev' ? '(開発用)' : '')
 export const getTitle = (char: Character) => ( char.pcName === '' ? '名前なし' : char.pcName ) + ' - ' + getHomeTitle()
+
+// Only strings and numbers are searchable; other stored values would turn into text like "[object Object]"
+const toSearchableText = (s: unknown) => {
+  if (typeof s === 'string') return s
+  if (typeof s === 'number') return String(s)
+  return ''
+}
+
+// Fold full/half-width (NFKC), katakana to hiragana, and letter case, and drop separators, so they all match
+const normalizeForSearch = (s: unknown) => toSearchableText(s)
+  .normalize('NFKC')
+  // ヵ/ヶ would shift to the rare small ゕ/ゖ; map them to the full-size か/け people actually type
+  .replace(/[ヵヶ]/g, (c) => (c === 'ヵ' ? 'か' : 'け'))
+  .replace(/[\u30A1-\u30F4\u30FD\u30FE]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60))
+  .toLowerCase()
+  // Separators people may or may not type: whitespace, ・ (NFKC also maps ･), = and /
+  .replace(/[\s・=/]/g, '')
+
+export const matchesCharacterSearch = (char: Character, query: string) => {
+  const q = normalizeForSearch(query)
+  if (q === '') return true
+  return [char.pcName, char.plName, char.classLevel].some((field) => normalizeForSearch(field).includes(q))
+}
