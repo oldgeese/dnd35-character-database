@@ -25,6 +25,8 @@ import DuplicateCharDialog from './DuplicateCharDialog'
 const ListChars = () => {
   const [characters, setCharacters] = useState<Character[] | null>(null)
   const [duplicating, setDuplicating] = useState<Character | null>(null)
+  // inputValue is what the box shows; query is what filters, and skips unfinished IME text like 「あｒ」
+  const [inputValue, setInputValue] = useState('')
   const [query, setQuery] = useState('')
   const db = firebase.firestore()
 
@@ -64,10 +66,16 @@ const ListChars = () => {
           type="search"
           fullWidth
           size="small"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value)
+            if (!(e.nativeEvent as InputEvent).isComposing) setQuery(e.target.value)
+          }}
           placeholder="キャラクター名・PL名・クラスレベルで検索"
-          inputProps={{ 'aria-label': 'キャラクター検索' }}
+          inputProps={{
+            'aria-label': 'キャラクター検索',
+            onCompositionEnd: (e: React.CompositionEvent<HTMLInputElement>) => setQuery(e.currentTarget.value),
+          }}
           // The theme shrinks input padding for the dense character sheet; restore it here
           sx={{ '& .MuiOutlinedInput-input': { py: 1, px: 1.5 } }}
         />
