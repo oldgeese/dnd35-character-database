@@ -37,12 +37,10 @@ const toSearchableText = (s: unknown) => {
   return ''
 }
 
-// Fold full/half-width (NFKC), katakana to hiragana, and letter case, and drop separators, so they all match
+// Fold full/half-width (NFKC) and letter case, and drop separators, so they all match.
+// Hiragana and katakana are kept distinct on purpose (#508).
 const normalizeForSearch = (s: unknown) => toSearchableText(s)
   .normalize('NFKC')
-  // ヵ/ヶ would shift to the rare small ゕ/ゖ; map them to the full-size か/け people actually type
-  .replace(/[ヵヶ]/g, (c) => (c === 'ヵ' ? 'か' : 'け'))
-  .replace(/[\u30A1-\u30F4\u30FD\u30FE]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60))
   .toLowerCase()
   // Separators people may or may not type: whitespace, ・ (NFKC also maps ･), = and /
   .replace(/[\s・=/]/g, '')
