@@ -54,6 +54,9 @@
   "name": "dnd35-character-database",
   "version": "1.0.0",
   "main": "./src/index.tsx",
+  "engines": {
+    "node": "24"
+  },
   "repository": "git@github.com:oldgeese/dnd35-character-database.git",
   "license": "MIT",
   "description": "D&D3.5 character database",
