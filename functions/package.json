@@ -10,7 +10,7 @@
     "build": "tsc",
     "migrate": "node scripts/migrate-passwords.ts",
     "restore": "node scripts/restore-passwords.ts",
-    "test:unit": "node --test src/**/*.test.ts",
+    "test:unit": "node --test 'src/**/*.test.ts'",
     "test:emu": "node --test --test-concurrency=1 test/*.test.ts"
   },
   "dependencies": {
