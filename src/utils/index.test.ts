@@ -53,6 +53,7 @@ test('ignores whitespace, ・, = and / in both query and field', () => {
   assert.equal(matches({ pcName: 'ジョン　スミス' }, 'ジョン スミス'), true)
 })
 
+// The fields are typed string, but stored data may hold numbers, so keep them searchable.
 test('numeric fields are searchable', () => {
   assert.equal(matches({ classLevel: 5 }, '5'), true)
 })
