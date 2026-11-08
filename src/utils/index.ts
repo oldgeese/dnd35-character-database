@@ -1,4 +1,4 @@
-import { Character } from '../models'
+import type { Character } from '../models'
 const ABILITY_POSITION: { [s:string]: number } = {
   '【筋】': 0,
   '【敏】': 1,

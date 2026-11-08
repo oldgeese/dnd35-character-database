@@ -3,7 +3,8 @@
     "build:dev": "env NODE_ENV=production FIREBASE_ENV=dev webpack",
     "build:prod": "env NODE_ENV=production FIREBASE_ENV=prod webpack",
     "start": "env NODE_ENV=development webpack serve",
-    "test": "pnpm --filter dnd35-functions test:unit && pnpm --filter dnd35-functions build && firebase emulators:exec --only firestore,functions --project demo-dnd35 'pnpm --filter dnd35-functions test:emu'",
+    "test": "pnpm test:unit && pnpm --filter dnd35-functions test:unit && pnpm --filter dnd35-functions build && firebase emulators:exec --only firestore,functions --project demo-dnd35 'pnpm --filter dnd35-functions test:emu'",
+    "test:unit": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test 'src/**/*.test.ts'",
     "lint": "eslint 'src/**'",
     "emu": "firebase emulators:start --import emudata --export-on-exit emudata"
   },
