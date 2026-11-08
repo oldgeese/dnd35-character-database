@@ -35,7 +35,12 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     // src/package.json only marks src as ESM for node:test; dependencies live in the root one.
-    // Keep airbnb's options (where devDependencies are allowed) and only change packageDir.
-    'import/no-extraneous-dependencies': ['error', { ...airbnbExtraneousOptions, packageDir: __dirname }],
+    // Keep airbnb's options (where devDependencies are allowed) and change packageDir.
+    'import/no-extraneous-dependencies': ['error', {
+      ...airbnbExtraneousOptions,
+      // airbnb's test globs only cover .js/.jsx
+      devDependencies: [...airbnbExtraneousOptions.devDependencies, '**/*.test.{ts,tsx}'],
+      packageDir: __dirname,
+    }],
   },
 }

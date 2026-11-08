@@ -49,6 +49,8 @@ test('ignores whitespace, ・, = and / in both query and field', () => {
   assert.equal(matches({ pcName: 'ジョンスミス' }, 'ジョン・スミス'), true)
   assert.equal(matches({ pcName: 'ジョン･スミス' }, 'ジョン・スミス'), true)
   assert.equal(matches({ pcName: 'アン=マリー' }, 'アン マリー'), true)
+  assert.equal(matches({ pcName: 'アン＝マリー' }, 'アンマリー'), true)
+  assert.equal(matches({ classLevel: 'ファイター／ウィザード' }, 'ファイターウィザード'), true)
   assert.equal(matches({ classLevel: 'ファイター/ウィザード' }, 'ファイターウィザード'), true)
   assert.equal(matches({ pcName: 'ジョン　スミス' }, 'ジョン スミス'), true)
 })
