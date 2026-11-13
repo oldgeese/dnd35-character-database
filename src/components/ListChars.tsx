@@ -23,9 +23,33 @@ import { Character } from '../models'
 import { matchesCharacterSearch } from '../utils'
 import DuplicateCharDialog from './DuplicateCharDialog'
 
+type LoadFailedAlertProps = {
+  // true when a list is already shown and only its updates stopped
+  stale: boolean
+  onRetry: () => void
+}
+
+const LoadFailedAlert = ({ stale, onRetry }: LoadFailedAlertProps) => (
+  <Alert
+    severity="error"
+    sx={{ mx: 2, mb: 2 }}
+    action={(
+      <Button color="inherit" size="small" onClick={onRetry}>
+        再読み込み
+      </Button>
+    )}
+  >
+    {stale
+      ? 'キャラクター一覧の更新が止まりました。表示中の一覧は最新でない可能性があります。'
+      : 'キャラクター一覧の読み込みに失敗しました。'}
+  </Alert>
+)
+
 const ListChars = () => {
   const [characters, setCharacters] = useState<Character[] | null>(null)
   const [loadFailed, setLoadFailed] = useState(false)
+  // Bumped by the retry button to subscribe again without reloading the page
+  const [attempt, setAttempt] = useState(0)
   const [duplicating, setDuplicating] = useState<Character | null>(null)
   // inputValue is what the box shows; query is what filters, and skips unfinished IME text like 「あｒ」
   const [inputValue, setInputValue] = useState('')
@@ -47,29 +71,20 @@ const ListChars = () => {
         setLoadFailed(true)
       })
     return unsubscribe
-  }, [db])
+  }, [db, attempt])
+
+  const retry = () => {
+    setLoadFailed(false)
+    setAttempt((n) => n + 1)
+  }
 
   const filtered = useMemo(
     () => (characters ?? []).filter((character) => matchesCharacterSearch(character, query)),
     [characters, query],
   )
 
-  const loadFailedAlert = (
-    <Alert
-      severity="error"
-      sx={{ mx: 2, mb: 2 }}
-      action={(
-        <Button color="inherit" size="small" onClick={() => window.location.reload()}>
-          再読み込み
-        </Button>
-      )}
-    >
-      キャラクター一覧の読み込みに失敗しました。時間をおいてページを再読み込みしてください。
-    </Alert>
-  )
-
   if (characters === null) {
-    if (loadFailed) return loadFailedAlert
+    if (loadFailed) return <LoadFailedAlert stale={false} onRetry={retry} />
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, py: 4 }}>
         <CircularProgress size={24} />
@@ -82,7 +97,7 @@ const ListChars = () => {
 
   return (
     <>
-      {loadFailed && loadFailedAlert}
+      {loadFailed && <LoadFailedAlert stale onRetry={retry} />}
       <Box sx={{ px: 2 }}>
         <TextField
           type="search"
