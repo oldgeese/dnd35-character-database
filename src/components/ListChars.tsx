@@ -59,12 +59,15 @@ const ListChars = () => {
   useEffect(() => {
     const unsubscribe = db.collection('characters')
       .orderBy('updateTime', 'desc')
-      .onSnapshot((snapshot) => {
+      // Also fire when only fromCache changes, so a retry that gets the same data still clears the error
+      .onSnapshot({ includeMetadataChanges: true }, (snapshot) => {
         const result: Character[] = []
         snapshot.forEach((doc) => {
           result.push(doc.data() as Character)
         })
         setCharacters(result)
+        // Clear the error only once the server answers; a snapshot from the cache can be stale too
+        if (!snapshot.metadata.fromCache) setLoadFailed(false)
       }, (error) => {
         // Firestore stops the listener after an error, so the list no longer updates
         console.error('Error listening to characters:', error)
@@ -73,18 +76,18 @@ const ListChars = () => {
     return unsubscribe
   }, [db, attempt])
 
-  const retry = () => {
-    setLoadFailed(false)
-    setAttempt((n) => n + 1)
-  }
+  // Keep the error shown until the new subscription gets data from the server
+  const retry = () => setAttempt((n) => n + 1)
 
   const filtered = useMemo(
     () => (characters ?? []).filter((character) => matchesCharacterSearch(character, query)),
     [characters, query],
   )
 
+  const loadFailedAlert = loadFailed && <LoadFailedAlert stale={characters !== null} onRetry={retry} />
+
   if (characters === null) {
-    if (loadFailed) return <LoadFailedAlert stale={false} onRetry={retry} />
+    if (loadFailedAlert) return loadFailedAlert
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, py: 4 }}>
         <CircularProgress size={24} />
@@ -97,7 +100,7 @@ const ListChars = () => {
 
   return (
     <>
-      {loadFailed && <LoadFailedAlert stale onRetry={retry} />}
+      {loadFailedAlert}
       <Box sx={{ px: 2 }}>
         <TextField
           type="search"
