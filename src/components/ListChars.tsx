@@ -59,15 +59,17 @@ const ListChars = () => {
   useEffect(() => {
     const unsubscribe = db.collection('characters')
       .orderBy('updateTime', 'desc')
-      // Also fire when only fromCache changes, so a retry that gets the same data still clears the error
+      // A cache snapshot is skipped below, so also fire when only fromCache changes:
+      // otherwise a server answer with the same data as the cache never arrives
       .onSnapshot({ includeMetadataChanges: true }, (snapshot) => {
+        // Use only server data: a cache snapshot (empty when offline) would replace the shown list
+        if (snapshot.metadata.fromCache) return
         const result: Character[] = []
         snapshot.forEach((doc) => {
           result.push(doc.data() as Character)
         })
         setCharacters(result)
-        // Clear the error only once the server answers; a snapshot from the cache can be stale too
-        if (!snapshot.metadata.fromCache) setLoadFailed(false)
+        setLoadFailed(false)
       }, (error) => {
         // Firestore stops the listener after an error, so the list no longer updates
         console.error('Error listening to characters:', error)
