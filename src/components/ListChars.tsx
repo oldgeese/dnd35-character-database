@@ -1,4 +1,5 @@
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -24,6 +25,7 @@ import DuplicateCharDialog from './DuplicateCharDialog'
 
 const ListChars = () => {
   const [characters, setCharacters] = useState<Character[] | null>(null)
+  const [loadFailed, setLoadFailed] = useState(false)
   const [duplicating, setDuplicating] = useState<Character | null>(null)
   // inputValue is what the box shows; query is what filters, and skips unfinished IME text like 「あｒ」
   const [inputValue, setInputValue] = useState('')
@@ -39,6 +41,10 @@ const ListChars = () => {
           result.push(doc.data() as Character)
         })
         setCharacters(result)
+      }, (error) => {
+        // Firestore stops the listener after an error, so the list no longer updates
+        console.error('Error listening to characters:', error)
+        setLoadFailed(true)
       })
     return unsubscribe
   }, [db])
@@ -48,7 +54,22 @@ const ListChars = () => {
     [characters, query],
   )
 
+  const loadFailedAlert = (
+    <Alert
+      severity="error"
+      sx={{ mx: 2, mb: 2 }}
+      action={(
+        <Button color="inherit" size="small" onClick={() => window.location.reload()}>
+          再読み込み
+        </Button>
+      )}
+    >
+      キャラクター一覧の読み込みに失敗しました。時間をおいてページを再読み込みしてください。
+    </Alert>
+  )
+
   if (characters === null) {
+    if (loadFailed) return loadFailedAlert
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, py: 4 }}>
         <CircularProgress size={24} />
@@ -61,6 +82,7 @@ const ListChars = () => {
 
   return (
     <>
+      {loadFailed && loadFailedAlert}
       <Box sx={{ px: 2 }}>
         <TextField
           type="search"
